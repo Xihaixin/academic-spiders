@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(python test_v2_api.py 2>&1)",
+      "PowerShell(python scholarin_spider.py -q \"人工智能\" -p 1 --cookies \"XSRF-TOKEN=bd371e5e-9f80-41e2-a11c-e1a122242703; hky_ticket=3FpD6H+mzYkrtk4oDD3i9w==; pub_ticket=6cTxXTqZW/yenPJ+7pLDoG6K89NbCOTh1Ns7lReRIj4GwrODkg29ow==; JSESSIONID=606B09E8239732EF5369A50EDB15B8C5\" --uid \"c9ca380e54f3455ca27bdeb6f921f7b0\" --no-proxy -v 2>&1)",
+      "PowerShell(python scholarin_spider.py -q \"人工智能\" -p 1 --cookies \"XSRF-TOKEN=bd371e5e-9f80-41e2-a11c-e1a122242703; hky_ticket=3FpD6H+mzYkrtk4oDD3i9w==; pub_ticket=6cTxXTqZW/yenPJ+7pLDoG6K89NbCOTh1Ns7lReRIj4GwrODkg29ow==; JSESSIONID=606B09E8239732EF5369A50EDB15B8C5\" --uid \"c9ca380e54f3455ca27bdeb6f921f7b0\" --no-proxy -v --extract 2>&1)"
+    ]
+  }
+}
