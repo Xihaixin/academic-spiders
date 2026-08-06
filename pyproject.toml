@@ -1,8 +1,11 @@
 [project]
 name = "academic-spiders"
 version = "0.1.0"
-description = "Add your description here"
+description = "慧科研 (pubscholar.cn) 文献数据采集系统"
 requires-python = ">=3.12"
 dependencies = [
     "requests>=2.34.2",
+    "scrapy>=2.12.0",
+    "pymysql>=1.1.0",
+    "dbutils>=3.1.0",
 ]
