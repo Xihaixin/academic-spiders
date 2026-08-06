@@ -1,0 +1,193 @@
+{
+  "abstracts": "叶夹角是影响作物株型和产量的关键农艺性状。植物激素如生长素在调控叶夹角中起着关键作用，但其分子机制尚不完全清楚。本文发现生长素响应因子基因OsARF12在叶枕中高表达，通过影响茎向重力性负调控水稻叶夹角。OsARF12过表达株系表现出更直立的叶夹角，而osarf12突变体与野生型相比叶夹角增大。进一步研究表明，OsARF12通过结合其启动子直接激活LPA1和LAZY1的表达。osarf12突变体表现出茎向重力性受损，这一表型与lpa1和lazy1突变体一致。总之，我们阐明了OsARF12通过调控LPA1和LAZY1的表达水平影响茎向重力性，从而调控叶夹角的生物学功能。本研究为生长素在水稻叶夹角决定中的作用提供了见解，可能对优化作物株型具有深远影响。",
+  "abstracts_abbreviation": "叶夹角是影响作物株型和产量的关键农艺性状。植物激素如生长素在调控叶夹角中起着关键作用，但其分子机制尚不完全清楚。本文发现生长素响应因子基因OsARF12在叶枕中高表达，通过影响茎向重力性负调控水稻...",
+  "article_type": "",
+  "attachments": [],
+  "author": [
+    "鲜凤君",
+    "刘淑雅",
+    "谢斌",
+    "黄继帅",
+    "张倩楠",
+    "徐祎萌",
+    "张欣荣",
+    "吕晨",
+    "朱琳",
+    "胡骏"
+  ],
+  "author_id": [
+    "e243d1dcff014b66e8c4aa92ddb2730d",
+    "0d5149848a37a852f9dea75699f6baa0",
+    "dd18114bf580f1d9bcde4e7fb42fbaf1",
+    "b19d0d1860b479f3732ff51919133e38",
+    "9eb871ed8adb17a8ce80908b9746c4d4",
+    "716bce5a903a66dcd628c7a3c5aabf2f",
+    "c0fd3973b04258fee6fdd7bec1ad63c1",
+    "bb2313324c07b912ff5a058b99b46cb8",
+    "db381563c7b5583d921fc93fa1abca50",
+    "242765fec9a829e5dfe38bd8f017d5b1"
+  ],
+  "authors": [
+    {
+      "institution": [
+        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+      ],
+      "is_corresponding_author": false,
+      "name": "鲜凤君"
+    },
+    {
+      "institution": [
+        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+      ],
+      "is_corresponding_author": false,
+      "name": "刘淑雅"
+    },
+    {
+      "institution": [
+        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+      ],
+      "is_corresponding_author": false,
+      "name": "谢斌"
+    },
+    {
+      "institution": [
+        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+      ],
+      "is_corresponding_author": false,
+      "name": "黄继帅"
+    },
+    {
+      "institution": [
+        "National Clinical Research Center of Kidney Diseases, Jinling Hospital, Medical School of Nanjing University, Nanjing, Jiangsu 210016, China"
+      ],
+      "is_corresponding_author": false,
+      "name": "张倩楠"
+    },
+    {
+      "institution": [
+        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+      ],
+      "is_corresponding_author": false,
+      "name": "徐祎萌"
+    },
+    {
+      "institution": [
+        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+      ],
+      "is_corresponding_author": false,
+      "name": "张欣荣"
+    },
+    {
+      "institution": [
+        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+      ],
+      "is_corresponding_author": false,
+      "name": "吕晨"
+    },
+    {
+      "institution": [
+        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+      ],
+      "is_corresponding_author": false,
+      "name": "朱琳"
+    },
+    {
+      "institution": [
+        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+      ],
+      "is_corresponding_author": true,
+      "name": "胡骏"
+    }
+  ],
+  "browse_count": 24,
+  "cn_type": "论文",
+  "cstr": "",
+  "date": "2026",
+  "degree": "",
+  "doi": "10.1016/j.jgg.2025.06.005",
+  "extendEntity": {
+    "title-repeated": "生长素响应因子osarf12通过影响茎向重力性调控水稻叶夹角",
+    "wos-category-llm": [],
+    "cnKeywords": [
+      "水稻",
+      "株型",
+      "叶夹角",
+      "茎向重力性",
+      "OsARF12"
+    ],
+    "article-id": [
+      "10.1016/j.jgg.2025.06.005"
+    ],
+    "journal-repeated": "journalofgeneticsandgenomics",
+    "sensitive_label": [],
+    "project_name": [],
+    "base_project": [],
+    "fulltext_permission": "1",
+    "classification_bg": [],
+    "article-id-type": [
+      "doi"
+    ],
+    "is_high_level": "",
+    "article_legal_status": "",
+    "contrib_institution": [
+      [
+        "武汉大学"
+      ],
+      [
+        "南京大学"
+      ]
+    ],
+    "is_use_headline": [],
+    "is_financial_support_project": "",
+    "enKeywords": [
+      "Rice",
+      "Plant architecture",
+      "Leaf angle",
+      "Shoot gravitropism",
+      "OsARF12"
+    ],
+    "is_cas_representative": "",
+    "base_subject": [],
+    "datasource-link": [
+      "neweditarticle:https://doi.org/10.1016/j.jgg.2025.06.005"
+    ]
+  },
+  "first_page": "234",
+  "graduation_institution": [],
+  "id": "17ee3003077754230f57b0ab91d2530f",
+  "is_free": false,
+  "issue": "2",
+  "keywords": [
+    "水稻",
+    "株型",
+    "叶夹角",
+    "茎向重力性",
+    "OsARF12"
+  ],
+  "last_page": "245",
+  "license": "",
+  "links": [
+    {
+      "is_open_access": false,
+      "name": "期刊官网",
+      "url": "https://doi.org/10.1016/j.jgg.2025.06.005"
+    }
+  ],
+  "local_links": [
+    "https://file.scholarin.cn/preview2?file=journal_upload_cafddcb7f23fea190f6b19e9c451a8e0.pdf"
+  ],
+  "major": "",
+  "school": [],
+  "semantic_entities": {},
+  "source": "Journal of Genetics and Genomics",
+  "source_list": [
+    "neweditarticle",
+    "JournalSubmit_Article",
+    "pubscholar_running"
+  ],
+  "title": "生长素响应因子OsARF12通过影响茎向重力性调控水稻叶夹角",
+  "tutor": [],
+  "type": "article",
+  "volume": "53",
+  "year": 2026
+}

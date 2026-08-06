@@ -1,0 +1,1405 @@
+[
+  {
+    "_page": 2,
+    "article_md5": "7d1d5a379e664d169e682a706140fb2b",
+    "title": "蒽醌光敏剂设计合成与光催化 C（sp3）—H 氧化反应性能研究",
+    "abstracts": "对蒽醌的 α 和 β 位进行结构编辑， 设计合成了 7 种新型蒽醌光敏剂， 并发现在甲基的光氧化反应中具有优异光催化性能. 研究结果表明， 在蒽醌母体 β 位点上引入强吸电子的三氟甲基取代基得到的 2-三氟甲基蒽醌（PC6）， 表现出最好的光氧化性能和选择性， 光催化速率是蒽醌的近 30 倍， 并具有良好底物普适性， 对大部分缺电子取代基和富电子取代基的芳杂环甲基衍生物实现良好以上的反应收率. 通过紫外-可见吸收光谱、荧光光谱、循环伏安及密度泛函理论（DFT）计算， 发现PC6的荧光量子产率达到蒽醌的 2.5倍， 是其光催化效率提升的主要原因. 该反应体系具有简单高效、条件温和和官能团耐受性好的优点， 为后续的 C（sp3）—H 活化反应提供了高效催化剂和有效的光催化方法.",
+    "key_words": [
+      "光催化",
+      "蒽醌光敏剂",
+      "C(sp3)—H 氧化"
+    ],
+    "author_names": [
+      "程熹",
+      "李雅琳",
+      "吴鹏",
+      "苏敏",
+      "张梓轩",
+      "焦民均",
+      "刘雪粉",
+      "罗书平"
+    ],
+    "source": "有机化学",
+    "volume": "46",
+    "issue": "5",
+    "first_page": "2104",
+    "last_page": "2111",
+    "date": "2026",
+    "year": 2026,
+    "doi": "10.6023/cjoc202510027",
+    "cstr": "",
+    "type": "article",
+    "article_type": "",
+    "lang": "zh",
+    "cn_type": "论文",
+    "is_free": false,
+    "links": [
+      {
+        "is_open_access": false,
+        "name": "期刊官网",
+        "url": "https://doi.org/10.6023/cjoc202510027"
+      }
+    ],
+    "authors": [
+      {
+        "institution": [
+          "浙江工业大学化学工程学院  杭州 310014"
+        ],
+        "is_corresponding_author": false,
+        "name": "程熹"
+      },
+      {
+        "institution": [
+          "浙江工业大学化学工程学院  杭州 310014"
+        ],
+        "is_corresponding_author": false,
+        "name": "李雅琳"
+      },
+      {
+        "institution": [
+          "浙江工业大学化学工程学院  杭州 310014"
+        ],
+        "is_corresponding_author": false,
+        "name": "吴鹏"
+      },
+      {
+        "institution": [
+          "浙江工业大学化学工程学院  杭州 310014"
+        ],
+        "is_corresponding_author": false,
+        "name": "苏敏"
+      },
+      {
+        "institution": [
+          "浙江工业大学化学工程学院  杭州 310014"
+        ],
+        "is_corresponding_author": false,
+        "name": "张梓轩"
+      },
+      {
+        "institution": [
+          "浙江工业大学化学工程学院  杭州 310014"
+        ],
+        "is_corresponding_author": false,
+        "name": "焦民均"
+      },
+      {
+        "institution": [
+          "杭州师范大学材料与化学化工学院  杭州 311121"
+        ],
+        "is_corresponding_author": false,
+        "name": "刘雪粉"
+      },
+      {
+        "institution": [
+          "浙江工业大学化学工程学院  杭州 310014"
+        ],
+        "is_corresponding_author": true,
+        "name": "罗书平"
+      }
+    ],
+    "extend_entity": {
+      "title-repeated": "蒽醌光敏剂设计合成与光催化csp3h氧化反应性能研究",
+      "wos-category-llm": [],
+      "cnKeywords": [
+        "光催化",
+        "蒽醌光敏剂",
+        "C(sp3)—H 氧化"
+      ],
+      "article-id": [
+        "10.6023/cjoc202510027"
+      ],
+      "journal-repeated": "有机化学",
+      "sensitive_label": [],
+      "project_name": [],
+      "base_project": [],
+      "fulltext_permission": "0",
+      "classification_bg": [],
+      "article-id-type": [
+        "doi"
+      ],
+      "contrib_institution": [
+        [
+          "浙江工业大学"
+        ],
+        [
+          "杭州师范大学"
+        ]
+      ],
+      "is_use_headline": [],
+      "enKeywords": [
+        "photocatalysis",
+        "anthraquinone photosensitizer",
+        "C(sp3)—H oxidation"
+      ],
+      "base_subject": [],
+      "datasource-link": [
+        "neweditarticle:https://doi.org/10.6023/cjoc202510027"
+      ]
+    },
+    "semantic_entities": {},
+    "source_list": [
+      "neweditarticle",
+      "JournalSubmit_Article",
+      "pubscholar_running"
+    ],
+    "license": "",
+    "local_links": [],
+    "attachments": [],
+    "degree": "",
+    "major": "",
+    "school": [],
+    "tutor": [],
+    "graduation_institution": []
+  },
+  {
+    "_page": 2,
+    "article_md5": "57520fa6d0ec03ea878819f030efcfd0",
+    "title": "大蒜中 S-1-丙烯基-L-半胱氨酸的合成及生物学特性研究进展",
+    "abstracts": "S-1-丙烯基-L-半胱氨酸（S-1-propenyl-L-cysteine， S1PC）是一种天然存在于葱属植物中的含硫氨基酸， 最早于 20世纪 60 年代在大蒜制剂中被发现， 也是老化大蒜提取物（Aged garlic extract， AGE）中的重要组分， 在其发挥药理作用过程中扮演重要角色. 自 2016 年起， 已发现 S1PC 具有多种生物活性， 包括抗高血压、抗炎和调节免疫特性. 相较于完整大蒜， S1PC 不仅气味更淡、毒性更低， 还能规避消化不良、口臭等不良反应， 对于期望获取大蒜健康益处的人群而言， 是一种更具吸引力的选择. S1PC 已被发现在高血压动物模型中有降低血压的作用， 并且在体内、体外均有免疫调节作用. 此外， S1PC 具有抗炎作用， 该特性有助于预防或管理与慢性炎症相关的疾病， 如牙龈炎和动脉粥样硬化. 基于上述发现， S1PC 被认为与其同分异构体 S-烯丙基-L-半胱氨酸（S-allyl-L-cysteine， SAC）一样， 是 AGE 中另一种重要的、具有药理活性且安全的成分. 综述了 S1PC 的理化性质等方面最新研究进展， 并提出了其未来潜在的应用发展方向.",
+    "key_words": [
+      "S-1-丙烯基-L-半胱氨酸(S1PC)",
+      "葱属植物",
+      "理化性质",
+      "合成方法",
+      "生物活性",
+      "药代动力学"
+    ],
+    "author_names": [
+      "田灵燕",
+      "王守锋",
+      "曾伟"
+    ],
+    "source": "有机化学",
+    "volume": "46",
+    "issue": "1",
+    "first_page": "74",
+    "last_page": "86",
+    "date": "2026",
+    "year": 2026,
+    "doi": "10.6023/cjoc202505028",
+    "cstr": "",
+    "type": "article",
+    "article_type": "期刊论文",
+    "lang": "zh",
+    "cn_type": "论文",
+    "is_free": false,
+    "links": [
+      {
+        "is_open_access": false,
+        "name": "期刊官网",
+        "url": "https://doi.org/10.6023/cjoc202505028"
+      }
+    ],
+    "authors": [
+      {
+        "institution": [
+          "济南大学化学化工学院  济南 250022"
+        ],
+        "is_corresponding_author": false,
+        "name": "田灵燕"
+      },
+      {
+        "institution": [
+          "济南大学化学化工学院  济南 250022"
+        ],
+        "is_corresponding_author": true,
+        "name": "王守锋"
+      },
+      {
+        "institution": [
+          "中国科学院上海有机化学研究所  上海 200032"
+        ],
+        "is_corresponding_author": true,
+        "name": "曾伟"
+      }
+    ],
+    "extend_entity": {
+      "title-repeated": "大蒜中s1丙烯基l半胱氨酸的合成及生物学特性研究进展",
+      "wos-category-llm": [],
+      "cnKeywords": [
+        "S-1-丙烯基-L-半胱氨酸(S1PC)",
+        "葱属植物",
+        "理化性质",
+        "合成方法",
+        "生物活性",
+        "药代动力学"
+      ],
+      "article-id": [
+        "b944ac2cf17874b68dd359fe5175adf2",
+        "10.6023/cjoc202505028"
+      ],
+      "journal-repeated": "有机化学",
+      "sensitive_label": [],
+      "project_name": [],
+      "base_project": [],
+      "fulltext_permission": "0",
+      "classification_bg": [],
+      "article-id-type": [
+        "lasjournal_journalarticleID",
+        "doi"
+      ],
+      "is_high_level": "",
+      "article_legal_status": "",
+      "contrib_institution": [
+        [
+          "济南大学"
+        ],
+        [
+          "中国科学院上海有机化学研究所"
+        ]
+      ],
+      "is_use_headline": [],
+      "is_financial_support_project": "",
+      "enKeywords": [
+        "S-1-propenyl-L-cysteine (S1PC)",
+        "genus allium",
+        "physical and chemical properties",
+        "synthesis method",
+        "biological activity",
+        "pharmacokinetics"
+      ],
+      "is_cas_representative": "",
+      "base_subject": [],
+      "datasource-link": [
+        "LasJournal_JournalArticle:https://sioc-journal.cn/Jwk_yjhx/CN/10.6023/cjoc202505028",
+        "neweditarticle:https://doi.org/10.6023/cjoc202505028"
+      ]
+    },
+    "semantic_entities": {},
+    "source_list": [
+      "LasJournal_JournalArticle",
+      "pubscholar_running",
+      "pub-scholar-recommend",
+      "neweditarticle",
+      "JournalSubmit_Article"
+    ],
+    "license": "",
+    "local_links": [],
+    "attachments": [],
+    "degree": "",
+    "major": "",
+    "school": [],
+    "tutor": [],
+    "graduation_institution": []
+  },
+  {
+    "_page": 2,
+    "article_md5": "1181265c743b41b4d05a286b267f2865",
+    "title": "有机碱驱动合成多取代苯并[b]噻吩-4-醇类化合物",
+    "abstracts": "多取代苯并[b]噻吩骨架是一类重要的合成中间体. 以 3-取代基-1-噻吩基-2-丙烯-1-酮类化合物和硝基烷烃类化合物为底物， 通过有机碱驱动环合反应合成了一系列多取代苯并[b]噻吩-4-醇类化合物. 实验结果表明， 最佳实验条件如下： 以 2.5 mmol 1，8-二氮杂二环[5.4.0]十一碳-7-烯（DBU）为碱， 1.0 mmol 3-取代基-1-噻吩基-2-丙烯-1-酮类化合物和 1.2 mmol 硝基烷烃化合物为底物， 在 N，N-二甲基甲酰胺（DMF）溶剂中于常温下反应 8 h， 合成了一系列多取代苯并[b]噻吩-4-醇类化合物， 产率高达 88%. 产物结构经 1H NMR、13C NMR 以及 HRMS （ESI）分析确证， 并对该反应合成机理进行了探讨. 该合成方法具有条件温和、实用高效的特点.",
+    "key_words": [
+      "有机碱驱动",
+      "苯并[b]噻吩",
+      "合成"
+    ],
+    "author_names": [
+      "任传清",
+      "李欣欣",
+      "郭家伟",
+      "季晓晖",
+      "刘波"
+    ],
+    "source": "有机化学",
+    "volume": "46",
+    "issue": "5",
+    "first_page": "2090",
+    "last_page": "2095",
+    "date": "2026",
+    "year": 2026,
+    "doi": "10.6023/cjoc202508019",
+    "cstr": "",
+    "type": "article",
+    "article_type": "",
+    "lang": "zh",
+    "cn_type": "论文",
+    "is_free": false,
+    "links": [
+      {
+        "is_open_access": false,
+        "name": "期刊官网",
+        "url": "https://doi.org/10.6023/cjoc202508019"
+      }
+    ],
+    "authors": [
+      {
+        "institution": [
+          "陕西理工大学化学与环境科学学院 陕西省催化基础与应用重点实验室 陕西汉中 723000"
+        ],
+        "is_corresponding_author": true,
+        "name": "任传清"
+      },
+      {
+        "institution": [
+          "陕西理工大学化学与环境科学学院 陕西省催化基础与应用重点实验室 陕西汉中 723000"
+        ],
+        "is_corresponding_author": false,
+        "name": "李欣欣"
+      },
+      {
+        "institution": [
+          "陕西理工大学化学与环境科学学院 陕西省催化基础与应用重点实验室 陕西汉中 723000"
+        ],
+        "is_corresponding_author": false,
+        "name": "郭家伟"
+      },
+      {
+        "institution": [
+          "陕西理工大学化学与环境科学学院 陕西省催化基础与应用重点实验室 陕西汉中 723000"
+        ],
+        "is_corresponding_author": false,
+        "name": "季晓晖"
+      },
+      {
+        "institution": [
+          "陕西理工大学化学与环境科学学院 陕西省催化基础与应用重点实验室 陕西汉中 723000"
+        ],
+        "is_corresponding_author": false,
+        "name": "刘波"
+      }
+    ],
+    "extend_entity": {
+      "title-repeated": "有机碱驱动合成多取代苯并b噻吩4醇类化合物",
+      "wos-category-llm": [],
+      "cnKeywords": [
+        "有机碱驱动",
+        "苯并[b]噻吩",
+        "合成"
+      ],
+      "article-id": [
+        "10.6023/cjoc202508019"
+      ],
+      "journal-repeated": "有机化学",
+      "sensitive_label": [],
+      "project_name": [],
+      "base_project": [],
+      "fulltext_permission": "0",
+      "classification_bg": [],
+      "article-id-type": [
+        "doi"
+      ],
+      "contrib_institution": [
+        [
+          "陕西理工大学"
+        ]
+      ],
+      "is_use_headline": [],
+      "enKeywords": [
+        "organobase-promoted",
+        "benzo[b]thiophene",
+        "synthesis"
+      ],
+      "base_subject": [],
+      "datasource-link": [
+        "neweditarticle:https://doi.org/10.6023/cjoc202508019"
+      ]
+    },
+    "semantic_entities": {},
+    "source_list": [
+      "neweditarticle",
+      "JournalSubmit_Article",
+      "pubscholar_running"
+    ],
+    "license": "",
+    "local_links": [],
+    "attachments": [],
+    "degree": "",
+    "major": "",
+    "school": [],
+    "tutor": [],
+    "graduation_institution": []
+  },
+  {
+    "_page": 2,
+    "article_md5": "bcb1b82033b86452e3c1c6499cf8ef50",
+    "title": "可见光驱动下卤键诱导的 α-碘甲基膦酸二乙酯与香豆素/喹啉酮的直接偶联反应",
+    "abstracts": "α-芳基膦酸酯作为一类重要的有机膦化合物， 在药物化学中具有重要应用价值； 同时， 香豆素和喹啉酮也是该领域十分常见的骨架结构. 然而， 目前 α-膦酸化的香豆素/喹啉酮及其衍生物的合成方法十分有限. 为此， 开发了一种可见光驱动下卤键诱导的直接偶联反应， 实现了α-碘甲基膦酸二乙酯与香豆素或喹啉酮的高效连接. 该反应条件温和、操作简便， 且具有优异的底物普适性和区域选择性.",
+    "key_words": [
+      "可见光",
+      "卤键",
+      "α-碘甲基膦酸二乙酯",
+      "香豆素/喹啉酮",
+      "直接偶联反应"
+    ],
+    "author_names": [
+      "梁家瑞",
+      "李金兰",
+      "蒋云",
+      "姚秋丽",
+      "徐应淑",
+      "王安俊"
+    ],
+    "source": "有机化学",
+    "volume": "46",
+    "issue": "1",
+    "first_page": "135",
+    "last_page": "145",
+    "date": "2026",
+    "year": 2026,
+    "doi": "10.6023/cjoc202506016",
+    "cstr": "",
+    "type": "article",
+    "article_type": "期刊论文",
+    "lang": "zh",
+    "cn_type": "论文",
+    "is_free": false,
+    "links": [
+      {
+        "is_open_access": false,
+        "name": "期刊官网",
+        "url": "https://doi.org/10.6023/cjoc202506016"
+      }
+    ],
+    "authors": [
+      {
+        "institution": [
+          "遵义医科大学药学院  贵州省化学药物创制全省重点实验室  贵州遵义 563000"
+        ],
+        "is_corresponding_author": false,
+        "name": "梁家瑞"
+      },
+      {
+        "institution": [
+          "遵义医科大学药学院  贵州省化学药物创制全省重点实验室  贵州遵义 563000"
+        ],
+        "is_corresponding_author": false,
+        "name": "李金兰"
+      },
+      {
+        "institution": [
+          "遵义医科大学药学院  贵州省化学药物创制全省重点实验室  贵州遵义 563000"
+        ],
+        "is_corresponding_author": false,
+        "name": "蒋云"
+      },
+      {
+        "institution": [
+          "遵义医科大学药学院  贵州省化学药物创制全省重点实验室  贵州遵义 563000"
+        ],
+        "is_corresponding_author": false,
+        "name": "姚秋丽"
+      },
+      {
+        "institution": [
+          "遵义医科大学药学院  贵州省化学药物创制全省重点实验室  贵州遵义 563000"
+        ],
+        "is_corresponding_author": true,
+        "name": "徐应淑"
+      },
+      {
+        "institution": [
+          "遵义医科大学药学院  贵州省化学药物创制全省重点实验室  贵州遵义 563000"
+        ],
+        "is_corresponding_author": true,
+        "name": "王安俊"
+      }
+    ],
+    "extend_entity": {
+      "title-repeated": "可见光驱动下卤键诱导的碘甲基膦酸二乙酯与香豆素喹啉酮的直接偶联反应",
+      "wos-category-llm": [],
+      "cnKeywords": [
+        "可见光",
+        "卤键",
+        "α-碘甲基膦酸二乙酯",
+        "香豆素/喹啉酮",
+        "直接偶联反应"
+      ],
+      "article-id": [
+        "880f108cfe98f8622ceda933dafe5568",
+        "10.6023/cjoc202506016"
+      ],
+      "journal-repeated": "有机化学",
+      "sensitive_label": [],
+      "project_name": [],
+      "base_project": [],
+      "fulltext_permission": "0",
+      "classification_bg": [],
+      "article-id-type": [
+        "lasjournal_journalarticleID",
+        "doi"
+      ],
+      "is_high_level": "",
+      "article_legal_status": "",
+      "contrib_institution": [
+        [
+          "遵义医科大学"
+        ]
+      ],
+      "is_use_headline": [],
+      "is_financial_support_project": "",
+      "enKeywords": [
+        "visible light",
+        "halogen bond",
+        "diethyl α-iodomethylphosphonates",
+        "coumarin/quinolone",
+        "direct coupling reaction"
+      ],
+      "is_cas_representative": "",
+      "base_subject": [],
+      "datasource-link": [
+        "LasJournal_JournalArticle:https://sioc-journal.cn/Jwk_yjhx/CN/10.6023/cjoc202506016",
+        "neweditarticle:https://doi.org/10.6023/cjoc202506016"
+      ]
+    },
+    "semantic_entities": {},
+    "source_list": [
+      "LasJournal_JournalArticle",
+      "pubscholar_running",
+      "pub-scholar-recommend",
+      "neweditarticle",
+      "JournalSubmit_Article"
+    ],
+    "license": "",
+    "local_links": [],
+    "attachments": [],
+    "degree": "",
+    "major": "",
+    "school": [],
+    "tutor": [],
+    "graduation_institution": []
+  },
+  {
+    "_page": 2,
+    "article_md5": "7cfbd5ce8e37c9e9512fea7be675fdb5",
+    "title": "硫色酮甲酰胺衍生物的合成及其抑菌活性",
+    "abstracts": "分别以 2-氯苯乙酮和 2-巯基苯甲酸为原料设计了两条合成路线， 合成了 13 个 2-取代硫色酮甲酰胺衍生物. 利用平皿法研究了化合物对小麦全蚀病菌的抑制活性. 构效关系研究表明， 2-位取代基对化合物活性具有重要影响， 2-[（4-氯苯基）氨基]-N，N-二乙基-4-氧代-4H-硫色酮基-3-甲酰胺（6f）对小麦全蚀病菌具有较好的抑制活性， 在 50 mg/L 浓度下抑制率可以达到 100%. 进一步研究结果表明 4-（4-氧代-2-苯基-4H-硫色酮基-3-甲酰胺基）苯甲酸异丙酯（13e）对小麦全蚀病菌的抑制效果突出， 在 12.5 mg/L浓度下抑制率亦可以达到 100%， 其计算的EC50值达到了 0.07 mg/L的较低水平， 抑制活性超过了阳性对照硅噻菌胺（EC50 26.7 mg/L）. 该研究将对活性化合物进一步结构设计与优化提供一定帮助， 为新农药的创制提供参考.",
+    "key_words": [
+      "硫色酮甲酰胺衍生物",
+      "合成路线",
+      "小麦全蚀病菌",
+      "抑制活性"
+    ],
+    "author_names": [
+      "周蒲",
+      "苏子洋",
+      "崔得运",
+      "程绎南",
+      "李毅",
+      "周海峰",
+      "孙炳剑",
+      "李洪连"
+    ],
+    "source": "有机化学",
+    "volume": "46",
+    "issue": "1",
+    "first_page": "87",
+    "last_page": "95",
+    "date": "2026",
+    "year": 2026,
+    "doi": "10.6023/cjoc202506027",
+    "cstr": "",
+    "type": "article",
+    "article_type": "期刊论文",
+    "lang": "zh",
+    "cn_type": "论文",
+    "is_free": false,
+    "links": [
+      {
+        "is_open_access": false,
+        "name": "期刊官网",
+        "url": "https://doi.org/10.6023/cjoc202506027"
+      }
+    ],
+    "authors": [
+      {
+        "institution": [
+          "河南农业大学植保学院  郑州 450046"
+        ],
+        "is_corresponding_author": false,
+        "name": "周蒲"
+      },
+      {
+        "institution": [
+          "河南农业大学植保学院  郑州 450046"
+        ],
+        "is_corresponding_author": false,
+        "name": "苏子洋"
+      },
+      {
+        "institution": [
+          "河南省科学院高新技术研究中心  郑州 450002"
+        ],
+        "is_corresponding_author": false,
+        "name": "崔得运"
+      },
+      {
+        "institution": [
+          "河南农业大学植保学院  郑州 450046"
+        ],
+        "is_corresponding_author": true,
+        "name": "程绎南"
+      },
+      {
+        "institution": [
+          "河南农业大学植保学院  郑州 450046"
+        ],
+        "is_corresponding_author": false,
+        "name": "李毅"
+      },
+      {
+        "institution": [
+          "河南农业大学植保学院  郑州 450046"
+        ],
+        "is_corresponding_author": false,
+        "name": "周海峰"
+      },
+      {
+        "institution": [
+          "河南农业大学植保学院  郑州 450046"
+        ],
+        "is_corresponding_author": false,
+        "name": "孙炳剑"
+      },
+      {
+        "institution": [
+          "河南农业大学植保学院  郑州 450046"
+        ],
+        "is_corresponding_author": false,
+        "name": "李洪连"
+      }
+    ],
+    "extend_entity": {
+      "title-repeated": "硫色酮甲酰胺衍生物的合成及其抑菌活性",
+      "wos-category-llm": [],
+      "cnKeywords": [
+        "硫色酮甲酰胺衍生物",
+        "合成路线",
+        "小麦全蚀病菌",
+        "抑制活性"
+      ],
+      "article-id": [
+        "2f18b2e0795e198e8350a2ee85679765",
+        "10.6023/cjoc202506027"
+      ],
+      "journal-repeated": "有机化学",
+      "sensitive_label": [],
+      "project_name": [],
+      "base_project": [],
+      "fulltext_permission": "0",
+      "classification_bg": [],
+      "article-id-type": [
+        "lasjournal_journalarticleID",
+        "doi"
+      ],
+      "is_high_level": "",
+      "article_legal_status": "",
+      "contrib_institution": [
+        [
+          "河南农业大学"
+        ],
+        [
+          "河南省科学院"
+        ]
+      ],
+      "is_use_headline": [],
+      "is_financial_support_project": "",
+      "enKeywords": [
+        "thiochromone formamide derivative",
+        "synthetic routes",
+        "Gaeumannomyces graminis var. tritici",
+        "inhibitory activity"
+      ],
+      "is_cas_representative": "",
+      "base_subject": [],
+      "datasource-link": [
+        "LasJournal_JournalArticle:https://sioc-journal.cn/Jwk_yjhx/CN/10.6023/cjoc202506027",
+        "neweditarticle:https://doi.org/10.6023/cjoc202506027"
+      ]
+    },
+    "semantic_entities": {},
+    "source_list": [
+      "LasJournal_JournalArticle",
+      "pubscholar_running",
+      "pub-scholar-recommend",
+      "neweditarticle",
+      "JournalSubmit_Article"
+    ],
+    "license": "",
+    "local_links": [],
+    "attachments": [],
+    "degree": "",
+    "major": "",
+    "school": [],
+    "tutor": [],
+    "graduation_institution": []
+  },
+  {
+    "_page": 2,
+    "article_md5": "35c13d77b97e34f9d9c79bd509105f25",
+    "title": "基于联烯类底物的去芳构化[4＋2]反应研究",
+    "abstracts": "双环[2.2.2]辛烷骨架广泛存在于具有复杂结构的天然产物中， 这类化合物因其生物活性的多样性而备受关注. 因此如何构建这类分子的笼状结构是药物合成中一个重要的课题. 本研究发展了一类联烯类底物的去芳构化[4＋2]反应， 实现了二氢呋喃并双环[2.2.2]辛烷三环骨架的构建. 本课题围绕基于苯环为双烯体的[4＋2]反应策略， 开发了一类新的芳环烷氧基联烯底物的去芳构化[4＋2]反应， 反应具有原料易得， 未使用催化剂催化， 反应条件更加温和， 环境友好程度更佳， 产物结构单一， 反应步骤少， 成本更加低廉， 最终产率优秀等优点. 相对于报道的苯环联烯类底物的去芳构化[4＋2]反应， 该反应更简捷， 在未使用催化剂催化的条件下， 仅在热力学条件下完成了环加成产物的构建， 最终完成了化合物 2a～2r 的合成. 对化合物 2e 和 2f 进行了单晶培养， 通过 X-ray 单晶衍射实验确定了二氢呋喃并双环[2.2.2]辛烷三环骨架的绝对构型. 在此基础上通过Suzuki偶联反应完成了化合物 4a～4d的合成， 通过生物活性测定发现化合物 4a 对白血病HL-60 体外肿瘤生长有半数抑制活性， 其对白血病 HL-60细胞的 IC50值为（11.96±0.30） μmol/L， 继而为此类复杂三环体系的药物化学研究奠定了基础.",
+    "key_words": [
+      "双环[2.2.2]辛烷",
+      "[4＋2]反应",
+      "联烯",
+      "去芳构化"
+    ],
+    "author_names": [
+      "秦永圳",
+      "陈洋",
+      "何述钟",
+      "杨岚"
+    ],
+    "source": "有机化学",
+    "volume": "46",
+    "issue": "3",
+    "first_page": "941",
+    "last_page": "950",
+    "date": "2026",
+    "year": 2026,
+    "doi": "10.6023/cjoc202509001",
+    "cstr": "",
+    "type": "article",
+    "article_type": "",
+    "lang": "zh",
+    "cn_type": "论文",
+    "is_free": false,
+    "links": [
+      {
+        "is_open_access": false,
+        "name": "期刊官网",
+        "url": "https://doi.org/10.6023/cjoc202509001"
+      }
+    ],
+    "authors": [
+      {
+        "institution": [
+          "贵州大学药学院  贵阳 550025"
+        ],
+        "is_corresponding_author": false,
+        "name": "秦永圳"
+      },
+      {
+        "institution": [
+          "贵州大学药学院  贵阳 550025",
+          "贵州省合成药物工程实验室  贵阳 550025"
+        ],
+        "is_corresponding_author": true,
+        "name": "陈洋"
+      },
+      {
+        "institution": [
+          "贵州大学药学院  贵阳 550025",
+          "贵州省合成药物工程实验室  贵阳 550025"
+        ],
+        "is_corresponding_author": true,
+        "name": "何述钟"
+      },
+      {
+        "institution": [
+          "贵州大学药学院  贵阳 550025",
+          "贵州省合成药物工程实验室  贵阳 550025"
+        ],
+        "is_corresponding_author": true,
+        "name": "杨岚"
+      }
+    ],
+    "extend_entity": {
+      "title-repeated": "基于联烯类底物的去芳构化42反应研究",
+      "wos-category-llm": [],
+      "cnKeywords": [
+        "双环[2.2.2]辛烷",
+        "[4＋2]反应",
+        "联烯",
+        "去芳构化"
+      ],
+      "article-id": [
+        "10.6023/cjoc202509001"
+      ],
+      "journal-repeated": "有机化学",
+      "sensitive_label": [],
+      "project_name": [],
+      "base_project": [],
+      "fulltext_permission": "0",
+      "classification_bg": [],
+      "article-id-type": [
+        "doi"
+      ],
+      "is_high_level": "",
+      "article_legal_status": "",
+      "contrib_institution": [
+        [
+          "贵州大学"
+        ]
+      ],
+      "is_use_headline": [],
+      "is_financial_support_project": "",
+      "enKeywords": [
+        "bicyclic [2.2.2] octane",
+        "[4＋2] reaction",
+        "allenes",
+        "dearomatization"
+      ],
+      "is_cas_representative": "",
+      "base_subject": [],
+      "datasource-link": [
+        "neweditarticle:https://doi.org/10.6023/cjoc202509001"
+      ]
+    },
+    "semantic_entities": {},
+    "source_list": [
+      "neweditarticle",
+      "JournalSubmit_Article",
+      "pubscholar_running"
+    ],
+    "license": "",
+    "local_links": [],
+    "attachments": [],
+    "degree": "",
+    "major": "",
+    "school": [],
+    "tutor": [],
+    "graduation_institution": []
+  },
+  {
+    "_page": 2,
+    "article_md5": "6f2dfce1b6cd5ff0420048e67b10951e",
+    "title": "镁促进未保护的吲哚及喹喔啉衍生物的选择性还原",
+    "abstracts": "发展了一种以廉价的碱土金属镁为催化剂， 氨硼烷（H3N•BH3）作为氢源， 对未保护的吲哚、喹喔啉、苯并噁唑、苯并噻唑、喹啉及其衍生物进行选择性氢化的方法， 高效合成了一系列脂环族杂环化合物， 并获得了良好的产率. 该催化体系还适用于克级合成， 对氟、氯、溴、三氟甲基和羟基等官能团均表现出良好的兼容性. 氘代实验表明， 氨硼烷中的 BH3作为氢源， 而硼烷中的 NH3作为质子源. 该方法为二氢吲哚及四氢喹喔啉等部分饱和杂环衍生物的合成提供了新的途径.",
+    "key_words": [
+      "还原",
+      "镁",
+      "吲哚",
+      "喹喔啉",
+      "氨硼烷"
+    ],
+    "author_names": [
+      "韦娜娜",
+      "郭婉真",
+      "鲁星",
+      "任志强",
+      "马豪杰",
+      "张玉琦",
+      "王记江",
+      "韩波"
+    ],
+    "source": "有机化学",
+    "volume": "46",
+    "issue": "3",
+    "first_page": "1027",
+    "last_page": "1038",
+    "date": "2026",
+    "year": 2026,
+    "doi": "10.6023/cjoc202508021",
+    "cstr": "",
+    "type": "article",
+    "article_type": "",
+    "lang": "zh",
+    "cn_type": "论文",
+    "is_free": false,
+    "links": [
+      {
+        "is_open_access": false,
+        "name": "期刊官网",
+        "url": "https://doi.org/10.6023/cjoc202508021"
+      }
+    ],
+    "authors": [
+      {
+        "institution": [
+          "延安大学化学与化工学院 新能源新功能材料重点实验室 陕西省化学反应工程重点实验室 陕西延安 716000"
+        ],
+        "is_corresponding_author": false,
+        "name": "韦娜娜"
+      },
+      {
+        "institution": [
+          "延安大学化学与化工学院 新能源新功能材料重点实验室 陕西省化学反应工程重点实验室 陕西延安 716000"
+        ],
+        "is_corresponding_author": false,
+        "name": "郭婉真"
+      },
+      {
+        "institution": [
+          "延安大学化学与化工学院 新能源新功能材料重点实验室 陕西省化学反应工程重点实验室 陕西延安 716000"
+        ],
+        "is_corresponding_author": false,
+        "name": "鲁星"
+      },
+      {
+        "institution": [
+          "延安大学化学与化工学院 新能源新功能材料重点实验室 陕西省化学反应工程重点实验室 陕西延安 716000"
+        ],
+        "is_corresponding_author": false,
+        "name": "任志强"
+      },
+      {
+        "institution": [
+          "延安大学化学与化工学院 新能源新功能材料重点实验室 陕西省化学反应工程重点实验室 陕西延安 716000"
+        ],
+        "is_corresponding_author": false,
+        "name": "马豪杰"
+      },
+      {
+        "institution": [
+          "延安大学化学与化工学院 新能源新功能材料重点实验室 陕西省化学反应工程重点实验室 陕西延安 716000"
+        ],
+        "is_corresponding_author": false,
+        "name": "张玉琦"
+      },
+      {
+        "institution": [
+          "延安大学化学与化工学院 新能源新功能材料重点实验室 陕西省化学反应工程重点实验室 陕西延安 716000"
+        ],
+        "is_corresponding_author": false,
+        "name": "王记江"
+      },
+      {
+        "institution": [
+          "延安大学化学与化工学院 新能源新功能材料重点实验室 陕西省化学反应工程重点实验室 陕西延安 716000"
+        ],
+        "is_corresponding_author": true,
+        "name": "韩波"
+      }
+    ],
+    "extend_entity": {
+      "title-repeated": "镁促进未保护的吲哚及喹喔啉衍生物的选择性还原",
+      "wos-category-llm": [],
+      "cnKeywords": [
+        "还原",
+        "镁",
+        "吲哚",
+        "喹喔啉",
+        "氨硼烷"
+      ],
+      "article-id": [
+        "10.6023/cjoc202508021"
+      ],
+      "journal-repeated": "有机化学",
+      "sensitive_label": [],
+      "project_name": [],
+      "base_project": [],
+      "fulltext_permission": "0",
+      "classification_bg": [],
+      "article-id-type": [
+        "doi"
+      ],
+      "is_high_level": "",
+      "article_legal_status": "",
+      "contrib_institution": [
+        [
+          "延安大学"
+        ]
+      ],
+      "is_use_headline": [],
+      "is_financial_support_project": "",
+      "enKeywords": [
+        "reduction",
+        "magnesium",
+        "indoles",
+        "quinoxalines",
+        "ammonia borane"
+      ],
+      "is_cas_representative": "",
+      "base_subject": [],
+      "datasource-link": [
+        "neweditarticle:https://doi.org/10.6023/cjoc202508021"
+      ]
+    },
+    "semantic_entities": {},
+    "source_list": [
+      "neweditarticle",
+      "JournalSubmit_Article",
+      "pubscholar_running"
+    ],
+    "license": "",
+    "local_links": [],
+    "attachments": [],
+    "degree": "",
+    "major": "",
+    "school": [],
+    "tutor": [],
+    "graduation_institution": []
+  },
+  {
+    "_page": 2,
+    "article_md5": "78ce65e69763deca41b5fbcfa2f0c218",
+    "title": "氰基导向芳香氢亲核取代反应构建新型萘酰亚胺比色探针： 食品与水样中氰化物的高灵敏检测",
+    "abstracts": "本研究基于缺电子芳烃芳香氢亲核取代（SNARH）反应机制， 提出氰基导向的 SNARH 反应策略， 成功设计并合成了一种新型萘酰亚胺探针 Nap-CHCN. 紫外-可见吸收光谱研究表明， 探针与 CN－作用后， 630 nm 处出现特征吸收带， 溶液颜色由无色变为蓝色， 检测限低至 8.02 μmol/L， 且对 CN－表现出优异的选择性. 核磁滴定实验证实了 CN－诱导的脱质子化识别机制， 而可逆性实验显示探针可通过三氟乙酸（TFA）实现多次循环使用. 实际应用中， 探针在试纸条、食品样本及真实水样中均表现出可靠的 CN－检测能力. 该探针兼具合成简便、高灵敏度及环境适应性， 为复杂体系中 CN－的实时监测提供了有效工具.",
+    "key_words": [
+      "芳香氢亲核取代(SNARH)",
+      "氰根离子",
+      "比色探针",
+      "萘酰亚胺",
+      "食品水样"
+    ],
+    "author_names": [
+      "杨洁",
+      "佘湫楠",
+      "周逸聪",
+      "康丽琴",
+      "赵佳丽",
+      "刘传祥"
+    ],
+    "source": "有机化学",
+    "volume": "46",
+    "issue": "2",
+    "first_page": "531",
+    "last_page": "538",
+    "date": "2026",
+    "year": 2026,
+    "doi": "10.6023/cjoc202507013",
+    "cstr": "",
+    "type": "article",
+    "article_type": "",
+    "lang": "zh",
+    "cn_type": "论文",
+    "is_free": false,
+    "links": [
+      {
+        "is_open_access": false,
+        "name": "期刊官网",
+        "url": "https://doi.org/10.6023/cjoc202507013"
+      }
+    ],
+    "authors": [
+      {
+        "institution": [
+          "上海应用技术大学化工与能源技术学部  上海 201418"
+        ],
+        "is_corresponding_author": false,
+        "name": "杨洁"
+      },
+      {
+        "institution": [
+          "上海应用技术大学化工与能源技术学部  上海 201418"
+        ],
+        "is_corresponding_author": false,
+        "name": "佘湫楠"
+      },
+      {
+        "institution": [
+          "上海应用技术大学化工与能源技术学部  上海 201418"
+        ],
+        "is_corresponding_author": false,
+        "name": "周逸聪"
+      },
+      {
+        "institution": [
+          "上海应用技术大学化工与能源技术学部  上海 201418"
+        ],
+        "is_corresponding_author": false,
+        "name": "康丽琴"
+      },
+      {
+        "institution": [
+          "上海应用技术大学化工与能源技术学部  上海 201418"
+        ],
+        "is_corresponding_author": false,
+        "name": "赵佳丽"
+      },
+      {
+        "institution": [
+          "上海应用技术大学化工与能源技术学部  上海 201418"
+        ],
+        "is_corresponding_author": true,
+        "name": "刘传祥"
+      }
+    ],
+    "extend_entity": {
+      "title-repeated": "氰基导向芳香氢亲核取代反应构建新型萘酰亚胺比色探针食品与水样中氰化物的高灵敏检测",
+      "wos-category-llm": [],
+      "cnKeywords": [
+        "芳香氢亲核取代(SNARH)",
+        "氰根离子",
+        "比色探针",
+        "萘酰亚胺",
+        "食品水样"
+      ],
+      "article-id": [
+        "10.6023/cjoc202507013"
+      ],
+      "journal-repeated": "有机化学",
+      "sensitive_label": [],
+      "project_name": [],
+      "base_project": [],
+      "fulltext_permission": "0",
+      "classification_bg": [],
+      "article-id-type": [
+        "doi"
+      ],
+      "is_high_level": "",
+      "article_legal_status": "",
+      "contrib_institution": [
+        [
+          "上海应用技术大学"
+        ]
+      ],
+      "is_use_headline": [],
+      "is_financial_support_project": "",
+      "enKeywords": [
+        "aromatic nucleophilic substitution of hydrogen (SNARH)",
+        "cyanide anion",
+        "colorimetric sensor",
+        "naphthalimide",
+        "food and water sample"
+      ],
+      "is_cas_representative": "",
+      "base_subject": [],
+      "datasource-link": [
+        "neweditarticle:https://doi.org/10.6023/cjoc202507013"
+      ]
+    },
+    "semantic_entities": {},
+    "source_list": [
+      "neweditarticle",
+      "JournalSubmit_Article",
+      "pubscholar_running"
+    ],
+    "license": "",
+    "local_links": [],
+    "attachments": [],
+    "degree": "",
+    "major": "",
+    "school": [],
+    "tutor": [],
+    "graduation_institution": []
+  },
+  {
+    "_page": 2,
+    "article_md5": "62c94b54554b0a4d03268fd523e619d7",
+    "title": "芳胺对位 C（sp2）—H 键官能团化研究进展",
+    "abstracts": "芳胺对位 C（sp2）—H 键的直接官能团化是有机合成领域中的一个重要研究方向. 传统上， 实现该位点的选择性官能团化主要依赖于氨基的预保护与活化， 此过程不仅步骤繁琐， 且严重制约了合成的效率与步骤经济性. 近年来， 该领域取得了革命性进展， 通过发展过渡金属催化、有机光催化、电化学合成以及无金属催化等多元化策略， 成功实现了芳胺对位 C—H 键的直接、高选择性修饰， 从根本上克服了传统方法的局限性. 此文旨在系统梳理这一领域的研究脉络， 详细总结了上述各类催化模式的反应设计、机理特点及其在构建 C—C 与 C—杂原子键中的应用， 并对该关键合成转化的发展现状与核心成就进行了全面评述.",
+    "key_words": [
+      "苯胺",
+      "C—H 官能团化",
+      "位点选择性",
+      "过渡金属催化",
+      "光催化"
+    ],
+    "author_names": [
+      "戴乐薇",
+      "王建玲",
+      "邹东"
+    ],
+    "source": "有机化学",
+    "volume": "46",
+    "issue": "5",
+    "first_page": "1813",
+    "last_page": "1844",
+    "date": "2026",
+    "year": 2026,
+    "doi": "10.6023/cjoc202511017",
+    "cstr": "",
+    "type": "article",
+    "article_type": "",
+    "lang": "zh",
+    "cn_type": "论文",
+    "is_free": false,
+    "links": [
+      {
+        "is_open_access": false,
+        "name": "期刊官网",
+        "url": "https://doi.org/10.6023/cjoc202511017"
+      }
+    ],
+    "authors": [
+      {
+        "institution": [
+          "浙江中医药大学药学院  杭州 310053"
+        ],
+        "is_corresponding_author": true,
+        "name": "戴乐薇"
+      },
+      {
+        "institution": [
+          "浙江大学医学院附属第二医院药学部  杭州 310009"
+        ],
+        "is_corresponding_author": false,
+        "name": "王建玲"
+      },
+      {
+        "institution": [
+          "浙江大学医学院附属邵逸夫医院药学部  杭州 310016"
+        ],
+        "is_corresponding_author": true,
+        "name": "邹东"
+      }
+    ],
+    "extend_entity": {
+      "title-repeated": "芳胺对位csp2h键官能团化研究进展",
+      "wos-category-llm": [],
+      "cnKeywords": [
+        "苯胺",
+        "C—H 官能团化",
+        "位点选择性",
+        "过渡金属催化",
+        "光催化"
+      ],
+      "article-id": [
+        "10.6023/cjoc202511017"
+      ],
+      "journal-repeated": "有机化学",
+      "sensitive_label": [],
+      "project_name": [],
+      "base_project": [],
+      "fulltext_permission": "0",
+      "classification_bg": [],
+      "article-id-type": [
+        "doi"
+      ],
+      "is_high_level": "",
+      "article_legal_status": "",
+      "contrib_institution": [
+        [
+          "浙江中医药大学"
+        ],
+        [
+          "浙江大学"
+        ]
+      ],
+      "is_use_headline": [],
+      "is_financial_support_project": "",
+      "enKeywords": [
+        "anilines",
+        "C—H functionalization",
+        "site-selectivity",
+        "transition metal catalysis",
+        "photoredox catalysis"
+      ],
+      "is_cas_representative": "",
+      "base_subject": [],
+      "datasource-link": [
+        "neweditarticle:https://doi.org/10.6023/cjoc202511017"
+      ]
+    },
+    "semantic_entities": {},
+    "source_list": [
+      "neweditarticle",
+      "JournalSubmit_Article",
+      "pubscholar_running"
+    ],
+    "license": "",
+    "local_links": [],
+    "attachments": [],
+    "degree": "",
+    "major": "",
+    "school": [],
+    "tutor": [],
+    "graduation_institution": []
+  },
+  {
+    "_page": 2,
+    "article_md5": "fea5b7b62d75029aaa2fd225bc32bb12",
+    "title": "有机大共轭分子 C—H 亲核取代反应的研究进展",
+    "abstracts": "有机大共轭分子凭借其独特的扩展 π 电子体系， 在材料化学、药物化学及化学生物学等领域展现出重要且广泛的应用价值. 对大共轭分子进行官能团化以调控其性质， 已成为化学研究领域备受关注的重要议题之一. 目前， 大共轭分子的后修饰方法研究相对较少， 主要依赖于芳香亲电取代和过渡金属催化的偶联反应等常规策略. 系统综述了基于大共轭分子的独特 C—H 亲核取代反应的研究进展， 涵盖了经典体系如卟啉、硼二吡咯亚甲基（BODIPYs）、薁烯以及一些其他大共轭分子. 研究表明， 通过优化反应条件， 选用合适的亲核试剂、导向基团与添加剂， 可以实现对特定 C—H 键的高效亲核取代官能团化， 从而构建具有特定结构与功能的化合物. 不仅将深化对亲核取代反应机制的理解， 还为构建具有独特功能的 π共轭体系开辟了新途径.",
+    "key_words": [
+      "大共轭分子",
+      "π-电子体系",
+      "亲核取代",
+      "C—H官能团化"
+    ],
+    "author_names": [
+      "白燕茹",
+      "周来运",
+      "刘广华",
+      "王青"
+    ],
+    "source": "有机化学",
+    "volume": "46",
+    "issue": "5",
+    "first_page": "1883",
+    "last_page": "1896",
+    "date": "2026",
+    "year": 2026,
+    "doi": "10.6023/cjoc202509030",
+    "cstr": "",
+    "type": "article",
+    "article_type": "",
+    "lang": "zh",
+    "cn_type": "论文",
+    "is_free": false,
+    "links": [
+      {
+        "is_open_access": false,
+        "name": "期刊官网",
+        "url": "https://doi.org/10.6023/cjoc202509030"
+      }
+    ],
+    "authors": [
+      {
+        "institution": [
+          "内蒙古大学化学化工学院  呼和浩特 010070"
+        ],
+        "is_corresponding_author": false,
+        "name": "白燕茹"
+      },
+      {
+        "institution": [
+          "内蒙古大学化学化工学院  呼和浩特 010070"
+        ],
+        "is_corresponding_author": false,
+        "name": "周来运"
+      },
+      {
+        "institution": [
+          "内蒙古自治区农牧业科学院农牧业质量安全与检测研究所  呼和浩特 010030"
+        ],
+        "is_corresponding_author": false,
+        "name": "刘广华"
+      },
+      {
+        "institution": [
+          "内蒙古大学化学化工学院  呼和浩特 010070"
+        ],
+        "is_corresponding_author": true,
+        "name": "王青"
+      }
+    ],
+    "extend_entity": {
+      "title-repeated": "有机大共轭分子ch亲核取代反应的研究进展",
+      "wos-category-llm": [],
+      "cnKeywords": [
+        "大共轭分子",
+        "π-电子体系",
+        "亲核取代",
+        "C—H官能团化"
+      ],
+      "article-id": [
+        "10.6023/cjoc202509030"
+      ],
+      "journal-repeated": "有机化学",
+      "sensitive_label": [],
+      "project_name": [],
+      "base_project": [],
+      "fulltext_permission": "0",
+      "classification_bg": [],
+      "article-id-type": [
+        "doi"
+      ],
+      "contrib_institution": [
+        [
+          "内蒙古大学"
+        ],
+        [
+          "内蒙古自治区农牧业科学院"
+        ]
+      ],
+      "is_use_headline": [],
+      "enKeywords": [
+        "largely conjugated system",
+        "π-electron system",
+        "nucleophilic substitution",
+        "C—H functionalization"
+      ],
+      "base_subject": [],
+      "datasource-link": [
+        "neweditarticle:https://doi.org/10.6023/cjoc202509030"
+      ]
+    },
+    "semantic_entities": {},
+    "source_list": [
+      "neweditarticle",
+      "JournalSubmit_Article",
+      "pubscholar_running"
+    ],
+    "license": "",
+    "local_links": [],
+    "attachments": [],
+    "degree": "",
+    "major": "",
+    "school": [],
+    "tutor": [],
+    "graduation_institution": []
+  }
+]

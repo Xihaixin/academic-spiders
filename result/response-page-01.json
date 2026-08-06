@@ -1,0 +1,1510 @@
+{
+    "total": 74374606,
+    "is_last": false,
+    "total_pages": 7437461,
+    "content": [
+        {
+            "abstracts": "叶夹角是影响作物株型和产量的关键农艺性状。植物激素如生长素在调控叶夹角中起着关键作用，但其分子机制尚不完全清楚。本文发现生长素响应因子基因OsARF12在叶枕中高表达，通过影响茎向重力性负调控水稻叶夹角。OsARF12过表达株系表现出更直立的叶夹角，而osarf12突变体与野生型相比叶夹角增大。进一步研究表明，OsARF12通过结合其启动子直接激活LPA1和LAZY1的表达。osarf12突变体表现出茎向重力性受损，这一表型与lpa1和lazy1突变体一致。总之，我们阐明了OsARF12通过调控LPA1和LAZY1的表达水平影响茎向重力性，从而调控叶夹角的生物学功能。本研究为生长素在水稻叶夹角决定中的作用提供了见解，可能对优化作物株型具有深远影响。",
+            "abstracts_abbreviation": "叶夹角是影响作物株型和产量的关键农艺性状。植物激素如生长素在调控叶夹角中起着关键作用，但其分子机制尚不完全清楚。本文发现生长素响应因子基因OsARF12在叶枕中高表达，通过影响茎向重力性负调控水稻...",
+            "article_type": "",
+            "attachments": [],
+            "author": [
+                "鲜凤君",
+                "刘淑雅",
+                "谢斌",
+                "黄继帅",
+                "张倩楠",
+                "徐祎萌",
+                "张欣荣",
+                "吕晨",
+                "朱琳",
+                "胡骏"
+            ],
+            "author_id": [
+                "e243d1dcff014b66e8c4aa92ddb2730d",
+                "0d5149848a37a852f9dea75699f6baa0",
+                "dd18114bf580f1d9bcde4e7fb42fbaf1",
+                "b19d0d1860b479f3732ff51919133e38",
+                "9eb871ed8adb17a8ce80908b9746c4d4",
+                "716bce5a903a66dcd628c7a3c5aabf2f",
+                "c0fd3973b04258fee6fdd7bec1ad63c1",
+                "bb2313324c07b912ff5a058b99b46cb8",
+                "db381563c7b5583d921fc93fa1abca50",
+                "242765fec9a829e5dfe38bd8f017d5b1"
+            ],
+            "authors": [
+                {
+                    "institution": [
+                        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "鲜凤君"
+                },
+                {
+                    "institution": [
+                        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "刘淑雅"
+                },
+                {
+                    "institution": [
+                        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "谢斌"
+                },
+                {
+                    "institution": [
+                        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "黄继帅"
+                },
+                {
+                    "institution": [
+                        "National Clinical Research Center of Kidney Diseases, Jinling Hospital, Medical School of Nanjing University, Nanjing, Jiangsu 210016, China"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "张倩楠"
+                },
+                {
+                    "institution": [
+                        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "徐祎萌"
+                },
+                {
+                    "institution": [
+                        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "张欣荣"
+                },
+                {
+                    "institution": [
+                        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "吕晨"
+                },
+                {
+                    "institution": [
+                        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "朱琳"
+                },
+                {
+                    "institution": [
+                        "State Key Laboratory of Hybrid Rice, Engineering Research Center for Plant Biotechnology and Germplasm Utilization of Ministry of Education, College of Life Sciences, Wuhan University, Wuhan, Hubei 430072, China"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "胡骏"
+                }
+            ],
+            "browse_count": 24,
+            "cn_type": "论文",
+            "cstr": "",
+            "date": "2026",
+            "degree": "",
+            "doi": "10.1016/j.jgg.2025.06.005",
+            "extendEntity": {
+                "title-repeated": "生长素响应因子osarf12通过影响茎向重力性调控水稻叶夹角",
+                "wos-category-llm": [],
+                "cnKeywords": [
+                    "水稻",
+                    "株型",
+                    "叶夹角",
+                    "茎向重力性",
+                    "OsARF12"
+                ],
+                "article-id": [
+                    "10.1016/j.jgg.2025.06.005"
+                ],
+                "journal-repeated": "journalofgeneticsandgenomics",
+                "sensitive_label": [],
+                "project_name": [],
+                "base_project": [],
+                "fulltext_permission": "1",
+                "classification_bg": [],
+                "article-id-type": [
+                    "doi"
+                ],
+                "is_high_level": "",
+                "article_legal_status": "",
+                "contrib_institution": [
+                    [
+                        "武汉大学"
+                    ],
+                    [
+                        "南京大学"
+                    ]
+                ],
+                "is_use_headline": [],
+                "is_financial_support_project": "",
+                "enKeywords": [
+                    "Rice",
+                    "Plant architecture",
+                    "Leaf angle",
+                    "Shoot gravitropism",
+                    "OsARF12"
+                ],
+                "is_cas_representative": "",
+                "base_subject": [],
+                "datasource-link": [
+                    "neweditarticle:https://doi.org/10.1016/j.jgg.2025.06.005"
+                ]
+            },
+            "first_page": "234",
+            "graduation_institution": [],
+            "id": "17ee3003077754230f57b0ab91d2530f",
+            "is_free": false,
+            "issue": "2",
+            "keywords": [
+                "水稻",
+                "株型",
+                "叶夹角",
+                "茎向重力性",
+                "OsARF12"
+            ],
+            "last_page": "245",
+            "license": "",
+            "links": [
+                {
+                    "is_open_access": false,
+                    "name": "期刊官网",
+                    "url": "https://doi.org/10.1016/j.jgg.2025.06.005"
+                }
+            ],
+            "local_links": [
+                "https://file.scholarin.cn/preview2?file=journal_upload_cafddcb7f23fea190f6b19e9c451a8e0.pdf"
+            ],
+            "major": "",
+            "school": [],
+            "semantic_entities": {},
+            "source": "Journal of Genetics and Genomics",
+            "source_list": [
+                "neweditarticle",
+                "JournalSubmit_Article",
+                "pubscholar_running"
+            ],
+            "title": "生长素响应因子OsARF12通过影响茎向重力性调控水稻叶夹角",
+            "tutor": [],
+            "type": "article",
+            "volume": "53",
+            "year": 2026
+        },
+        {
+            "abstracts": "研究了 N/Al 受阻 Lewis 酸碱对（FLP）型的铝氢化合物的合成和放氢反应性能. 以 2，2，6，6-四甲基哌啶、碘苯、正丁基锂、三氯化铝和四氢锂铝为原料， 通过五步金属有机合成路线， 制备了含分子内 N→Al 键作用的 FLP-型铝二氢化合物（o-TMP-C6H4）AlH2 [1， TMP＝N（CMe2CH2）2CH2]. 化合物 1 在甲苯溶剂中 80 ℃下发生自岐化放氢反应， 得到铝单氢化合物（o-TMP-C6H4）2AlH （2）； 化合物 2 在 50 ℃下引发 N-甲基吲哚 3-C（sp2）—H 脱氢放氢反应， 生成[（o-TMP- C6H4）]2Al（3-C8H5NMe） （3）. 化合物 1 在－30 ℃下发生吲哚 NH 的放氢反应， 生成铝单氢化合物[（o-TMP-C6H4）Al- （μ-H）（NC8H6）]2 （4）； 化合物 4 在室温下也与吲哚 NH 基产生放氢反应， 生成（o-TMP-C6H4）Al（NC8H6）2 （5）. 化合物 1 与 B（C6F5）3发生 Al—H/B—C6F5的基团交换反应， 生成 Al（μ-H）2B 3c-2e 键化合物（o-TMP-C6H4）（C6F5）Al（μ-H）2B（C6F5）2 （6）； 与 Al（C6F5）3则进行 Al—H/Al—C6F5的基团交换， 得到 Al（μ-H）2Al 3c-2e 键产物[（o-TMP- C6H4）（C6F5）Al（μ-H）]2 （7）. 化合物 1～7 都是具有 N/Al FLP-特性的化合物， 化合物 1， 2 和 4 在放氢反应中受助于 N/Al FLP 的协同作用.",
+            "abstracts_abbreviation": "研究了 N/Al 受阻 Lewis 酸碱对（FLP）型的铝氢化合物的合成和放氢反应性能. 以 2，2，6，6-四甲基哌啶、碘苯、正丁基锂、三氯化铝和四氢锂铝为原料， 通过五步金属有机合成路线， 制备了含分子内 N→Al ...",
+            "article_type": "",
+            "attachments": [],
+            "author": [
+                "陈艺林",
+                "朱成建"
+            ],
+            "author_id": [
+                "88aa58e3b917049bcd84dc7716f1b017",
+                "365eaf7eea32797613d58c69fa69255a"
+            ],
+            "authors": [
+                {
+                    "institution": [
+                        "南京大学化学化工学院  南京 210023",
+                        "江苏南大光电材料股份有限公司  江苏苏州 215000"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "陈艺林"
+                },
+                {
+                    "institution": [
+                        "南京大学化学化工学院  南京 210023"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "朱成建"
+                }
+            ],
+            "cn_type": "论文",
+            "cstr": "",
+            "date": "2026",
+            "degree": "",
+            "doi": "10.6023/cjoc202510011",
+            "extendEntity": {
+                "title-repeated": "受阻lewis酸碱对flp型铝氢化合物的合成及其放h2反应研究",
+                "wos-category-llm": [],
+                "cnKeywords": [
+                    "N/Al FLP-型铝氢化合物",
+                    "放氢反应",
+                    "FLP-型活化",
+                    "3c-2e 键化合物"
+                ],
+                "article-id": [
+                    "10.6023/cjoc202510011"
+                ],
+                "journal-repeated": "有机化学",
+                "sensitive_label": [],
+                "project_name": [],
+                "base_project": [],
+                "fulltext_permission": "0",
+                "classification_bg": [],
+                "article-id-type": [
+                    "doi"
+                ],
+                "is_high_level": "",
+                "article_legal_status": "",
+                "contrib_institution": [
+                    [
+                        "南京大学"
+                    ],
+                    [
+                        "江苏南大光电材料股份有限公司"
+                    ]
+                ],
+                "is_use_headline": [],
+                "is_financial_support_project": "",
+                "enKeywords": [
+                    "N/Al FLP-type aluminum hydride",
+                    "H2-liberation reaction",
+                    "FLP-type activation",
+                    "3c-2e bond compound"
+                ],
+                "is_cas_representative": "",
+                "base_subject": [],
+                "datasource-link": [
+                    "neweditarticle:https://doi.org/10.6023/cjoc202510011"
+                ]
+            },
+            "first_page": "881",
+            "graduation_institution": [],
+            "id": "f3c5ca07006733bd5a4a1c06fcbc7c07",
+            "is_free": false,
+            "issue": "3",
+            "keywords": [
+                "N/Al FLP-型铝氢化合物",
+                "放氢反应",
+                "FLP-型活化",
+                "3c-2e 键化合物"
+            ],
+            "last_page": "887",
+            "license": "",
+            "links": [
+                {
+                    "is_open_access": false,
+                    "name": "期刊官网",
+                    "url": "https://doi.org/10.6023/cjoc202510011"
+                }
+            ],
+            "local_links": [],
+            "major": "",
+            "school": [],
+            "semantic_entities": {},
+            "source": "有机化学",
+            "source_list": [
+                "neweditarticle",
+                "JournalSubmit_Article",
+                "pubscholar_running"
+            ],
+            "title": "受阻 Lewis 酸碱对（FLP）型铝氢化合物的合成及其放 H2反应研究",
+            "tutor": [],
+            "type": "article",
+            "volume": "46",
+            "year": 2026
+        },
+        {
+            "abstracts": "十元氮杂环化合物不仅是众多含氮生物碱的核心骨架， 也是构建其它天然产物的关键中间体， 其高效合成在有机化学和药物化学领域备受关注. 这类化合物因其独特的中环骨架且具有良好的生物活性， 在过去十年间， 其合成方法得到了很大的发展， 也成为了当前中环化合物合成的研究热点之一. 系统梳理了过去十年来十元氮杂环化合物合成的研究进展， 介绍了该类化合物的创新合成方法及其在十元氮杂环天然产物全合成领域的最新应用.",
+            "abstracts_abbreviation": "十元氮杂环化合物不仅是众多含氮生物碱的核心骨架， 也是构建其它天然产物的关键中间体， 其高效合成在有机化学和药物化学领域备受关注. 这类化合物因其独特的中环骨架且具有良好的生物活性， 在过去十年...",
+            "article_type": "",
+            "attachments": [],
+            "author": [
+                "罗艳",
+                "刘章伟",
+                "胡朝蕾",
+                "闭红艳",
+                "莫冬亮"
+            ],
+            "author_id": [
+                "06a3e5847bea8d33b84a9e30ad4432db",
+                "baa6cf6918b7b87afdecee8a63b18f77",
+                "df505126b41644427c5f5fc2e088d652",
+                "5073987211502788497489d35ad180b9",
+                "8a3f04d9269dd9bbc9396dc371672ad2"
+            ],
+            "authors": [
+                {
+                    "institution": [
+                        "广西师范大学化学与药学学院  省部共建药用资源化学与药物分子工程国家重点实验室  广西桂林 541004"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "罗艳"
+                },
+                {
+                    "institution": [
+                        "广西师范大学化学与药学学院  省部共建药用资源化学与药物分子工程国家重点实验室  广西桂林 541004"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "刘章伟"
+                },
+                {
+                    "institution": [
+                        "中国矿业大学力学与土木工程学院(北京)  北京 100083"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "胡朝蕾"
+                },
+                {
+                    "institution": [
+                        "广西师范大学化学与药学学院  省部共建药用资源化学与药物分子工程国家重点实验室  广西桂林 541004"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "闭红艳"
+                },
+                {
+                    "institution": [
+                        "广西师范大学化学与药学学院  省部共建药用资源化学与药物分子工程国家重点实验室  广西桂林 541004"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "莫冬亮"
+                }
+            ],
+            "cn_type": "论文",
+            "cstr": "",
+            "date": "2026",
+            "degree": "",
+            "doi": "10.6023/cjoc202508004",
+            "extendEntity": {
+                "title-repeated": "十元氮杂环化合物合成最新研究进展",
+                "wos-category-llm": [],
+                "cnKeywords": [
+                    "十元氮杂环化合物",
+                    "中环化合物",
+                    "环化反应",
+                    "环加成反应",
+                    "扩环反应"
+                ],
+                "article-id": [
+                    "10.6023/cjoc202508004"
+                ],
+                "journal-repeated": "有机化学",
+                "sensitive_label": [],
+                "project_name": [],
+                "base_project": [],
+                "fulltext_permission": "0",
+                "classification_bg": [],
+                "article-id-type": [
+                    "doi"
+                ],
+                "is_high_level": "",
+                "article_legal_status": "",
+                "contrib_institution": [
+                    [
+                        "广西师范大学"
+                    ],
+                    [
+                        "中国矿业大学"
+                    ]
+                ],
+                "is_use_headline": [],
+                "is_financial_support_project": "",
+                "enKeywords": [
+                    "ten-membered N-heterocyclic compounds",
+                    "medium-sized ring compounds",
+                    "cyclization reaction",
+                    "cycloaddition reaction",
+                    "ring expansion reaction"
+                ],
+                "is_cas_representative": "",
+                "base_subject": [],
+                "datasource-link": [
+                    "neweditarticle:https://doi.org/10.6023/cjoc202508004"
+                ]
+            },
+            "first_page": "420",
+            "graduation_institution": [],
+            "id": "3f8d85d1f45f1984d66a9dd1baab76b5",
+            "is_free": false,
+            "issue": "2",
+            "keywords": [
+                "十元氮杂环化合物",
+                "中环化合物",
+                "环化反应",
+                "环加成反应",
+                "扩环反应"
+            ],
+            "last_page": "442",
+            "license": "",
+            "links": [
+                {
+                    "is_open_access": false,
+                    "name": "期刊官网",
+                    "url": "https://doi.org/10.6023/cjoc202508004"
+                }
+            ],
+            "local_links": [],
+            "major": "",
+            "school": [],
+            "semantic_entities": {},
+            "source": "有机化学",
+            "source_list": [
+                "neweditarticle",
+                "JournalSubmit_Article",
+                "pubscholar_running"
+            ],
+            "title": "十元氮杂环化合物合成最新研究进展",
+            "tutor": [],
+            "type": "article",
+            "volume": "46",
+            "year": 2026
+        },
+        {
+            "abstracts": "咪唑类化合物是一类具有重要结构骨架的物质， 不仅是生物体内组氨酸的组分， 也是核糖核酸和脱氧核糖核酸嘌呤的组分. 同时， 咪唑本身具有特殊的“酸碱两性”芳杂环结构和良好的电子转移性， 因此被广泛应用在医药领域以及材料领域. 结合近五年来国内外的研究报道， 按照催化剂的类型对常见的合成策略进行了归纳总结， 并对该领域未来发展趋势进行了展望.",
+            "abstracts_abbreviation": "咪唑类化合物是一类具有重要结构骨架的物质， 不仅是生物体内组氨酸的组分， 也是核糖核酸和脱氧核糖核酸嘌呤的组分. 同时， 咪唑本身具有特殊的“酸碱两性”芳杂环结构和良好的电子转移性， 因此被广泛应...",
+            "article_type": "",
+            "attachments": [],
+            "author": [
+                "赵咪娜",
+                "唐嘉一"
+            ],
+            "author_id": [
+                "e1b76754d9955dc7de1507c817a181d7",
+                "8eb1fa4a56b86e76fe9fa5e8ebe2a5d6"
+            ],
+            "authors": [
+                {
+                    "institution": [
+                        "陕西学前师范学院  生物食品与化学学院  西安 710100"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "赵咪娜"
+                },
+                {
+                    "institution": [
+                        "陕西学前师范学院  生物食品与化学学院  西安 710100"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "唐嘉一"
+                }
+            ],
+            "browse_count": 1,
+            "cn_type": "论文",
+            "cstr": "",
+            "date": "2026",
+            "degree": "",
+            "doi": "10.6023/cjoc202507027",
+            "extendEntity": {
+                "title-repeated": "咪唑类化合物的合成研究进展",
+                "wos-category-llm": [],
+                "cnKeywords": [
+                    "咪唑",
+                    "合成",
+                    "催化剂",
+                    "机理"
+                ],
+                "article-id": [
+                    "10.6023/cjoc202507027"
+                ],
+                "journal-repeated": "有机化学",
+                "sensitive_label": [],
+                "project_name": [],
+                "base_project": [],
+                "fulltext_permission": "0",
+                "classification_bg": [],
+                "article-id-type": [
+                    "doi"
+                ],
+                "is_high_level": "",
+                "article_legal_status": "",
+                "contrib_institution": [
+                    [
+                        "陕西学前师范学院"
+                    ]
+                ],
+                "is_use_headline": [],
+                "is_financial_support_project": "",
+                "enKeywords": [
+                    "imidazole",
+                    "synthesis",
+                    "catalyst",
+                    "mechanism"
+                ],
+                "is_cas_representative": "",
+                "base_subject": [],
+                "datasource-link": [
+                    "neweditarticle:https://doi.org/10.6023/cjoc202507027"
+                ]
+            },
+            "first_page": "455",
+            "graduation_institution": [],
+            "id": "b1633dc446378a82be3bebfb8d8397b9",
+            "is_free": false,
+            "issue": "2",
+            "keywords": [
+                "咪唑",
+                "合成",
+                "催化剂",
+                "机理"
+            ],
+            "last_page": "474",
+            "license": "",
+            "links": [
+                {
+                    "is_open_access": false,
+                    "name": "期刊官网",
+                    "url": "https://doi.org/10.6023/cjoc202507027"
+                }
+            ],
+            "local_links": [],
+            "major": "",
+            "school": [],
+            "semantic_entities": {},
+            "source": "有机化学",
+            "source_list": [
+                "neweditarticle",
+                "JournalSubmit_Article",
+                "pubscholar_running"
+            ],
+            "title": "咪唑类化合物的合成研究进展",
+            "tutor": [],
+            "type": "article",
+            "volume": "46",
+            "year": 2026
+        },
+        {
+            "abstracts": "N-脱甲基反应是生物体代谢过程中的一类重要转化. 此文报道了一种在光照射下， 无需外加光催化剂， 以氧气为氧化剂， 利用廉价易得的盐酸-二甲基亚砜（DMSO）体系对 N-甲基酰胺进行脱甲基化的新方法. 该方法操作简便， 条件温和， 无需惰性气体保护， 具有优异的官能团兼容性， 多种 N-甲基酰胺衍生物均能获得良好产率. 放大实验进一步验证了该方法的实用性和绿色可行性. 该策略为温和条件下实现酰胺的高效 N-脱甲基化提供了新思路.",
+            "abstracts_abbreviation": "N-脱甲基反应是生物体代谢过程中的一类重要转化. 此文报道了一种在光照射下， 无需外加光催化剂， 以氧气为氧化剂， 利用廉价易得的盐酸-二甲基亚砜（DMSO）体系对 N-甲基酰胺进行脱甲基化的新方法. 该方...",
+            "article_type": "",
+            "attachments": [],
+            "author": [
+                "刘琼",
+                "杨修龙",
+                "李浩源",
+                "沈佳慧",
+                "杨硕",
+                "孟庆元",
+                "牛效莹"
+            ],
+            "author_id": [
+                "aae951e26ef10e9e5161be3bf0bffef9",
+                "c74b1c07ec2b36576ac0e7987bb1930a",
+                "5d0eaf82e60d8066cbed8d792b6a10be",
+                "b9c747c7b94e85a7aee267b303c1575f",
+                "bc7db04704b290126cf7a962983e640b",
+                "c74d02743d1541fa9cf8e63dfb039c31",
+                "b4a0b48eb8b2ddf8018b8699a5f420a7"
+            ],
+            "authors": [
+                {
+                    "institution": [
+                        "河北大学化学与材料科学学院  药物化学与分子诊断教育部重点实验室  河北省化学生物学重点实验室  河北保定 071002"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "刘琼"
+                },
+                {
+                    "institution": [
+                        "河北大学化学与材料科学学院  药物化学与分子诊断教育部重点实验室  河北省化学生物学重点实验室  河北保定 071002"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "杨修龙"
+                },
+                {
+                    "institution": [
+                        "中国科学院化学研究所  分子识别与功能实验室  北京分子科学国家研究中心  北京 100190",
+                        "中国科学院大学化学科学学院  北京 100049"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "李浩源"
+                },
+                {
+                    "institution": [
+                        "河北大学化学与材料科学学院  药物化学与分子诊断教育部重点实验室  河北省化学生物学重点实验室  河北保定 071002"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "沈佳慧"
+                },
+                {
+                    "institution": [
+                        "河北大学化学与材料科学学院  药物化学与分子诊断教育部重点实验室  河北省化学生物学重点实验室  河北保定 071002"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "杨硕"
+                },
+                {
+                    "institution": [
+                        "中国科学院化学研究所  分子识别与功能实验室  北京分子科学国家研究中心  北京 100190",
+                        "中国科学院大学化学科学学院  北京 100049"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "孟庆元"
+                },
+                {
+                    "institution": [
+                        "河北大学化学与材料科学学院  药物化学与分子诊断教育部重点实验室  河北省化学生物学重点实验室  河北保定 071002"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "牛效莹"
+                }
+            ],
+            "browse_count": 1,
+            "cn_type": "论文",
+            "cstr": "",
+            "date": "2026",
+            "degree": "",
+            "doi": "10.6023/cjoc202512011",
+            "extendEntity": {
+                "title-repeated": "盐酸二甲基亚砜体系促进酰胺的需氧光催化n脱甲基反应",
+                "wos-category-llm": [],
+                "cnKeywords": [
+                    "N-脱甲基",
+                    "光催化",
+                    "C—N 键断裂"
+                ],
+                "article-id": [
+                    "10.6023/cjoc202512011"
+                ],
+                "journal-repeated": "有机化学",
+                "sensitive_label": [],
+                "project_name": [],
+                "base_project": [],
+                "fulltext_permission": "0",
+                "classification_bg": [],
+                "article-id-type": [
+                    "doi"
+                ],
+                "contrib_institution": [
+                    [
+                        "河北大学"
+                    ],
+                    [
+                        "中国科学院大学"
+                    ],
+                    [
+                        "中国科学院化学研究所"
+                    ]
+                ],
+                "is_use_headline": [],
+                "enKeywords": [
+                    "N-demethylation",
+                    "photocatalytic",
+                    "C—N bond cleavage"
+                ],
+                "base_subject": [],
+                "datasource-link": [
+                    "neweditarticle:https://doi.org/10.6023/cjoc202512011"
+                ]
+            },
+            "first_page": "1713",
+            "graduation_institution": [],
+            "id": "02c57db558dbc812a720e89cb54406a2",
+            "is_free": false,
+            "issue": "4",
+            "keywords": [
+                "N-脱甲基",
+                "光催化",
+                "C—N 键断裂"
+            ],
+            "last_page": "1721",
+            "links": [
+                {
+                    "is_open_access": false,
+                    "name": "期刊官网",
+                    "url": "https://doi.org/10.6023/cjoc202512011"
+                }
+            ],
+            "local_links": [],
+            "major": "",
+            "school": [],
+            "semantic_entities": {},
+            "source": "有机化学",
+            "source_list": [
+                "neweditarticle",
+                "JournalSubmit_Article",
+                "pubscholar_running",
+                "ins-knowledge-base—data"
+            ],
+            "title": "盐酸-二甲基亚砜体系促进酰胺的需氧光催化 N-脱甲基反应",
+            "tutor": [],
+            "type": "article",
+            "volume": "46",
+            "year": 2026
+        },
+        {
+            "abstracts": "环丙烷骨架因其独特的高张力环结构和良好的脂溶性， 在药物化学与燃料化学等多个领域具有重要的理论与应用价值. 系统综述了近二十年来环丙烷骨架结构的构建策略， 涵盖了卡宾/类卡宾与烯烃的环加成反应、叶立德参与的环化反应、金属环丙烷参与的环丙烷化反应、分子内环丙烷化反应， 以及新兴的光催化、电催化和酶催化环丙烷化反应等. 重点分析了相关反应的机理类型、底物适应性与产物立体选择性. 此外， 介绍了环丙烷骨架构建策略在药物研发（如抗病毒剂和神经调节剂等活性分子构建）、天然产物全合成及高能燃料分子设计等领域的重要应用进展. 最后， 展望了环丙烷骨架构建的发展前景， 指出开发新型高效催化剂（如纳米负载型与多孔框架型催化剂）、先进光催化技术及绿色的合成新方法是该领域的重要发展方向.",
+            "abstracts_abbreviation": "环丙烷骨架因其独特的高张力环结构和良好的脂溶性， 在药物化学与燃料化学等多个领域具有重要的理论与应用价值. 系统综述了近二十年来环丙烷骨架结构的构建策略， 涵盖了卡宾/类卡宾与烯烃的环加成反应、...",
+            "article_type": "",
+            "attachments": [],
+            "author": [
+                "郭峻烽",
+                "李春迎",
+                "胡荣贵",
+                "戎豪杰",
+                "李江伟",
+                "杜咏梅",
+                "秦越",
+                "吕剑",
+                "孙道安"
+            ],
+            "author_id": [
+                "6d51bcdf696b253c56d7b20e212e42a0",
+                "24b73f95ceddff744d56c0ca78201b09",
+                "7fb349ed07e3bd3d2be046ce0c6112f0",
+                "dea4199f122e517b2461f2b48eccc0cb",
+                "f9abb438e310b142d1f0247f2b0f6b47",
+                "33730535db9d5ea44b6d25a09c5db3ad",
+                "b47f2831c7f8b754c8537a6db2142ab4",
+                "d725cbd1e61c9a14fe6686c10c220d7a",
+                "024e95f32ff12485fb462de9f08d8b78"
+            ],
+            "authors": [
+                {
+                    "institution": [
+                        "西安近代化学研究所 氟氮化工新材料全国重点实验室 西安 710065"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "郭峻烽"
+                },
+                {
+                    "institution": [
+                        "西安近代化学研究所 氟氮化工新材料全国重点实验室 西安 710065"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "李春迎"
+                },
+                {
+                    "institution": [
+                        "西安近代化学研究所 氟氮化工新材料全国重点实验室 西安 710065"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "胡荣贵"
+                },
+                {
+                    "institution": [
+                        "西安近代化学研究所 氟氮化工新材料全国重点实验室 西安 710065"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "戎豪杰"
+                },
+                {
+                    "institution": [
+                        "西安近代化学研究所 氟氮化工新材料全国重点实验室 西安 710065"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "李江伟"
+                },
+                {
+                    "institution": [
+                        "西安近代化学研究所 氟氮化工新材料全国重点实验室 西安 710065"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "杜咏梅"
+                },
+                {
+                    "institution": [
+                        "西安近代化学研究所 氟氮化工新材料全国重点实验室 西安 710065"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "秦越"
+                },
+                {
+                    "institution": [
+                        "西安近代化学研究所 氟氮化工新材料全国重点实验室 西安 710065"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "吕剑"
+                },
+                {
+                    "institution": [
+                        "西安近代化学研究所 氟氮化工新材料全国重点实验室 西安 710065"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "孙道安"
+                }
+            ],
+            "browse_count": 2,
+            "cn_type": "论文",
+            "cstr": "",
+            "date": "2026",
+            "degree": "",
+            "doi": "10.6023/cjoc202507041",
+            "extendEntity": {
+                "title-repeated": "环丙烷骨架的构建及其应用研究进展",
+                "wos-category-llm": [],
+                "cnKeywords": [
+                    "环丙烷",
+                    "卡宾",
+                    "环丙烷化反应",
+                    "合成策略",
+                    "药物",
+                    "天然产物",
+                    "高能燃料"
+                ],
+                "article-id": [
+                    "10.6023/cjoc202507041"
+                ],
+                "journal-repeated": "有机化学",
+                "sensitive_label": [],
+                "project_name": [],
+                "base_project": [],
+                "fulltext_permission": "0",
+                "classification_bg": [],
+                "article-id-type": [
+                    "doi"
+                ],
+                "is_high_level": "",
+                "article_legal_status": "",
+                "contrib_institution": [
+                    [
+                        "西安近代化学研究所"
+                    ]
+                ],
+                "is_use_headline": [],
+                "is_financial_support_project": "",
+                "enKeywords": [
+                    "cyclopropane",
+                    "carbine",
+                    "cyclopropanation reaction",
+                    "synthetic strategies",
+                    "medicines",
+                    "natural products",
+                    "high-energy fuel"
+                ],
+                "is_cas_representative": "",
+                "base_subject": [],
+                "datasource-link": [
+                    "neweditarticle:https://doi.org/10.6023/cjoc202507041"
+                ]
+            },
+            "first_page": "379",
+            "graduation_institution": [],
+            "id": "cb36e0e626e89810bd011bc93a40d2a3",
+            "is_free": false,
+            "issue": "2",
+            "keywords": [
+                "环丙烷",
+                "卡宾",
+                "环丙烷化反应",
+                "合成策略",
+                "药物",
+                "天然产物",
+                "高能燃料"
+            ],
+            "last_page": "398",
+            "license": "",
+            "links": [
+                {
+                    "is_open_access": false,
+                    "name": "期刊官网",
+                    "url": "https://doi.org/10.6023/cjoc202507041"
+                }
+            ],
+            "local_links": [],
+            "major": "",
+            "school": [],
+            "semantic_entities": {},
+            "source": "有机化学",
+            "source_list": [
+                "neweditarticle",
+                "JournalSubmit_Article",
+                "pubscholar_running"
+            ],
+            "title": "环丙烷骨架的构建及其应用研究进展",
+            "tutor": [],
+            "type": "article",
+            "volume": "46",
+            "year": 2026
+        },
+        {
+            "abstracts": "报道了一种基于硫叶立德与硫代羧酸的硫酯化反应， 简便合成 β-羰基硫代羧酸酯的方法. 多种 β-羰基硫代羧酸酯可在室温、无添加剂条件下以中等至良好收率获得. 该反应可实现克级规模制备， 具有操作简便、条件温和、无金属污染等优势.",
+            "abstracts_abbreviation": "报道了一种基于硫叶立德与硫代羧酸的硫酯化反应， 简便合成 β-羰基硫代羧酸酯的方法. 多种 β-羰基硫代羧酸酯可在室温、无添加剂条件下以中等至良好收率获得. 该反应可实现克级规模制备， 具有操作简便、...",
+            "article_type": "",
+            "attachments": [],
+            "author": [
+                "杨梓",
+                "马超",
+                "王祖利",
+                "魏伟",
+                "易东"
+            ],
+            "author_id": [
+                "b10c51d30b4031cf519c7fc2d819a5a5",
+                "a9f8e90fed33e9df70432060fe9663a2",
+                "7d070ebf088f145dda5872291dd58001",
+                "4c76ade7688aa282fc69dc4a9c5b6de0",
+                "485a5d7bdf13838f07d46efce56c5e24"
+            ],
+            "authors": [
+                {
+                    "institution": [
+                        "长沙医学院功能核酸基础与临床湖南省普通高校重点实验室  长沙 410219"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "杨梓"
+                },
+                {
+                    "institution": [
+                        "曲阜师范大学化学与化工学院  山东曲阜 273165"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "马超"
+                },
+                {
+                    "institution": [
+                        "南京林业大学林木生物质低碳高效利用国家工程研究中心  南京 210037"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "王祖利"
+                },
+                {
+                    "institution": [
+                        "曲阜师范大学化学与化工学院  山东曲阜 273165"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "魏伟"
+                },
+                {
+                    "institution": [
+                        "西南医科大学药学院  四川泸州 646000"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "易东"
+                }
+            ],
+            "browse_count": 2,
+            "cn_type": "论文",
+            "cstr": "",
+            "date": "2026",
+            "degree": "",
+            "doi": "10.6023/cjoc202507031",
+            "extendEntity": {
+                "title-repeated": "无添加剂条件下硫叶立德与硫代羧酸硫酯化反应合成羰基硫代羧酸酯",
+                "wos-category-llm": [],
+                "cnKeywords": [
+                    "硫叶立德",
+                    "硫代羧酸",
+                    "β-羰基硫代羧酸酯",
+                    "无添加剂"
+                ],
+                "article-id": [
+                    "10.6023/cjoc202507031"
+                ],
+                "journal-repeated": "有机化学",
+                "sensitive_label": [],
+                "project_name": [],
+                "base_project": [],
+                "fulltext_permission": "0",
+                "classification_bg": [],
+                "article-id-type": [
+                    "doi"
+                ],
+                "is_high_level": "",
+                "article_legal_status": "",
+                "contrib_institution": [
+                    [
+                        "长沙医学院"
+                    ],
+                    [
+                        "曲阜师范大学"
+                    ],
+                    [
+                        "南京林业大学"
+                    ],
+                    [
+                        "西南医科大学"
+                    ]
+                ],
+                "is_use_headline": [],
+                "is_financial_support_project": "",
+                "enKeywords": [
+                    "sulfoxonium ylides",
+                    "thioic acids",
+                    "β-keto thioesters",
+                    "additive-free"
+                ],
+                "is_cas_representative": "",
+                "base_subject": [],
+                "datasource-link": [
+                    "neweditarticle:https://doi.org/10.6023/cjoc202507031"
+                ]
+            },
+            "first_page": "578",
+            "graduation_institution": [],
+            "id": "27ebd886a73410856faf60e786971502",
+            "is_free": false,
+            "issue": "2",
+            "keywords": [
+                "硫叶立德",
+                "硫代羧酸",
+                "β-羰基硫代羧酸酯",
+                "无添加剂"
+            ],
+            "last_page": "585",
+            "license": "",
+            "links": [
+                {
+                    "is_open_access": false,
+                    "name": "期刊官网",
+                    "url": "https://doi.org/10.6023/cjoc202507031"
+                }
+            ],
+            "local_links": [],
+            "major": "",
+            "school": [],
+            "semantic_entities": {},
+            "source": "有机化学",
+            "source_list": [
+                "neweditarticle",
+                "JournalSubmit_Article",
+                "pubscholar_running"
+            ],
+            "title": "无添加剂条件下硫叶立德与硫代羧酸硫酯化反应合成β-羰基硫代羧酸酯",
+            "tutor": [],
+            "type": "article",
+            "volume": "46",
+            "year": 2026
+        },
+        {
+            "abstracts": "过渡金属催化的 C—C 偶联反应是有机合成中构建碳-碳键的核心策略， 其发展不仅推动了药物、材料和天然产物的合成， 还不断在机理创新和催化剂设计上取得突破. 在此基础上， 报道了在铜催化条件下酮类之间发生的自由基反应， 利用该反应可以实现 2-羰基-1，4-二酮化合物的合成. 该方法对多种结构类型的酮（包括取代基多样的脂肪酮、芳香酮和各种不限于丙酮的简单酮）均表现出优异的适用性， 用途广泛， 易于实施， 催化剂毒性低， 成本效益高， 且产物易于分离纯化.",
+            "abstracts_abbreviation": "过渡金属催化的 C—C 偶联反应是有机合成中构建碳-碳键的核心策略， 其发展不仅推动了药物、材料和天然产物的合成， 还不断在机理创新和催化剂设计上取得突破. 在此基础上， 报道了在铜催化条件下酮类之间...",
+            "article_type": "",
+            "attachments": [],
+            "author": [
+                "刘颖杰",
+                "闵来生",
+                "杨锐蓉",
+                "宋冬雪",
+                "彭瑞",
+                "梁德强"
+            ],
+            "author_id": [
+                "d5a07d1ec0b86df65de7479a9463243c",
+                "0ade2ff2f1e2d638441b86fcf9ec9ce3",
+                "33a037d6b0ea2068c639792982c4f8ea",
+                "8f26327876eb9faa819d12209de2b6ac",
+                "71e55bc2d9ac4bb869d4feef69e14f62",
+                "8412e992f4f94594c146d02829793323"
+            ],
+            "authors": [
+                {
+                    "institution": [
+                        "哈尔滨商业大学药物工程技术研究中心 哈尔滨 150076"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "刘颖杰"
+                },
+                {
+                    "institution": [
+                        "哈尔滨商业大学药物工程技术研究中心 哈尔滨 150076"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "闵来生"
+                },
+                {
+                    "institution": [
+                        "昆明学院化学化工学院 昆明 650214"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "杨锐蓉"
+                },
+                {
+                    "institution": [
+                        "哈尔滨商业大学药物工程技术研究中心 哈尔滨 150076"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "宋冬雪"
+                },
+                {
+                    "institution": [
+                        "哈尔滨商业大学药物工程技术研究中心 哈尔滨 150076"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "彭瑞"
+                },
+                {
+                    "institution": [
+                        "昆明学院化学化工学院 昆明 650214"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "梁德强"
+                }
+            ],
+            "browse_count": 1,
+            "cn_type": "论文",
+            "cstr": "",
+            "date": "2026",
+            "degree": "",
+            "doi": "10.6023/cjoc202506032",
+            "extendEntity": {
+                "title-repeated": "cui催化cc键偶联反应构建2羰基14二酮",
+                "wos-category-llm": [],
+                "cnKeywords": [
+                    "过渡金属催化",
+                    "C—C偶联",
+                    "自由基反应",
+                    "2-羰基-1,4-二酮"
+                ],
+                "article-id": [
+                    "10.6023/cjoc202506032"
+                ],
+                "journal-repeated": "有机化学",
+                "sensitive_label": [],
+                "project_name": [],
+                "base_project": [],
+                "fulltext_permission": "0",
+                "classification_bg": [],
+                "article-id-type": [
+                    "doi"
+                ],
+                "is_high_level": "",
+                "article_legal_status": "",
+                "contrib_institution": [
+                    [
+                        "哈尔滨商业大学"
+                    ],
+                    [
+                        "昆明学院"
+                    ]
+                ],
+                "is_use_headline": [],
+                "is_financial_support_project": "",
+                "enKeywords": [
+                    "transition metal catalysis",
+                    "C—C coupling",
+                    "radical reaction",
+                    "2-carbonyl-1,4-dione"
+                ],
+                "is_cas_representative": "",
+                "base_subject": [],
+                "datasource-link": [
+                    "neweditarticle:https://doi.org/10.6023/cjoc202506032"
+                ]
+            },
+            "first_page": "603",
+            "graduation_institution": [],
+            "id": "9735a8f85e1a39cb56d89f2026d1e256",
+            "is_free": false,
+            "issue": "2",
+            "keywords": [
+                "过渡金属催化",
+                "C—C偶联",
+                "自由基反应",
+                "2-羰基-1,4-二酮"
+            ],
+            "last_page": "611",
+            "license": "",
+            "links": [
+                {
+                    "is_open_access": false,
+                    "name": "期刊官网",
+                    "url": "https://doi.org/10.6023/cjoc202506032"
+                }
+            ],
+            "local_links": [],
+            "major": "",
+            "school": [],
+            "semantic_entities": {},
+            "source": "有机化学",
+            "source_list": [
+                "neweditarticle",
+                "JournalSubmit_Article",
+                "pubscholar_running"
+            ],
+            "title": "CuI 催化 C—C 键偶联反应构建 2-羰基-1，4-二酮",
+            "tutor": [],
+            "type": "article",
+            "volume": "46",
+            "year": 2026
+        },
+        {
+            "abstracts": "有机大共轭分子凭借其独特的扩展 π 电子体系， 在材料化学、药物化学及化学生物学等领域展现出重要且广泛的应用价值. 对大共轭分子进行官能团化以调控其性质， 已成为化学研究领域备受关注的重要议题之一. 目前， 大共轭分子的后修饰方法研究相对较少， 主要依赖于芳香亲电取代和过渡金属催化的偶联反应等常规策略. 系统综述了基于大共轭分子的独特 C—H 亲核取代反应的研究进展， 涵盖了经典体系如卟啉、硼二吡咯亚甲基（BODIPYs）、薁烯以及一些其他大共轭分子. 研究表明， 通过优化反应条件， 选用合适的亲核试剂、导向基团与添加剂， 可以实现对特定 C—H 键的高效亲核取代官能团化， 从而构建具有特定结构与功能的化合物. 不仅将深化对亲核取代反应机制的理解， 还为构建具有独特功能的 π共轭体系开辟了新途径.",
+            "abstracts_abbreviation": "有机大共轭分子凭借其独特的扩展 π 电子体系， 在材料化学、药物化学及化学生物学等领域展现出重要且广泛的应用价值. 对大共轭分子进行官能团化以调控其性质， 已成为化学研究领域备受关注的重要议题之一...",
+            "article_type": "",
+            "attachments": [],
+            "author": [
+                "白燕茹",
+                "周来运",
+                "刘广华",
+                "王青"
+            ],
+            "author_id": [
+                "7a5d663f40eee958311993d5dbbdbc83",
+                "a17a203050d776337d4828e67a7a75bb",
+                "fcf15680b0d7b8f746ae52cc78c55a42",
+                "8af29ee2c62cb57b002cab3ab857e782"
+            ],
+            "authors": [
+                {
+                    "institution": [
+                        "内蒙古大学化学化工学院  呼和浩特 010070"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "白燕茹"
+                },
+                {
+                    "institution": [
+                        "内蒙古大学化学化工学院  呼和浩特 010070"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "周来运"
+                },
+                {
+                    "institution": [
+                        "内蒙古自治区农牧业科学院农牧业质量安全与检测研究所  呼和浩特 010030"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "刘广华"
+                },
+                {
+                    "institution": [
+                        "内蒙古大学化学化工学院  呼和浩特 010070"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "王青"
+                }
+            ],
+            "browse_count": 1,
+            "cn_type": "论文",
+            "cstr": "",
+            "date": "2026",
+            "degree": "",
+            "doi": "10.6023/cjoc202509030",
+            "extendEntity": {
+                "title-repeated": "有机大共轭分子ch亲核取代反应的研究进展",
+                "wos-category-llm": [],
+                "cnKeywords": [
+                    "大共轭分子",
+                    "π-电子体系",
+                    "亲核取代",
+                    "C—H官能团化"
+                ],
+                "article-id": [
+                    "10.6023/cjoc202509030"
+                ],
+                "journal-repeated": "有机化学",
+                "sensitive_label": [],
+                "project_name": [],
+                "base_project": [],
+                "fulltext_permission": "0",
+                "classification_bg": [],
+                "article-id-type": [
+                    "doi"
+                ],
+                "contrib_institution": [
+                    [
+                        "内蒙古大学"
+                    ],
+                    [
+                        "内蒙古自治区农牧业科学院"
+                    ]
+                ],
+                "is_use_headline": [],
+                "enKeywords": [
+                    "largely conjugated system",
+                    "π-electron system",
+                    "nucleophilic substitution",
+                    "C—H functionalization"
+                ],
+                "base_subject": [],
+                "datasource-link": [
+                    "neweditarticle:https://doi.org/10.6023/cjoc202509030"
+                ]
+            },
+            "first_page": "1883",
+            "graduation_institution": [],
+            "id": "e302cb7063a34801b817ddfe775f567b",
+            "is_free": false,
+            "issue": "5",
+            "keywords": [
+                "大共轭分子",
+                "π-电子体系",
+                "亲核取代",
+                "C—H官能团化"
+            ],
+            "last_page": "1896",
+            "links": [
+                {
+                    "is_open_access": false,
+                    "name": "期刊官网",
+                    "url": "https://doi.org/10.6023/cjoc202509030"
+                }
+            ],
+            "local_links": [],
+            "major": "",
+            "school": [],
+            "semantic_entities": {},
+            "source": "有机化学",
+            "source_list": [
+                "neweditarticle",
+                "JournalSubmit_Article",
+                "pubscholar_running"
+            ],
+            "title": "有机大共轭分子 C—H 亲核取代反应的研究进展",
+            "tutor": [],
+            "type": "article",
+            "volume": "46",
+            "year": 2026
+        },
+        {
+            "abstracts": "对蒽醌的 α 和 β 位进行结构编辑， 设计合成了 7 种新型蒽醌光敏剂， 并发现在甲基的光氧化反应中具有优异光催化性能. 研究结果表明， 在蒽醌母体 β 位点上引入强吸电子的三氟甲基取代基得到的 2-三氟甲基蒽醌（PC6）， 表现出最好的光氧化性能和选择性， 光催化速率是蒽醌的近 30 倍， 并具有良好底物普适性， 对大部分缺电子取代基和富电子取代基的芳杂环甲基衍生物实现良好以上的反应收率. 通过紫外-可见吸收光谱、荧光光谱、循环伏安及密度泛函理论（DFT）计算， 发现PC6的荧光量子产率达到蒽醌的 2.5倍， 是其光催化效率提升的主要原因. 该反应体系具有简单高效、条件温和和官能团耐受性好的优点， 为后续的 C（sp3）—H 活化反应提供了高效催化剂和有效的光催化方法.",
+            "abstracts_abbreviation": "对蒽醌的 α 和 β 位进行结构编辑， 设计合成了 7 种新型蒽醌光敏剂， 并发现在甲基的光氧化反应中具有优异光催化性能. 研究结果表明， 在蒽醌母体 β 位点上引入强吸电子的三氟甲基取代基得到的 2-三氟...",
+            "article_type": "",
+            "attachments": [],
+            "author": [
+                "程熹",
+                "李雅琳",
+                "吴鹏",
+                "苏敏",
+                "张梓轩",
+                "焦民均",
+                "刘雪粉",
+                "罗书平"
+            ],
+            "author_id": [
+                "17ba3dde810110ad8ea47728507694a5",
+                "4e793d54806d7510127dd6d557bc30f2",
+                "d95fc0874a4932d6e5b3b8273062c23f",
+                "2954fb1cbe075a370878fad31145b395",
+                "fe6f30e93304bb8e7dc2817b28aac9fa",
+                "a3d942362377af9de5e5916f5992df6f",
+                "112096ecba3ee75524312a56384481a1",
+                "9246c52a159c25d1ce442e6c80a196fb"
+            ],
+            "authors": [
+                {
+                    "institution": [
+                        "浙江工业大学化学工程学院  杭州 310014"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "程熹"
+                },
+                {
+                    "institution": [
+                        "浙江工业大学化学工程学院  杭州 310014"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "李雅琳"
+                },
+                {
+                    "institution": [
+                        "浙江工业大学化学工程学院  杭州 310014"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "吴鹏"
+                },
+                {
+                    "institution": [
+                        "浙江工业大学化学工程学院  杭州 310014"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "苏敏"
+                },
+                {
+                    "institution": [
+                        "浙江工业大学化学工程学院  杭州 310014"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "张梓轩"
+                },
+                {
+                    "institution": [
+                        "浙江工业大学化学工程学院  杭州 310014"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "焦民均"
+                },
+                {
+                    "institution": [
+                        "杭州师范大学材料与化学化工学院  杭州 311121"
+                    ],
+                    "is_corresponding_author": false,
+                    "name": "刘雪粉"
+                },
+                {
+                    "institution": [
+                        "浙江工业大学化学工程学院  杭州 310014"
+                    ],
+                    "is_corresponding_author": true,
+                    "name": "罗书平"
+                }
+            ],
+            "browse_count": 3,
+            "cn_type": "论文",
+            "cstr": "",
+            "date": "2026",
+            "degree": "",
+            "doi": "10.6023/cjoc202510027",
+            "extendEntity": {
+                "title-repeated": "蒽醌光敏剂设计合成与光催化csp3h氧化反应性能研究",
+                "wos-category-llm": [],
+                "cnKeywords": [
+                    "光催化",
+                    "蒽醌光敏剂",
+                    "C(sp3)—H 氧化"
+                ],
+                "article-id": [
+                    "10.6023/cjoc202510027"
+                ],
+                "journal-repeated": "有机化学",
+                "sensitive_label": [],
+                "project_name": [],
+                "base_project": [],
+                "fulltext_permission": "0",
+                "classification_bg": [],
+                "article-id-type": [
+                    "doi"
+                ],
+                "contrib_institution": [
+                    [
+                        "浙江工业大学"
+                    ],
+                    [
+                        "杭州师范大学"
+                    ]
+                ],
+                "is_use_headline": [],
+                "enKeywords": [
+                    "photocatalysis",
+                    "anthraquinone photosensitizer",
+                    "C(sp3)—H oxidation"
+                ],
+                "base_subject": [],
+                "datasource-link": [
+                    "neweditarticle:https://doi.org/10.6023/cjoc202510027"
+                ]
+            },
+            "first_page": "2104",
+            "graduation_institution": [],
+            "id": "7d1d5a379e664d169e682a706140fb2b",
+            "is_free": false,
+            "issue": "5",
+            "keywords": [
+                "光催化",
+                "蒽醌光敏剂",
+                "C(sp3)—H 氧化"
+            ],
+            "last_page": "2111",
+            "links": [
+                {
+                    "is_open_access": false,
+                    "name": "期刊官网",
+                    "url": "https://doi.org/10.6023/cjoc202510027"
+                }
+            ],
+            "local_links": [],
+            "major": "",
+            "school": [],
+            "semantic_entities": {},
+            "source": "有机化学",
+            "source_list": [
+                "neweditarticle",
+                "JournalSubmit_Article",
+                "pubscholar_running"
+            ],
+            "title": "蒽醌光敏剂设计合成与光催化 C（sp3）—H 氧化反应性能研究",
+            "tutor": [],
+            "type": "article",
+            "volume": "46",
+            "year": 2026
+        }
+    ]
+}

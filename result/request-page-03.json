@@ -1,0 +1,21 @@
+{
+    "page": 3,
+    "size": 10,
+    "order_field": "date",
+    "order_direction": "desc",
+    "user_id": "0b68c4370e9a43e4ad1690fdd31f643f",
+    "lang": "zh",
+    "aggregations": {
+        "type": "",
+        "subject": "",
+        "year": "",
+        "keyword": "",
+        "collection": "",
+        "lang": "C",
+        "source": "",
+        "correspAuthor": "",
+        "funding": "",
+        "institution": "",
+        "license": ""
+    }
+}
