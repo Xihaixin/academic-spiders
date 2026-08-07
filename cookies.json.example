@@ -1,0 +1,18 @@
+{
+    "v1": {
+        "cookie": "XSRF-TOKEN=<your-xsrf-token>; JSESSIONID=<your-jsessionid>",
+        "xsrf_token": "<your-xsrf-token>",
+        "finger": "c84069ed4e4270f9897e3a07acb81355",
+        "user_id": "0b68c4370e9a43e4ad1690fdd31f643f",
+        "secret": "6m6pingbinwaktg227gngifoocrfbo95",
+        "page_size": 50
+    },
+    "v2": {
+        "cookie": "XSRF-TOKEN=<your-xsrf-token>; JSESSIONID=<your-jsessionid>; hky_ticket=<your-ticket>",
+        "xsrf_token": "<your-xsrf-token>",
+        "finger": "c84069ed4e4270f9897e3a07acb81355",
+        "user_id": "<your-uid-from-payload>",
+        "secret": "6m6pingbinwaktg227gngifoocrfbo95",
+        "page_size": 20
+    }
+}
