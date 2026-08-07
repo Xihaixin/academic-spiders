@@ -263,3 +263,33 @@ KeyError: 'ArticleItem does not support field: _page'
 | extend_entity 独立建表 | articles 精简; 低频查询不扫描大字段 |
 | links 并入 articles (JSON) | 1-2 条/文, 无聚合查询需求, 减少 JOIN |
 | 子表冗余 article_md5 | Pipeline 中直接用响应 id 查询，无需 JOIN articles |
+
+---
+
+## <a id="7"></a>问题七：v1/v2 接口行为变化观察 (2026-08-07)
+
+### 现象
+
+先前调试时，登录后浏览器使用 v2 接口 (`/hky/api/v2/resources/article`)。但今天重新登录后，浏览器实际请求的是 v1 接口 (`/hky/open/resources/api/v1/articles`)。
+
+### 对比
+
+| 维度 | 旧观察 | 新观察 |
+|------|--------|--------|
+| API 端点 | `/hky/api/v2/resources/article` (登录) | `/hky/open/resources/api/v1/articles` (登录) |
+| Cookie | `JSESSIONID=...` (未登录) | `pub_ticket=...` (登录) |
+| 域名 | `scholarin.cn` | `pubscholar.cn` |
+| 鉴权方式 | 签名 + XSRF-TOKEN + JSESSIONID | 签名 + XSRF-TOKEN + pub_ticket |
+
+### 推测原因
+
+1. **站点前端更新**: 网站可能将搜索功能统一迁移到 v1 接口，v1 已升级为支持登录认证 (`pub_ticket`)。v2 接口可能仅在某些特定条件下使用（如特定搜索类型）。
+2. **A/B 分流**: 用户可能处于不同的 A/B 测试组，不同组使用不同接口。
+3. **Cookie 机制变更**: 旧版使用 `JSESSIONID`（未登录会话），新版使用 `pub_ticket`（登录票据），网站的认证体系做了升级。
+4. **域名差异**: `scholarin.cn` 上的 v2 需要该域名专属的 Cookie（如 `hky_ticket`），而 `pubscholar.cn` 上的 v1 使用 `pub_ticket`。两个域名可能使用不同的认证 Cookie。
+
+### 结论
+
+- v1 接口经过升级后功能完备（支持登录认证），足够满足全量爬取需求
+- v2 Spider 验证（M3）暂缓，待观测到 v2 接口实际被使用且有明确需求时再推进
+- 当前项目以 v1 爬虫为主要工作目标

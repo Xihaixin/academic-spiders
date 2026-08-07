@@ -44,7 +44,13 @@
 |---|------|------|
 | **M1** | Middleware/Pipeline 弃用警告修复 | `process_request(self, request, spider)` → 通过 `self.crawler` 获取 spider，消除 Scrapy 2.17 弃用警告 |
 | **M2** | 修复双重重试冲突 | `PubscholarRetryMiddleware` 和 `RetryMiddleware` 均拦截 403/429，导致 `retry/max_reached: 2`（重复计数） |
-| **M3** | v2 Spider 集成验证 | 需要用户提供 `scholarin.cn` 登录 Cookie (XSRF-TOKEN, JSESSIONID, hky_ticket 等) |
+| **M3** | v2 Spider 集成验证 | 暂缓 — 观察发现登录后网站使用 v1 而非 v2 接口 (详见 `.aidocs/troubleshooting-record.md#7`) |
+
+### ❓ 待观察
+
+| # | 任务 | 说明 |
+|---|------|------|
+| **O1** | v1/v2 接口行为变化 | 登录后实际使用 v1 而非 v2 接口 (2026-08-07 观察)。待后续确认是否为永久性变更后再决定 v2 去留 |
 
 ### 🟢 低优先级
 
