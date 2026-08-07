@@ -1000,30 +1000,80 @@ def test_pagination_extraction_v2():
 
 ---
 
+## 第四部分：认证系统补充分析 (2026-08-07)
+
+### 4.1 CSTCloud Passport 登录流程
+
+pubscholar.cn 登录入口实际重定向到统一认证平台：
+
+```
+https://passport.escience.cn/login?returnUrl=https://pubscholar.cn/
+```
+
+登录机制为 CAS-like SSO + Spring Security：
+
+1. GET 登录页面 → 提取 `_csrf` token（`<meta name="_csrf">`）
+2. POST `/login`（username + password + _csrf）→ 302 重定向
+3. 重定向回 pubscholar.cn → 服务端验证 ticket → 设置 `pub_ticket` + `XSRF-TOKEN` Cookie
+
+`pub_ticket` 有效期约 **10 天**，无续期接口，过期必须重新登录。
+
+### 4.2 Cookie 演进
+
+| 阶段 | Cookie | 来源 | 生命周期 |
+|------|--------|------|----------|
+| 初始 (非登录) | `JSESSIONID` | 仅访问首页 | 数小时 |
+| 登录后 | `pub_ticket` | passport.escience.cn SSO | ~10 天 |
+
+当前项目完全基于 `pub_ticket` 登录态，支持通过 CSTCloud 账号密码自动登录（`check_cookies.py login`）。
+
+### 4.3 v1/v2 接口行为变化
+
+**观察 (2026-08-07)**: 登录后浏览器实际调用 v1 接口而非 v2。
+
+推测：
+- 站点将搜索功能统一迁移到 v1（v1 升级了登录认证支持）
+- 或用户处于不同的 A/B 测试组
+- scholarin.cn 域名下的 v2 需要该域名专属的 Cookie（`hky_ticket`）
+
+当前项目以 v1 为主要目标，v2 Spider 暂缓。
+
+---
+
 ## 附录
 
 ### A. 项目文件清单
 
 ```
 academic-spiders/
-├── scholarin_spider.py     # 主爬虫（生产代码）
-├── diagnose_auth.py        # 认证诊断工具
-├── README.md               # 使用文档
-└── .aidocs/
-    └── reverse-engineering-review.md   # 本文档
+├── scrapy.cfg, pyproject.toml
+├── cookies.json, cookies.json.example
+├── check_cookies.py
+├── sql/schema.sql
+├── academic_spiders/
+│   ├── items.py, settings.py, middlewares.py, pipelines.py
+│   ├── utils/signing.py, parsers.py, cookie_config.py, auth.py
+│   └── spiders/pubscholar_v1.py, pubscholar_v2.py
+├── run_v1_spider.py, run_v2_spider.py
+├── test_v1_api.py
+├── result/
+├── .aidocs/
+└── task.md
 ```
 
 ### B. 关键技术索引
 
-| 技术点 | 文件 | 位置 |
-|--------|------|------|
-| 签名算法 | `scholarin_spider.py` | `_generate_signature()` |
-| Nonce 生成 | `scholarin_spider.py` | `_generate_nonce()` |
-| 密钥常量 | `scholarin_spider.py` | `SECRET = "6m6ping..."` |
-| Cookie 加载 | `scholarin_spider.py` | `_load_cookies()` |
-| 浏览器头模拟 | `scholarin_spider.py` | `__init__()` → `session.headers` |
-| 分页解析 | `scholarin_spider.py` | `_extract_pagination()` |
-| 字段提取 | `scholarin_spider.py` | `extract_article_info()` |
+| 技术点 | 文件 | 函数/位置 |
+|--------|------|-----------|
+| 签名算法 | `utils/signing.py` | `build_signature_headers()` |
+| Nonce 生成 | `utils/signing.py` | `generate_nonce()` |
+| 密钥常量 | `utils/cookie_config.py` | default dict |
+| Cookie 检查 | `utils/auth.py` | `check_cookie_valid()` |
+| 自动登录 | `utils/auth.py` | `auto_login()` |
+| 字段解析 | `utils/parsers.py` | `record_to_item()` |
+| 签名中间件 | `middlewares.py` | `PubscholarSigningMiddleware` |
+| 过期检测 | `middlewares.py` | `PubscholarRetryMiddleware` |
+| 数据管道 | `pipelines.py` | `MySQLPipeline`, `JsonExportPipeline` |
 
 ### C. 原始 JS 代码片段（已归档）
 
