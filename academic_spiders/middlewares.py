@@ -83,17 +83,21 @@ class PubscholarSigningMiddleware:
 class PubscholarRetryMiddleware(RetryMiddleware):
     """
     扩展重试中间件: 429/403 时刷新签名并指数退避
+
+    403 分类处理:
+      - "第三方应用独立请求时" → Cookie 过期，立即停止（不重试）
+      - 其他 403 → 签名/权限问题，刷新签名重试
     """
 
     def __init__(self, settings):
         super().__init__(settings)
         self.secret = settings.get("PUBSCHOLAR_SECRET", "")
-        # 使用 v1 finger 作为默认（重试时刷新签名即可）
         self.fallback_finger = (
             settings.get("V1_FINGER")
             or settings.get("V2_FINGER")
             or ""
         )
+        self._cookie_expired = False
 
     def _is_target(self, url: str) -> bool:
         return "pubscholar.cn" in url or "scholarin.cn" in url
@@ -110,8 +114,21 @@ class PubscholarRetryMiddleware(RetryMiddleware):
         return retry_req
 
     def process_response(self, request, response):
+        if response.status == 403:
+            body = response.text[:200] if hasattr(response, 'text') else ""
+            if "第三方应用独立请求时" in body:
+                self._cookie_expired = True
+                logger.error(
+                    "Cookie 已过期! API 返回: %s\n"
+                    "请重新获取 Cookie:\n"
+                    "  方式一: python -m academic_spiders.utils.auth login -u <账号> -p <密码>\n"
+                    "  方式二: 手动访问 https://pubscholar.cn 登录后更新 cookies.json",
+                    body.strip(),
+                )
+                return response
+
         if response.status in (429, 403):
-            reason = "频率限制" if response.status == 429 else "权限/签名问题"
+            reason = "频率限制" if response.status == 429 else "签名问题"
             logger.warning(
                 "HTTP %d (%s): %s",
                 response.status, reason, request.url,

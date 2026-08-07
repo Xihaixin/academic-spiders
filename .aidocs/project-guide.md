@@ -97,12 +97,37 @@ python test_v1_api.py    # 验证 API 连通性和签名正确性
 |--------|------|--------|
 | `PUBSCHOLAR_SECRET` | SHA1 签名密钥 | `6m6pingbinwaktg227gngifoocrfbo95` |
 | `PUBSCHOLAR_USER_ID` | 请求中的 user_id | `0b68c43...` |
-| `V1_COOKIE` | 会话 Cookie | 需定期更新 |
-| `V1_XSRF_TOKEN` | CSRF Token | 需定期更新 |
+| `V1_COOKIE` | 会话 Cookie | 从 `cookies.json` 加载 |
+| `V1_XSRF_TOKEN` | CSRF Token | 从 `cookies.json` 加载 |
 | `V1_FINGER` | 设备指纹 | `c84069ed...` |
 | `CONCURRENT_REQUESTS` | 并发数 | 8 |
 | `DOWNLOAD_DELAY` | 请求间隔 (秒) | 1.5 |
 | `AUTOTHROTTLE_ENABLED` | 自适应限速 | True |
+
+### 4.1 Cookie 管理
+
+所有 Cookie 存储在 `cookies.json` 中（已加入 `.gitignore`，模板见 `cookies.json.example`）。
+
+```bash
+# 检查 Cookie 状态
+python check_cookies.py check
+
+# 自动登录 （CSTCloud Passport 账号密码）
+python check_cookies.py login -u <账号> -p <密码>
+
+# 手动更新: 编辑 cookies.json 后无需重启项目
+```
+
+Cookie 过期时爬虫自动停止并提示更新方式，不会无限重试。
+
+### 4.2 长时间运行
+
+| 项目 | 说明 |
+|------|------|
+| pub_ticket 有效期 | ~10 天（CSTCloud Passport 会话票据） |
+| 预计完成时间 | 1.5M 页, ~5 req/s → 约 3.5 天持续运行 |
+| Cookie 刷新需求 | 每 10 天重新登录一次（单次爬取足够） |
+| 断点续爬 | `scrapy crawl pubscholar_v1 -s V1_START_PAGE=<N>` |
 
 ---
 
