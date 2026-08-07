@@ -12,7 +12,8 @@ session = requests.Session()
 session.cookies.set("XSRF-TOKEN", "115318a2-c245-446e-b005-1cee19f9fe49", domain="pubscholar.cn")
 session.cookies.set("JSESSIONID", "ADE2864C54C437C14B2E7CB2C2CAB732", domain="pubscholar.cn")
 
-headers = build_signature_headers(secret)
+finger = "c84069ed4e4270f9897e3a07acb81355"
+headers = build_signature_headers(secret, finger)
 headers.update({
     "Accept": "application/json, text/plain, */*",
     "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
@@ -22,8 +23,6 @@ headers.update({
     "Referer": "https://pubscholar.cn/",
     # CSRF token
     "X-XSRF-TOKEN": "115318a2-c245-446e-b005-1cee19f9fe49",
-    # 设备指纹 (独立于 signature)
-    "x-finger": "c84069ed4e4270f9897e3a07acb81355",
     # Sec-Fetch 同源标记
     "Sec-Fetch-Dest": "empty",
     "Sec-Fetch-Mode": "cors",

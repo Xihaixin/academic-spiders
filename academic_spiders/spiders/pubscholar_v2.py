@@ -11,7 +11,7 @@ import logging
 from typing import Any, Generator
 
 import scrapy
-from scrapy import Request
+from scrapy import Request, signals
 from scrapy.http import Response
 
 from academic_spiders.items import ArticleItem
@@ -53,9 +53,12 @@ class PubscholarV2Spider(scrapy.Spider):
         spider.start_page = max(s.getint("V2_START_PAGE"), 1)
         # query 来自命令行 -a 参数
         spider.query = kwargs.get("query", "") or s.get("V2_QUERY", "")
+        # 使用 spider_opened 信号注入初始请求（绕过 Windows 上
+        # Scrapy 2.17 start_requests() 生成器不被调用的 bug）
+        crawler.signals.connect(spider._on_spider_opened, signal=signals.spider_opened)
         return spider
 
-    def start_requests(self) -> Generator[Request, None, None]:
+    def _on_spider_opened(self):
         if not self.query:
             logger.error("v2 爬虫需要搜索关键词! 使用: -a query='关键词'")
             return
@@ -65,7 +68,7 @@ class PubscholarV2Spider(scrapy.Spider):
             self.query, self.start_page, self.page_size,
             self.max_pages or "无限制",
         )
-        yield self._build_page_request(self.start_page)
+        self.crawler.engine.crawl(self._build_page_request(self.start_page))
 
     def _build_page_request(self, page: int) -> Request:
         payload = {

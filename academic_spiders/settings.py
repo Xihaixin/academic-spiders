@@ -7,7 +7,7 @@ NEWSPIDER_MODULE = "academic_spiders.spiders"
 
 # ── 爬虫行为 ──────────────────────────────────────────────────
 ROBOTSTXT_OBEY = False
-COOKIES_ENABLED = True          # v1 需要会话 Cookie
+COOKIES_ENABLED = False         # 禁用 Scrapy 默认 Cookie 管理，由签名中间件直接注入 Cookie header
 TELNETCONSOLE_ENABLED = False
 LOG_LEVEL = "INFO"
 LOG_FORMAT = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"

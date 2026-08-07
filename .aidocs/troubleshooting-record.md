@@ -115,7 +115,7 @@ e.headers["x-finger"] = Object(S.f)(); // 设备指纹 — 固定值
 
 ---
 
-## <a id="3"></a>问题三：Scrapy Windows reactor 不工作
+## <a id="3"></a>问题三：Scrapy Spider 启动后瞬间关闭 (start_requests 不被调用 + CookiesMiddleware 冲突)
 
 ### 现象
 
@@ -128,67 +128,57 @@ e.headers["x-finger"] = Object(S.f)(); // 设备指纹 — 固定值
 
 `start_requests()` 从未被调用，无任何错误日志，`elapsed_time_seconds: 0.0`。
 
-### 诊断过程
+### 根因分析 (2026-08-07 修正)
 
-**Step 1**: 怀疑 spider 代码问题 → 添加 `print()` 和 `logger.info()` 到 `start_requests` 入口
-→ 无输出，确认该方法**从未被调用** ❌
+**原诊断 (v1.0) 是误判。** Scrapy 2.17 + Twisted 26.4.0 + Python 3.12 + Windows 11 **可以正常运行**（同环境下 `scrapy crawl quotes` 正常获取 110 条数据验证通过）。
 
-**Step 2**: 怀疑 spider `from_crawler` 初始化问题 → 直接实例化 spider 对象测试
-```python
-s = PubscholarV1Spider()
-list(s.start_requests())  # → 1 个 Request 对象 ✅
-```
-→ Spider 代码本身正常 ✅
+真正的问题有 **两个独立 Bug**：
 
-**Step 3**: 怀疑 settings/middleware/pipeline 问题 → 用 `runspider` + 最简蜘蛛 + 空配置
-```python
-class SimpleSpider(scrapy.Spider):
-    name = "simple"
-    def start_requests(self):
-        yield scrapy.Request("https://httpbin.org/get", ...)
-```
-→ 同样的 "Spider opened → Closing spider (finished)" ❌
+**Bug A: `start_requests()` 生成器不被 engine 调度**
 
-**Step 4**: 怀疑 Twisted 版本问题 → 尝试不同 reactor
-- 默认 AsyncioSelectorReactor → ❌
-- SelectReactor (`-s TWISTED_REACTOR=twisted.internet.selectreactor.SelectReactor`) → ❌
-- 显式 `asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())` → ❌
+在 Scrapy 2.17 + asyncio reactor + Windows 组合下，自定义 `start_requests()` 生成器方法无法被 engine 正确调度——`start_urls` 配合默认 `start_requests()` 正常，但任何 override 的生成器版本均不起效。这是 Scrapy 对 Twisted Deferred/生成器 与 Windows asyncio 事件循环交互的边界兼容问题。
 
-全部失败。
+验证方法：`CrawlerProcess` + `start_urls` 正常，`CrawlerProcess` + 自定义 `start_requests()` 静默失败。
 
-**Step 5**: 验证请求本身能通 → 用 `requests` 库直接调用 API
-```python
-requests.post(url, json=payload, headers=headers)  # → 200 ✅
-```
-→ API、签名、Cookie 全部正常 ✅
+**Bug B: `CookiesMiddleware` 清除我们注入的 Cookie header**
 
-### 根因分析
-
-**环境**: Windows 11 + Python 3.12.12 + Scrapy 2.17.0 + Twisted 26.4.0
-
-Scrapy 2.17 默认使用 `twisted.internet.asyncioreactor.AsyncioSelectorReactor`。在 Windows 上，该 reactor 的事件循环不会正确调度 Spider 的 `start_requests`。引擎调用 `spider.start_requests()` 后，返回的生成器被包装成 Twisted task，但 task 从未被 reactor 调度执行。reactor 认为无事可做，立即退出。
-
-这是 Twisted + asyncio + Windows 平台的已知兼容性问题，Scrapy 官方推荐在 Windows 上使用 `CrawlerRunner` + 显式 `reactor.run()`，但同样不工作。
-
-### 解决方案
-
-**短期方案** (已实施)：创建独立运行器 `run_v1_spider.py` / `run_v2_spider.py`，使用 `requests` 库替代 Scrapy 引擎做 HTTP 请求，同时复用 Scrapy 的 Item 和 Pipeline 组件进行数据处理和存储。
+`PubscholarSigningMiddleware` 通过 `request.headers["Cookie"] = "XSRF-TOKEN=...; JSESSIONID=..."` 注入 Cookie，但 Scrapy 内置的 `CookiesMiddleware`（优先级 700，晚于签名中间件的 543）在 `process_request` 中执行：
 
 ```python
-# 核心架构不变
-from academic_spiders.items import ArticleItem
-from academic_spiders.pipelines import MySQLPipeline
-from academic_spiders.utils.signing import build_signature_headers
-
-# 用 requests 替代 Scrapy engine
-import requests
-session.post(url, json=payload, headers=headers)
+request.headers.pop('Cookie', None)  # 移除我们设置的 Cookie!
+jar.add_cookie_header(request)       # 从 (空的) cookie jar 重新设置
 ```
 
-**长期方案** (环境层面):
-- Linux/Mac 上直接使用 `scrapy crawl`
-- 降级到 Scrapy 2.11 + Twisted < 24 的稳定组合
-- 安装 `pywin32` 并尝试 `iocpreactor`
+由于 cookie jar 为空，最终请求**没有 Cookie**，API 返回 403 `"第三方应用独立请求时，无此操作权限"`。
+
+### 解决方案 (已实施)
+
+**Bug A 修复**: 在两个 Spider 中移除 `start_requests()` 方法，改用 `spider_opened` 信号 + `self.crawler.engine.crawl(request)` 注入初始请求：
+
+```python
+# pubscholar_v1.py / pubscholar_v2.py
+from scrapy import signals
+
+@classmethod
+def from_crawler(cls, crawler, *args, **kwargs):
+    spider = super().from_crawler(crawler, *args, **kwargs)
+    crawler.signals.connect(spider._on_spider_opened, signal=signals.spider_opened)
+    return spider
+
+def _on_spider_opened(self):
+    self.crawler.engine.crawl(self._build_page_request(self.start_page))
+```
+
+**Bug B 修复**: `settings.py` 中设置 `COOKIES_ENABLED = False`，因为签名中间件自行通过 header 注入管理所有 Cookie，无需 Scrapy 的 cookie jar 参与。
+
+### 验证结果
+
+```
+v1 spider (scrapy crawl pubscholar_v1):
+  3 页 × 50 条 = 150 items ✓
+  总数据量: 74,374,920 条中文文献 / 1,487,499 页
+  JSON 输出: output/page_000001.json ~ page_000003.json
+```
 
 ---
 

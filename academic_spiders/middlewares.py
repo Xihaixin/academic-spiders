@@ -100,7 +100,7 @@ class PubscholarRetryMiddleware(RetryMiddleware):
 
     def _retry(self, request, reason, spider):
         """重试前刷新签名"""
-        retry_req = super()._retry(request, reason, spider)
+        retry_req = super()._retry(request, reason)
         if retry_req and self._is_target(request.url):
             sig_headers = build_signature_headers(
                 self.secret, self.fallback_finger
@@ -113,7 +113,8 @@ class PubscholarRetryMiddleware(RetryMiddleware):
         if response.status in (429, 403):
             reason = "频率限制" if response.status == 429 else "权限/签名问题"
             logger.warning(
-                "HTTP %d (%s): %s", response.status, reason, request.url,
+                "HTTP %d (%s): %s",
+                response.status, reason, request.url,
             )
             return self._retry(request, reason, spider) or response
         return response

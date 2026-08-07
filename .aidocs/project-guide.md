@@ -55,32 +55,30 @@ academic-spiders/
 
 ## 3. 运行方式
 
-### 3.1 Windows (推荐)
-
-Scrapy 的 Twisted reactor 在 Windows + Python 3.12 环境下存在兼容性问题 (详见 [troubleshooting-record.md](troubleshooting-record.md))，请使用专用运行器：
+### 3.1 使用 Scrapy (推荐，全平台通用)
 
 ```bash
-# v1 — 全量爬取中文文献
-python run_v1_spider.py --all -s 50
+# v1 — 测试 (3 页)
+scrapy crawl pubscholar_v1 -s V1_MAX_PAGES=3
 
-# v1 — 测试 (3 页，不写 MySQL)
-python run_v1_spider.py -p 3 -s 10 --no-mysql
+# v1 — 全量爬取中文文献 (~7400万条)
+scrapy crawl pubscholar_v1
 
 # v1 — 断点续爬
-python run_v1_spider.py --all --start-page 10000
+scrapy crawl pubscholar_v1 -s V1_START_PAGE=10000
 
 # v2 — 关键词搜索 (需登录 Cookie)
-python run_v2_spider.py -q "人工智能" --cookie "..." --xsrf-token "..." --uid "..."
+scrapy crawl pubscholar_v2 -a query="人工智能" -s V2_MAX_PAGES=10
 ```
 
-### 3.2 Linux / Mac
+### 3.2 使用独立运行器 (备选，绕过 Scrapy engine)
 
 ```bash
 # v1
-scrapy crawl pubscholar_v1 -s V1_MAX_PAGES=10
+python run_v1_spider.py -p 3 -s 10 --no-mysql
 
 # v2
-scrapy crawl pubscholar_v2 -a query="人工智能"
+python run_v2_spider.py -q "人工智能" --cookie "..." --xsrf-token "..." --uid "..."
 ```
 
 ### 3.3 API 诊断

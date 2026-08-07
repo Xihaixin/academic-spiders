@@ -11,7 +11,7 @@ import logging
 from typing import Any, Generator, Optional
 
 import scrapy
-from scrapy import Request
+from scrapy import Request, signals
 from scrapy.http import Response
 
 from academic_spiders.items import ArticleItem
@@ -55,10 +55,12 @@ class PubscholarV1Spider(scrapy.Spider):
         spider.start_page = max(s.getint("V1_START_PAGE"), 1)
         spider.year_from = s.get("V1_YEAR_FROM")
         spider.year_to = s.get("V1_YEAR_TO")
+        # 使用 spider_opened 信号注入初始请求（绕过 Windows 上
+        # Scrapy 2.17 start_requests() 生成器不被调用的 bug）
+        crawler.signals.connect(spider._on_spider_opened, signal=signals.spider_opened)
         return spider
 
-    def start_requests(self) -> Generator[Request, None, None]:
-        """生成起始请求 (第1页或断点续爬页)"""
+    def _on_spider_opened(self):
         logger.info(
             "v1 爬虫启动: start_page=%d, page_size=%d, max_pages=%s, "
             "year_range=%s-%s",
@@ -66,7 +68,7 @@ class PubscholarV1Spider(scrapy.Spider):
             self.max_pages or "无限制",
             self.year_from or "无", self.year_to or "无",
         )
-        yield self._build_page_request(self.start_page)
+        self.crawler.engine.crawl(self._build_page_request(self.start_page))
 
     def _build_page_request(self, page: int) -> Request:
         """构造分页 POST 请求"""
