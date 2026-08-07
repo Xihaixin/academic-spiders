@@ -15,3 +15,5 @@ Thumbs.db
 
 # Project output (爬取结果)
 scholarin_*.csv
+output/
+cookies.json

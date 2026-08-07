@@ -15,6 +15,7 @@ from scrapy import Request, signals
 from scrapy.http import Response
 
 from academic_spiders.items import ArticleItem
+from academic_spiders.utils.parsers import record_to_item
 
 logger = logging.getLogger(__name__)
 
@@ -143,67 +144,4 @@ class PubscholarV2Spider(scrapy.Spider):
         logger.error("第 %s 页网络异常: %s", page, failure.value)
 
     def _parse_record(self, record: dict, page: int) -> ArticleItem:
-        """将 v2 API 记录转为 ArticleItem
-
-        v2 字段映射:
-          id → article_md5
-          title → title
-          abstracts / abstracts_cn → abstracts
-          author[] → author_names
-          authors[] → authors
-          source → source
-          date → date
-          doi → doi
-          keywords[] → key_words
-          article_type → article_type
-          citation_count, download_count → (忽略, 非重点字段)
-          free → is_free
-        """
-        return ArticleItem(
-            _page=page,
-            article_md5=record.get("id", ""),
-            title=record.get("title", ""),
-            abstracts=(record.get("abstracts_cn")
-                       or record.get("abstracts")
-                       or record.get("abstracts_en")
-                       or ""),
-            key_words=record.get("keywords", []),
-            author_names=record.get("author", []),
-            source=record.get("source", ""),
-            volume=record.get("volume", ""),
-            issue=record.get("issue", ""),
-            first_page=record.get("first_page", ""),
-            last_page=record.get("last_page", ""),
-            date=record.get("date", ""),
-            year=self._parse_year(record.get("date", "")),
-            doi=record.get("doi", ""),
-            cstr=record.get("cstr", ""),
-            type=record.get("type", ""),
-            article_type=record.get("article_type", ""),
-            lang="zh",
-            cn_type=record.get("cn_type", ""),
-            is_free=record.get("free", False) or record.get("is_free", False),
-            links=record.get("links", []),
-            authors=record.get("authors", []),
-            extend_entity=record.get("extendEntity", {}),
-            semantic_entities=record.get("semantic_entities", {}),
-            source_list=record.get("source_list", []),
-            license=record.get("license", ""),
-            local_links=record.get("local_links", []),
-            attachments=record.get("attachments", []),
-            degree=record.get("degree", ""),
-            major=record.get("major", ""),
-            school=record.get("school", []),
-            tutor=record.get("tutor", []),
-            graduation_institution=record.get("graduation_institution", []),
-        )
-
-    @staticmethod
-    def _parse_year(date_str: str) -> int:
-        """从日期字符串提取年份"""
-        if not date_str:
-            return None
-        try:
-            return int(date_str[:4])
-        except (ValueError, TypeError):
-            return None
+        return record_to_item(record, page, api_version="v2")

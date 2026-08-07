@@ -17,6 +17,7 @@ import requests
 
 from academic_spiders.items import ArticleItem
 from academic_spiders.pipelines import MySQLPipeline, JsonExportPipeline
+from academic_spiders.utils.parsers import record_to_item
 from academic_spiders.utils.signing import build_signature_headers
 
 logger = logging.getLogger("v2_runner")
@@ -134,47 +135,7 @@ class V2SpiderRunner:
 
     def _record_to_item(self, record: dict, page: int) -> ArticleItem:
         """v2 记录 → ArticleItem"""
-        date_str = record.get("date", "")
-        return ArticleItem(
-            _page=page,
-            article_md5=record.get("id", ""),
-            title=record.get("title", ""),
-            abstracts=(
-                record.get("abstracts_cn")
-                or record.get("abstracts")
-                or record.get("abstracts_en")
-                or ""
-            ),
-            key_words=record.get("keywords", []),
-            author_names=record.get("author", []),
-            source=record.get("source", ""),
-            volume=record.get("volume", ""),
-            issue=record.get("issue", ""),
-            first_page=record.get("first_page", ""),
-            last_page=record.get("last_page", ""),
-            date=date_str,
-            year=int(date_str[:4]) if date_str and len(date_str) >= 4 else None,
-            doi=record.get("doi", ""),
-            cstr=record.get("cstr", ""),
-            type=record.get("type", ""),
-            article_type=record.get("article_type", ""),
-            lang="zh",
-            cn_type=record.get("cn_type", ""),
-            is_free=record.get("free", False) or record.get("is_free", False),
-            links=record.get("links", []),
-            authors=record.get("authors", []),
-            extend_entity=record.get("extendEntity", {}),
-            semantic_entities=record.get("semantic_entities", {}),
-            source_list=record.get("source_list", []),
-            license=record.get("license", ""),
-            local_links=record.get("local_links", []),
-            attachments=record.get("attachments", []),
-            degree=record.get("degree", ""),
-            major=record.get("major", ""),
-            school=record.get("school", []),
-            tutor=record.get("tutor", []),
-            graduation_institution=record.get("graduation_institution", []),
-        )
+        return record_to_item(record, page, api_version="v2")
 
     def _fetch_total(self) -> int:
         """获取搜索总条数"""

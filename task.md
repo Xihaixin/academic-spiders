@@ -1,76 +1,78 @@
-# 📋 Claude Code 文献爬虫系统构建提示词模板
+# 📋 慧科研 (pubscholar.cn) 文献爬虫系统 — 任务列表
 
-## 角色与核心目标 (Role & Goal)
-**角色**：你是一位精通 Python 爬虫工程与反爬对抗的资深架构师。
-**核心目标**：基于 Scrapy 框架，为我开发一套针对 **[目标网站名称，例如：知网/arXiv/PubMed]** 的文献数据采集系统。
+**更新日期**: 2026-08-07
 
+---
 
-## BACKGROUND:项目背景
-当前项目里面 scholarin_spider.py 是一个针对网站 https://pubscholar.cn/ ，接口： /api/v2/resources/article 构造的一个爬虫项目. 再项目根目录中 .aidocs 是对 v2 接口逆向分析的整个完整的过程。
+## 项目背景
+- **目标接口**: v1 (`/hky/open/resources/api/v1/articles`) 和 v2 (`/hky/api/v2/resources/article`)
+- **数据量**: ~7400万条中文文献 (v1 全量), v2 按关键词搜索
+- **技术栈**: Scrapy 2.17 + Python 3.12 + MySQL 8.0
 
-[!重要]：网站 https://pubscholar.cn/ 提供了两个接口，它们分别是：
-- hky/api/v2/resources/article  
-- hky/open/resources/api/v1/articles
+---
 
-这两个接口之间的区别在于 v2 需要用户登录才能使用， v1 是无需登录即可获取数据。
+## 已完成
 
-另一个重要的背景：
-[!重要]：在 result 目录中，我为你提供了 v1 接口对应的请求信息，以及响应数据。
+### ✅ 1. Scrapy Windows 兼容性修复
+- **问题**: `start_requests()` 生成器不被 asyncio reactor 调度; `CookiesMiddleware` 清除注入的 Cookie header
+- **修复**: 改用 `spider_opened` 信号 + `engine.crawl()`; `COOKIES_ENABLED = False`
+- **验证**: `scrapy crawl pubscholar_v1 -s V1_MAX_PAGES=3` → 150 items 成功
 
-[!重要]：我们只需要获取中文文献（大约有 7千多万条数据），参考 result 中的参数
+### ✅ 2. 数据库表结构
+- 6 张表: `articles`, `article_extended_data`, `article_thesis_info`, `article_authors`, `article_keywords`, `spider_run_log`
+- SQL 脚本: `sql/schema.sql`
 
-[!重要]：在当前项目的根目录中 “解密分析过程.md” 存放关于 v1 接口的解密过程，我已经得到了对应的密钥和加密方法。你可以进行测试
+### ✅ 3. Scrapy 项目结构
+- `items.py`, `pipelines.py`, `settings.py`, `middlewares.py`, `utils/signing.py`
+- Spiders: `pubscholar_v1.py`, `pubscholar_v2.py`
 
+---
 
-## 任务总览
-目前 v2 对应的爬虫已经做完，初步测试可以使用，**接下来的任务是**：
-1. 我们主要任务有两个
-2. 主要任务一：使用 scrapy 构造 v1 接口对应的爬虫
-3. 主要任务二：为已有的 v2 接口对应的爬虫使用 scrapy 项目进行重构
-4. 构造爬虫时请使用 scrapy 框架
-5. 在构造爬虫之前，你需要先阅读 result 目录下关于 v1 接口的请求和响应数据
-6. 我们的数据将要存储到 MySQL 数据库中，所以你要先阅读我为你提供的响应数据，为我构造数据结构并给出用于生成对应数据表的 SQL 脚本文件。[这步完成后需要等我进行确认]
-7. 当数据结构确认之后，你要开始构建 v1 接口对应的爬虫
-8. 当 v1 爬虫构建完成之后，再对 v2 爬虫进行重构
+## 待执行任务
 
+### 🔴 高优先级
 
-## 2. 目标网站与数据模型 (Target & Schema)
-*   **网站标的**：https://pubscholar.cn/
-*   **目标接口**：https://pubscholar.cn/hky/open/resources/api/v1/articles
-*   **爬取深度**：获取该网站所有的中文文献数据
-*   **关键字段 (Item)**:需要你进行分析，然后我们一起共同进行确认
-*   
+| # | 任务 | 说明 |
+|---|------|------|
+| **H1** | 消除代码重复: `_parse_record` / `_record_to_item` | `run_v1_spider.py:138` 和 `pubscholar_v1.py:181` 有 ~60 行重复字段映射，应收敛到 `utils/parsers.py`，两处统一引用 |
+| **H2** | 实现 `spider_run_log` 写入 | Pipeline 启动/结束时自动写入运行日志 (run_id UUID, 起止时间, total_items, last_page) |
+| **H3** | Cookie 管理规范化 | 移除 `settings.py` 中硬编码的 Cookie 默认值，改为 `cookies.json` 或 `COOKIE` 环境变量；v1/v2 独立配置 |
 
-## 3. 技术栈与工程规范 (Tech Stack)
-*   **核心框架**：基于逆向解密逻辑使用 Scrapy 框架构建爬虫 
-*   **项目结构**：必须生成完整的 Scrapy 项目目录（包含 `items.py`, `pipelines.py`, `settings.py`, `middlewares.py` 和 `spiders/`）。
-*   **依赖文件**：使用 uv 来管理整个项目的依赖，当前项目已经引入对应的配置文件
+### 🟡 中优先级
 
-## 4. 核心功能需求 (Functional Requirements)
-请按以下逻辑编写爬虫代码，并逐一验证：
-1.  **起始请求**：模拟浏览器发送带必要 Headers 的请求。
-2.  **列表解析**：提取当前页所有文献的详情页链接，并生成新的 `Request` 请求。
-3.  **详情解析**：精准提取上述 7 个字段，处理字段为空或缺失的异常情况。
-4.  **翻页处理**：网站前端需要用户进行滑动实现动态请求与数据的加载，不过我们使用了接口，这个似乎可以直接在请求参数中为 page 进行赋值
-5.  **数据管道**：在 `pipelines.py` 中实现数据清洗（去除空白字符、HTML 标签）和去重逻辑，可以保存请求得到的原始**JSON** 响应数据到 `./output/` 目录。我们数据存储主要通过连接 MySQL 进行存储。
+| # | 任务 | 说明 |
+|---|------|------|
+| **M1** | Middleware/Pipeline 弃用警告修复 | `process_request(self, request, spider)` → 通过 `self.crawler` 获取 spider，消除 Scrapy 2.17 弃用警告 |
+| **M2** | 修复双重重试冲突 | `PubscholarRetryMiddleware` 和 `RetryMiddleware` 均拦截 403/429，导致 `retry/max_reached: 2`（重复计数） |
+| **M3** | v2 Spider 集成验证 | 需要用户提供 `scholarin.cn` 登录 Cookie (XSRF-TOKEN, JSESSIONID, hky_ticket 等) |
 
-## 5. 反爬策略与配置 (Anti-Scraping & Settings)
-请在 `settings.py` 中或通过 `custom_settings` 配置以下内容：
-*   **并发控制**：`CONCURRENT_REQUESTS` 设置为 **[例如：16]**，`DOWNLOAD_DELAY` 设置为 **[例如：2-5 秒随机]**。
-*   **请求头伪装**：轮换 `User-Agent`，并携带必要的 `Cookie`（如需登录请告知我，我先提供）。
-*   **自动化限速**：启用 `AUTOTHROTTLE_ENABLED = True`。
-*   **防封禁策略**：若遇到 403/429 状态码，自动重试并指数退避。
+### 🟢 低优先级
 
-## 6. 执行步骤与交互协议 (Workflow)
-**请严格遵循以下步骤执行，每完成一步请向我汇报进展并等待确认（除非我指示你跳过）：**
+| # | 任务 | 说明 |
+|---|------|------|
+| **L1** | v1 Cookie 过期指引 | 当前 `V1_COOKIE` 为浏览器会话 Cookie，过期后需从 pubscholar.cn 重新获取，补充文档说明 |
 
-*   **步骤 1：站点探查**：使用 `curl` 或 `fetch` 工具访问目标 URL，分析 HTML 结构和 Ajax 请求，向我报告你找到的数据源（静态 HTML / 动态接口）。
-*   **步骤 2：模型定义**：在 `items.py` 中定义好数据模型，并展示给我确认。
-*   **步骤 3：核心编码**：编写 Spider、Pipeline 和中间件。
-*   **步骤 4：冒烟测试**：运行爬虫抓取 **[例如：前 5 页]** 数据，捕捉运行报错并**自动分析修复**（不得擅自修改目标网站结构）。
-*   **步骤 5：交付总结**：提供运行命令和最终文件清单。
+---
 
-## 7. 约束与边界条件 (Constraints)
-*   **合规性**：必须遵守目标网站的 `robots.txt` 协议，爬取间隔不可少于 1 秒。
-*   **错误容错**：代码中必须包含 `try-except` 异常捕获，避免因某个 Item 字段缺失导致整个爬虫崩溃。
+## 数据结构审查结论
 
+| 审查项 | 状态 |
+|--------|------|
+| Item 字段 ↔ API 响应 | ✅ 34 字段全部映射 |
+| Item → Pipeline INSERT | ✅ 字段一一对应 |
+| Pipeline → SQL schema | ✅ 列数匹配 |
+| spider_run_log 写入 | ❌ 表已建但 Pipeline 未写入 (见 H2) |
+
+---
+
+## 改动文件清单 (本轮已提交)
+
+| 文件 | 改动内容 |
+|------|----------|
+| `settings.py:10` | `COOKIES_ENABLED = False` |
+| `spiders/pubscholar_v1.py` | `start_requests()` → `_on_spider_opened()` signal |
+| `spiders/pubscholar_v2.py` | `start_requests()` → `_on_spider_opened()` signal |
+| `middlewares.py` | `_retry()` 签名适配 Scrapy 2.17 |
+| `test_v1_api.py` | 适配 `build_signature_headers()` finger 参数 |
+| `.aidocs/project-guide.md` | 修正运行方式为 `scrapy crawl` |
+| `.aidocs/troubleshooting-record.md` | 修正根因分析 |

@@ -17,6 +17,7 @@ import requests
 
 from academic_spiders.items import ArticleItem
 from academic_spiders.pipelines import MySQLPipeline, JsonExportPipeline
+from academic_spiders.utils.parsers import record_to_item
 from academic_spiders.utils.signing import build_signature_headers
 
 logger = logging.getLogger("v1_runner")
@@ -137,41 +138,7 @@ class V1SpiderRunner:
 
     def _record_to_item(self, record: dict, page: int) -> ArticleItem:
         """将 API 记录转为 ArticleItem"""
-        return ArticleItem(
-            _page=page,
-            article_md5=record.get("id", ""),
-            title=record.get("title", ""),
-            abstracts=record.get("abstracts", ""),
-            key_words=record.get("keywords", []),
-            author_names=record.get("author", []),
-            source=record.get("source", ""),
-            volume=record.get("volume", ""),
-            issue=record.get("issue", ""),
-            first_page=record.get("first_page", ""),
-            last_page=record.get("last_page", ""),
-            date=record.get("date", ""),
-            year=record.get("year"),
-            doi=record.get("doi", ""),
-            cstr=record.get("cstr", ""),
-            type=record.get("type", ""),
-            article_type=record.get("article_type", ""),
-            lang="zh",
-            cn_type=record.get("cn_type", ""),
-            is_free=record.get("is_free", False),
-            links=record.get("links", []),
-            authors=record.get("authors", []),
-            extend_entity=record.get("extendEntity", {}),
-            semantic_entities=record.get("semantic_entities", {}),
-            source_list=record.get("source_list", []),
-            license=record.get("license", ""),
-            local_links=record.get("local_links", []),
-            attachments=record.get("attachments", []),
-            degree=record.get("degree", ""),
-            major=record.get("major", ""),
-            school=record.get("school", []),
-            tutor=record.get("tutor", []),
-            graduation_institution=record.get("graduation_institution", []),
-        )
+        return record_to_item(record, page, api_version="v1")
 
     def run(self):
         """主运行循环"""

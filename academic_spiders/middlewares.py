@@ -54,7 +54,7 @@ class PubscholarSigningMiddleware:
                 return config
         return {}
 
-    def process_request(self, request, spider):
+    def process_request(self, request):
         """在请求发出前注入签名头和认证信息"""
         config = self._get_config(request.url)
         if not config:
@@ -98,7 +98,7 @@ class PubscholarRetryMiddleware(RetryMiddleware):
     def _is_target(self, url: str) -> bool:
         return "pubscholar.cn" in url or "scholarin.cn" in url
 
-    def _retry(self, request, reason, spider):
+    def _retry(self, request, reason):
         """重试前刷新签名"""
         retry_req = super()._retry(request, reason)
         if retry_req and self._is_target(request.url):
@@ -109,12 +109,12 @@ class PubscholarRetryMiddleware(RetryMiddleware):
                 retry_req.headers[key] = value
         return retry_req
 
-    def process_response(self, request, response, spider):
+    def process_response(self, request, response):
         if response.status in (429, 403):
             reason = "频率限制" if response.status == 429 else "权限/签名问题"
             logger.warning(
                 "HTTP %d (%s): %s",
                 response.status, reason, request.url,
             )
-            return self._retry(request, reason, spider) or response
+            return self._retry(request, reason) or response
         return response

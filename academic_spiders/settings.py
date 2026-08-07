@@ -27,7 +27,9 @@ AUTOTHROTTLE_TARGET_CONCURRENCY = 4.0
 # ── 重试与错误处理 ────────────────────────────────────────────
 RETRY_ENABLED = True
 RETRY_TIMES = 3
-RETRY_HTTP_CODES = [403, 429, 500, 502, 503, 504]
+# 403 由 PubscholarRetryMiddleware 单独处理（含签名刷新），
+# 避免与 Scrapy 内置 RetryMiddleware 双重重试
+RETRY_HTTP_CODES = [429, 500, 502, 503, 504]
 
 # ── 下载器中间件 ──────────────────────────────────────────────
 DOWNLOADER_MIDDLEWARES = {
@@ -70,38 +72,34 @@ DEFAULT_REQUEST_HEADERS = {
     "Sec-Fetch-Site": "same-origin",
 }
 
+# ── Cookie / 认证配置 (通过 cookies.json + 环境变量加载) ────
+from academic_spiders.utils.cookie_config import load_cookie_config
+_cookie_cfg = load_cookie_config()
+_v1cfg = _cookie_cfg["v1"]
+_v2cfg = _cookie_cfg["v2"]
+
 # ── v1 API 配置 ───────────────────────────────────────────────
 PUBSCHOLAR_V1_URL = "https://pubscholar.cn/hky/open/resources/api/v1/articles"
-PUBSCHOLAR_SECRET = "6m6pingbinwaktg227gngifoocrfbo95"
-PUBSCHOLAR_USER_ID = "0b68c4370e9a43e4ad1690fdd31f643f"
-
-# 会话 Cookie (从浏览器获取，无需登录 — 访问 pubscholar.cn 即可获得)
-# 格式: "key1=value1; key2=value2"
-V1_COOKIE = "XSRF-TOKEN=115318a2-c245-446e-b005-1cee19f9fe49; JSESSIONID=ADE2864C54C437C14B2E7CB2C2CAB732"
-
-# CSRF Token (从 Cookie 中提取的 XSRF-TOKEN 值)
-V1_XSRF_TOKEN = "115318a2-c245-446e-b005-1cee19f9fe49"
-
-# 设备指纹 (x-finger header, 每次会话保持一致)
-V1_FINGER = "c84069ed4e4270f9897e3a07acb81355"
+PUBSCHOLAR_SECRET = _v1cfg["secret"]
+PUBSCHOLAR_USER_ID = _v1cfg["user_id"]
+V1_COOKIE = _v1cfg["cookie"]
+V1_XSRF_TOKEN = _v1cfg["xsrf_token"]
+V1_FINGER = _v1cfg["finger"]
 
 # ── 爬取控制 ──────────────────────────────────────────────────
 V1_MAX_PAGES = None
-V1_PAGE_SIZE = 50
+V1_PAGE_SIZE = _v1cfg["page_size"]
 V1_START_PAGE = 1
 V1_YEAR_FROM = None
 V1_YEAR_TO = None
 
 # ── v2 API 配置 ───────────────────────────────────────────────
 V2_API_URL = "https://scholarin.cn/hky/api/v2/resources/article"
-V2_QUERY = ""                                  # 默认搜索关键词
+V2_QUERY = ""
 V2_MAX_PAGES = None
-V2_PAGE_SIZE = 20
+V2_PAGE_SIZE = _v2cfg["page_size"]
 V2_START_PAGE = 1
-
-# v2 登录 Cookie (从已登录 scholarin.cn 浏览器获取)
-# 包含: XSRF-TOKEN, JSESSIONID, hky_ticket, pub_ticket 等
-V2_COOKIE = ""
-V2_XSRF_TOKEN = ""
-V2_USER_ID = ""                                # 登录用户的 UID
-V2_FINGER = "c84069ed4e4270f9897e3a07acb81355"
+V2_COOKIE = _v2cfg["cookie"]
+V2_XSRF_TOKEN = _v2cfg["xsrf_token"]
+V2_USER_ID = _v2cfg["user_id"]
+V2_FINGER = _v2cfg["finger"]

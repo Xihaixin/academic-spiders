@@ -160,19 +160,25 @@ v1 和 v2 接口均不包含 `/app/`，使用同一密钥。
 
 ## 7. Cookie 获取方法
 
-### v1 (pubscholar.cn)
+### v1 (pubscholar.cn) — 会话 Cookie，约数小时有效期
 1. 浏览器打开 `https://pubscholar.cn/` (无需登录)
-2. F12 → Application → Cookies
+2. F12 → Application → Cookies → `pubscholar.cn`
 3. 复制 `XSRF-TOKEN` 和 `JSESSIONID` 的值
+4. 更新 `cookies.json` 中 `v1.cookie` 和 `v1.xsrf_token` 字段
 
-### v2 (scholarin.cn)
+### v2 (scholarin.cn) — 登录 Cookie，约数小时有效期
 1. 浏览器登录 `https://scholarin.cn/`
 2. F12 → Network → 搜索任意关键词
 3. 找到 `/hky/api/v2/resources/article` 请求
-4. 复制 Cookie / X-XSRF-TOKEN / uid
+4. 复制完整的 Cookie 值、`X-XSRF-TOKEN`、Payload 中的 `uid`
+5. 更新 `cookies.json` 中 `v2.cookie`、`v2.xsrf_token`、`v2.user_id` 字段
 
 ### Cookie 过期处理
-Cookie 过期后 API 返回 403 `"第三方应用独立请求时，无此操作权限"`。重新按上述步骤获取即可。
+Cookie 过期后 API 返回 403 `{"cause":"第三方应用独立请求时，无此操作权限","failure":true}`。
+
+1. 重新按上述步骤从浏览器获取新的 Cookie
+2. 更新 `cookies.json`（或在命令行用 `-s V1_COOKIE=...` 临时覆盖）
+3. v1 会话 Cookie 通常有效数小时；v2 登录 Cookie 通常 24 小时内有效
 
 ---
 

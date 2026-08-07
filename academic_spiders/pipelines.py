@@ -5,6 +5,7 @@
 import json
 import logging
 import os
+import uuid
 from datetime import datetime
 from typing import Optional
 
@@ -33,7 +34,7 @@ class JsonExportPipeline:
         os.makedirs(output_dir, exist_ok=True)
         return cls(output_dir=output_dir)
 
-    def process_item(self, item, spider):
+    def process_item(self, item):
         page = item.get("_page", "unknown")
         if page not in self.buffers:
             self.buffers[page] = []
@@ -41,7 +42,7 @@ class JsonExportPipeline:
         self.buffers[page].append(dict(item))
         return item
 
-    def close_spider(self, spider):
+    def close_spider(self):
         for page, items in self.buffers.items():
             filename = os.path.join(
                 self.output_dir, f"page_{page:06d}.json"
@@ -55,18 +56,31 @@ class JsonExportPipeline:
 # MySQL 管道: 多表写入
 # ============================================================
 class MySQLPipeline:
-    """将 Item 写入 MySQL 数据库（articles + 子表）"""
+    """将 Item 写入 MySQL 数据库（articles + 子表 + spiders_run_log）"""
 
     def __init__(self, settings: dict):
         self.pool: Optional[PooledDB] = None
         self.settings = settings
+        self._run_id: Optional[str] = None
+        self._spider_name: str = ""
+        self._start_time: Optional[datetime] = None
+        self._item_count: int = 0
+        self._error_count: int = 0
+        self._last_page: int = 0
         self._init_pool()
 
     @classmethod
     def from_crawler(cls, crawler):
         instance = cls(settings=crawler.settings)
+        crawler.signals.connect(instance._on_spider_opened, signals.spider_opened)
         crawler.signals.connect(instance.close_spider, signals.spider_closed)
         return instance
+
+    def _on_spider_opened(self, spider):
+        self._spider_name = spider.name
+        self._start_time = datetime.now()
+        self._run_id = uuid.uuid4().hex
+        self._insert_run_log("running")
 
     def _init_pool(self):
         """初始化 MySQL 连接池"""
@@ -86,12 +100,15 @@ class MySQLPipeline:
         )
         logger.info("MySQL 连接池已初始化")
 
-    def close_spider(self, spider):
+    def close_spider(self):
+        self._update_run_log("completed")
         if self.pool:
             self.pool.close()
             logger.info("MySQL 连接池已关闭")
 
-    def process_item(self, item, spider):
+    def process_item(self, item):
+        self._item_count += 1
+        self._last_page = max(self._last_page, item.get("_page", 0) or 0)
         try:
             conn = self.pool.connection()
             try:
@@ -107,6 +124,7 @@ class MySQLPipeline:
             finally:
                 conn.close()
         except Exception as e:
+            self._error_count += 1
             logger.error("写入 MySQL 失败 [%s]: %s", item.get("article_md5"), e)
         return item
 
@@ -339,6 +357,52 @@ class MySQLPipeline:
                 self._to_json(item.get("tutor")),
                 self._to_json(item.get("graduation_institution")),
             ))
+
+    # ── spider_run_log ────────────────────────────────────────
+
+    def _insert_run_log(self, status: str):
+        """插入运行日志起始记录"""
+        try:
+            conn = self.pool.connection()
+            try:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """INSERT INTO spider_run_log
+                           (run_id, spider_name, start_time, status)
+                           VALUES (%s, %s, %s, %s)""",
+                        (self._run_id, self._spider_name,
+                         self._start_time, status),
+                    )
+                conn.commit()
+            finally:
+                conn.close()
+            logger.info("spider_run_log 已写入: run_id=%s", self._run_id[:12])
+        except Exception as e:
+            logger.warning("无法写入 spider_run_log: %s", e)
+
+    def _update_run_log(self, status: str):
+        """更新运行日志 (结束时间、状态、统计)"""
+        try:
+            conn = self.pool.connection()
+            try:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """UPDATE spider_run_log SET
+                           end_time = %s,
+                           status = %s,
+                           total_items = %s,
+                           total_errors = %s,
+                           last_page = %s
+                           WHERE run_id = %s""",
+                        (datetime.now(), status, self._item_count,
+                         self._error_count, self._last_page,
+                         self._run_id),
+                    )
+                conn.commit()
+            finally:
+                conn.close()
+        except Exception as e:
+            logger.warning("无法更新 spider_run_log: %s", e)
 
     # ── 辅助方法 ─────────────────────────────────────────────
 
