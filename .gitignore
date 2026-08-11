@@ -15,5 +15,6 @@ Thumbs.db
 
 # Project output (爬取结果)
 scholarin_*.csv
-output/
+output/*
 cookies.json
+.env
