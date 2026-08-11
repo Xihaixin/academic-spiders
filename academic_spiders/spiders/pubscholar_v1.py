@@ -81,7 +81,7 @@ class PubscholarV1Spider(scrapy.Spider):
             "user_id": self.user_id,
             "lang": "zh",
             "aggregations": {
-                "type": "",
+                "type": "",             # 期刊论文, 学位论文, 会议论文, 预印本论文
                 "subject": "",
                 "year": "",
                 "keyword": "",

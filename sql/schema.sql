@@ -8,8 +8,8 @@
 -- ============================================================
 
 -- 创建数据库（如不存在）
--- CREATE DATABASE IF NOT EXISTS pubscholar DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
--- USE pubscholar;
+-- CREATE DATABASE IF NOT EXISTS academicdb DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- USE academicdb;
 
 
 /*
@@ -43,6 +43,42 @@
  *  响应.links[]               → articles.links (JSON)
  */
 
+
+/*
+  1. 确定数据表：article 主表
+  2. 文献-作者关联表：article_authors
+
+  - spider 运行状态表
+
+  对表进行调整的前置思考：
+  1. article 表里面已经存在 author_names, key_words(只有中文),
+  2. is_free 字段是否可以使用 is_open_access 
+  3. 关于 links 字段，它里面只有 url 和 is_open_access 是有用字段
+  4. links.url 与 doi 两个字段之间的联系：links.url 等于 doi 前面加上一个 https://doi.org 吗
+  5. type, article_type 它们都用来表示当前论文的类型，那么三者之间有什么区别呢 ？
+     我看到首页显示了四种论文类型：期刊论文, 学位论文, 会议论文, 预印本论文
+  - date 和 year 两个字段确实不太一样：比如在查看 “学位论文”时，date: 202507, year: 2025
+  - 如果是学位论文的话，它的字段结构还是有一点不太一样：它有对应的 degree, tutor 导师, 没有所谓的 doi, volume, issue 有一个graduation_institution 这个应该是毕业的机构
+
+
+  6. cstr 在中国科学院、国家科技基础条件平台中心等机构建设的系统中，cstr 是给科技资源（包括论文、数据集、仪器设备等）分配的唯一永久标识符，类似于国际通用的 DOI（数字对象标识符）。
+  7. 在 article 表中还有一个比较关键的 url link，似乎是 local_link 似乎是平台服务器上所保存的文件地址，这个字段是否也应该添加上，如果有的话？
+  8. 论文的封面是什么样的 ？
+
+  建立一个新表 article_info 另外还有一个问题：在平台首页展示出来的论文简略信息列表元素中，那些卡片实际上应该是一个点击后可以跳转的链接，我们应该存储这些 url ，因为我们需要跳转到论文详情页中获取更丰富的数据
+  - 表 article_extended_data 是否有必要存在 ？可这里卖弄的额字段似乎只有三个关键内容：中文关键词，英文关键词，contrib_institution 机构名称
+
+  contrib_institution 机构与 institution 以及 graduation_institution 这三个字段之间的区别是什么 ？
+  - 学位论文有 graduation_institution
+  - 
+
+
+  我看到响应内容中既有中文摘要，也有英文摘要，实际上没有必要将两个摘要都放在 article 表中；我们在 article 表中只存放与论文一致语言的关键词列表。这么一看，article_keyword 表确实有存在的必要
+  关于 article_thesis_info 表用于存储学位论文，具体中文文献中大约有 100 万左右的数据。具体有什么作用？
+  如何判断所获取的文献是否属于学位论文这种类型？ article_type : "学位论文"，在响应体中是根据 article_type 进行判断 
+  它里面的字段对应的数据是从哪里获取的 ？为什么为全部都是空值 ？ 是我的程序解析问题，还是压根就不存在那些字段 ？
+
+*/
 
 -- ============================================================
 -- 1. 文献主表 (articles)

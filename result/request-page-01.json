@@ -11,7 +11,12 @@
         "year": "",
         "keyword": "",
         "collection": "",
-        "lang": "C",
+        "lang": "C", 
+        "_coment":{
+            "name": "lang",
+            "human add": "人为添加 _coment 字段",
+            "description":"中文使用 lang: C 标识"
+        },
         "source": "",
         "correspAuthor": "",
         "funding": "",
