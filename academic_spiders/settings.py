@@ -1,6 +1,7 @@
 # Scrapy settings for academic_spiders project
 
 import logging
+import os
 
 from academic_spiders.utils.logging_config import setup_file_logging
 
@@ -20,6 +21,9 @@ TELNETCONSOLE_ENABLED = False
 LOG_LEVEL = "INFO"
 LOG_FORMAT = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 LOG_DATEFORMAT = "%H:%M:%S"
+# 简洁日志: 每条文献只记一行摘要 (页码/标题/去重键),
+# 不打印完整 item dict (完整 JSON 已存 output/ 目录)
+LOG_FORMATTER = "academic_spiders.utils.logformatter.ConciseLogFormatter"
 
 # ── 并发控制 ──────────────────────────────────────────────────
 CONCURRENT_REQUESTS = 8
@@ -52,12 +56,14 @@ ITEM_PIPELINES = {
     "academic_spiders.pipelines.SpiderRunLogPipeline": 300,
 }
 
-# ── MySQL 配置 ────────────────────────────────────────────────
-MYSQL_HOST = "localhost"
-MYSQL_PORT = 3306
-MYSQL_USER = "root"
-MYSQL_PASSWORD = "200310"
-MYSQL_DATABASE = "academicdb"
+# ── MySQL 配置 (支持环境变量覆盖, 用于测试/生产环境隔离) ──────
+#   生产: 默认 academicdb
+#   测试: MYSQL_DATABASE=academicdb_test (环境变量 / -s 参数 / --db-name)
+MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
+MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))
+MYSQL_USER = os.getenv("MYSQL_USER", "root")
+MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "200310")
+MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "academicdb")
 MYSQL_POOL_SIZE = 8
 
 # ── Feed 导出 ─────────────────────────────────────────────────
