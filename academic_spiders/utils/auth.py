@@ -181,7 +181,7 @@ def auto_login(username: str, password: str) -> Optional[dict]:
 
     if not pub_ticket:
         logger.error("登录后未获取到 pub_ticket cookie")
-        logger.debug("所有 cookies: %s", [(c.name, c.value[:20]) for c in cookies])
+        logger.debug("所有 cookies: %s", [(c.name, (c.value or "")[:20]) for c in cookies])
         return None
 
     raw_cookie = "; ".join(

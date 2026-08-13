@@ -113,7 +113,7 @@ class PubscholarRetryMiddleware(RetryMiddleware):
                 retry_req.headers[key] = value
         return retry_req
 
-    def process_response(self, request, response):
+    def process_response(self, request, response, spider):
         if response.status == 403:
             body = response.text[:200] if hasattr(response, 'text') else ""
             if "第三方应用独立请求时" in body:

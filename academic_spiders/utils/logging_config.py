@@ -14,6 +14,7 @@ import logging
 import os
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
+from typing import Optional
 
 # 项目根目录 (utils/ 的上一级是 academic_spiders/, 再上一级是项目根)
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -37,7 +38,7 @@ def is_test_db(db_name: str) -> bool:
     return bool(db_name) and db_name != PROD_DB_NAME
 
 
-def get_log_dir(db_name: str = None) -> Path:
+def get_log_dir(db_name: Optional[str] = None) -> Path:
     """获取 (并创建) 日志目录
 
     :param db_name: 数据库名 (None 时从环境变量读取)
@@ -54,7 +55,7 @@ def get_log_dir(db_name: str = None) -> Path:
 def setup_file_logging(
     log_filename: str,
     level: int = logging.INFO,
-    db_name: str = None,
+    db_name: Optional[str] = None,
 ):
     """为 root logger 添加轮转文件 handler (保留控制台输出)
 

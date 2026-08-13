@@ -73,8 +73,8 @@ class V2SpiderRunner:
 
         # Pipelines
         self.json_pipeline = JsonExportPipeline(output_dir="output")
-        self.mysql_pipeline: MySQLPipeline = None
-        self.run_log: SpiderRunLogPipeline = None
+        self.mysql_pipeline: Optional[MySQLPipeline] = None
+        self.run_log: Optional[SpiderRunLogPipeline] = None
 
         # 统计
         self.stats = {"pages": 0, "items": 0, "errors": 0}
@@ -110,7 +110,7 @@ class V2SpiderRunner:
             headers["X-XSRF-TOKEN"] = self.xsrf_token
         return headers
 
-    def _fetch_page(self, page: int) -> dict:
+    def _fetch_page(self, page: int) -> Optional[dict]:
         payload = {
             "uid": self.user_id,
             "user_id": self.user_id,

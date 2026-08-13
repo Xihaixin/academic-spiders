@@ -9,3 +9,12 @@ dependencies = [
     "pymysql>=1.1.0",
     "dbutils>=3.1.0",
 ]
+
+# ── 类型检查配置 (Pylance / Pyright) ─────────────────────────
+# Scrapy 项目是高度动态的 (Item 是 dict 子类、crawler.settings 未类型化、
+# pymysql 无类型存根)，strict/standard 模式会产生上千条 "Unknown 类型" 噪音。
+# 这里固定 basic 模式并关闭纯噪音规则，仅保留核心类型检查。
+[tool.pyright]
+typeCheckingMode = "basic"
+reportUnusedCallResult = false
+reportPrivateImportUsage = false

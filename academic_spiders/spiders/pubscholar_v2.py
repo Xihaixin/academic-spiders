@@ -36,6 +36,7 @@ class PubscholarV2Spider(scrapy.Spider):
 
     # 运行状态 (供 SpiderRunLogPipeline 读取)
     last_page = 0
+    _abnormal_count = 0
 
     # 默认配置
     api_url = "https://scholarin.cn/hky/api/v2/resources/article"
@@ -80,7 +81,9 @@ class PubscholarV2Spider(scrapy.Spider):
             self.query, self.start_page, self.page_size,
             self.max_pages or "无限制",
         )
-        self.crawler.engine.crawl(self._build_page_request(self.start_page))
+        crawler = self.crawler
+        if crawler is not None and crawler.engine is not None:
+            crawler.engine.crawl(self._build_page_request(self.start_page))
 
     def _build_page_request(self, page: int) -> Request:
         payload = {
@@ -115,7 +118,7 @@ class PubscholarV2Spider(scrapy.Spider):
             return
 
         try:
-            data = response.json()
+            data = json.loads(response.text)
         except json.JSONDecodeError as e:
             logger.error("第 %d 页 JSON 解析失败: %s", page, e)
             return

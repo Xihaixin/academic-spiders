@@ -11,6 +11,7 @@ from typing import Optional
 import pymysql
 from dbutils.pooled_db import PooledDB
 from scrapy import signals
+from scrapy.settings import Settings
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +59,7 @@ class JsonExportPipeline:
 class MySQLPipeline:
     """将 Item 写入 MySQL 数据库"""
 
-    def __init__(self, settings: dict):
+    def __init__(self, settings: Settings):
         self.pool: Optional[PooledDB] = None
         self.settings = settings
         self._init_pool()
@@ -92,6 +93,8 @@ class MySQLPipeline:
             logger.info("MySQL 连接池已关闭")
 
     def process_item(self, item, spider):
+        if self.pool is None:
+            return item
         try:
             conn = self.pool.connection()
             try:
@@ -409,7 +412,7 @@ class SpiderRunLogPipeline:
     统计来源: Scrapy crawler.stats (request_count / item_scraped_count / log_count/ERROR)
     """
 
-    def __init__(self, settings: dict):
+    def __init__(self, settings: Settings):
         self.settings = settings
         self.run_id: Optional[str] = None
 
@@ -460,7 +463,7 @@ class SpiderRunLogPipeline:
 
     # ── 通用方法 (Scrapy signals 和 Windows runner 共用) ──────
 
-    def write_run_start(self, spider_name: str, extra: dict = None):
+    def write_run_start(self, spider_name: str, extra: Optional[dict] = None):
         """写入运行开始记录 (status='running')"""
         # 标记上次异常终止的遗留记录 (status 仍为 'running' 的僵尸记录)
         self._mark_interrupted()
@@ -518,7 +521,7 @@ class SpiderRunLogPipeline:
         total_items: int = 0,
         total_errors: int = 0,
         last_page: int = 0,
-        error_message: str = None,
+        error_message: Optional[str] = None,
     ):
         """更新运行结束记录 (status + 统计信息)"""
         if not self.run_id:

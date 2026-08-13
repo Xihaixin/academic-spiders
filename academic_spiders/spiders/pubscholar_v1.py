@@ -39,6 +39,7 @@ class PubscholarV1Spider(scrapy.Spider):
 
     # 运行状态 (供 SpiderRunLogPipeline 读取)
     last_page = 0
+    _abnormal_count = 0
 
     # 默认配置（from_crawler 会使用 settings 中的值覆盖）
     api_url = "https://pubscholar.cn/hky/open/resources/api/v1/articles"
@@ -82,7 +83,9 @@ class PubscholarV1Spider(scrapy.Spider):
             self.max_pages or "无限制",
             self.year_from or "无", self.year_to or "无",
         )
-        self.crawler.engine.crawl(self._build_page_request(self.start_page))
+        crawler = self.crawler
+        if crawler is not None and crawler.engine is not None:
+            crawler.engine.crawl(self._build_page_request(self.start_page))
 
     def _build_page_request(self, page: int) -> Request:
         """构造分页 POST 请求"""
@@ -134,7 +137,7 @@ class PubscholarV1Spider(scrapy.Spider):
 
         # 解析 JSON
         try:
-            data = response.json()
+            data = json.loads(response.text)
         except json.JSONDecodeError as e:
             logger.error("第 %d 页 JSON 解析失败: %s", page, e)
             return

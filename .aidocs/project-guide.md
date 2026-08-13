@@ -1,6 +1,6 @@
 # 慧科研 (pubscholar.cn) 文献爬虫系统 — 项目文档
 
-**版本**: 3.2 | **日期**: 2026-08-13
+**版本**: 3.3 | **日期**: 2026-08-13
 
 ---
 
@@ -106,6 +106,68 @@ python run_v2_spider.py -q "人工智能" --cookie "..." --xsrf-token "..." --ui
 python test_v1_api.py
 ```
 
+### 3.5 调试
+
+#### 方式 1: DEBUG 日志 (最快, 不改代码)
+
+```bash
+# Scrapy + 测试库 + DEBUG 日志 + 只爬 1 页
+scrapy crawl pubscholar_v1 \
+  -s MYSQL_DATABASE=academicdb_test \
+  -s LOG_LEVEL=DEBUG \
+  -s V1_MAX_PAGES=1
+
+# runner + 测试库 + verbose
+python run_v1_spider.py -p 1 -s 3 --db-name academicdb_test -v
+```
+
+DEBUG 日志输出: 每个请求的 HTTP 状态、翻页进度、错误与限流信息。每条文献只记一行摘要 (页码/标题/去重键)，完整 JSON 数据保存在 `output/` 目录 (JsonExportPipeline)，日志中不再重复输出完整字段。
+
+#### 方式 2: VSCode 断点调试 (推荐)
+
+项目内置 [.vscode/launch.json](../../.vscode/launch.json) 三个配置:
+
+| 配置 | 用途 |
+|------|------|
+| 调试 pubscholar_v1 (测试库) | Scrapy 爬虫 + 测试库 + DEBUG + 1 页 |
+| 调试 run_v1_spider (测试库) | runner + 测试库 (同步代码, 调试体验最佳) |
+| 调试 pubscholar_v1 (生产库, 慎用) | 仅确认安全时使用 |
+
+使用步骤: 代码行号左侧设断点 → `F5` → 选择配置 → 启动。
+
+推荐断点位置:
+
+| 位置 | 观察内容 |
+|------|----------|
+| `pubscholar_v1.py` `parse()` | 翻页逻辑、响应解析 |
+| `parsers.py` `record_to_item()` | 字段映射、dedup_key 生成 |
+| `pipelines.py` `_upsert_article()` | 去重写入、审计逻辑 |
+| `middlewares.py` `process_request()` | 签名注入 |
+
+> 调试体验建议: 优先用「调试 run_v1_spider」——runner 是同步代码, 断点/单步/变量查看直观; Scrapy 是 Twisted 异步引擎, 断点命中但调用栈更深。
+
+#### 方式 3: 代码内 breakpoint()
+
+```python
+# 在要调试的位置插入
+breakpoint()   # 程序运行到此处暂停, 进入 pdb 交互模式
+```
+
+```bash
+python run_v1_spider.py -p 1 -s 3 --db-name academicdb_test
+```
+
+pdb 命令: `p` 打印变量 / `n` 下一行 / `s` 进入函数 / `c` 继续 / `q` 退出。
+
+#### 调试四件套
+
+| 保护 | 参数 | 作用 |
+|------|------|------|
+| 测试库 | `-s MYSQL_DATABASE=academicdb_test` / `--db-name academicdb_test` | 数据不污染生产库 |
+| 限制页数 | `-s V1_MAX_PAGES=1` / `-p 1` | 只跑 1 页, 快速出结果 |
+| DEBUG 日志 | `-s LOG_LEVEL=DEBUG` / `-v` | 看全链路细节 |
+| 小页面 | `-s V1_PAGE_SIZE=3` / `-s 3` | 响应小好分析 |
+
 ---
 
 ## 4. 配置说明
@@ -210,7 +272,31 @@ SELECT 是否已存在 (WHERE dedup_key = ?)
 mysql -u root -p academicdb < sql/schema.sql
 ```
 
-### 5.6 存储估算
+### 5.6 测试环境 (数据库完全隔离)
+
+调试/测试时使用独立的测试库 `academicdb_test`，与生产库 `academicdb` 物理隔离、结构相同：
+
+```bash
+# ① 初始化测试库 (创建库 + 建表, 用同一个 schema.sql)
+python init_test_db.py
+
+# ② 重置测试库 (清空测试数据重建)
+python init_test_db.py --reset
+```
+
+**三种切换方式**（任选其一）：
+
+| 方式 | 命令 | 场景 |
+|------|------|------|
+| 环境变量 | `$env:MYSQL_DATABASE="academicdb_test"` 后正常启动 | 长时间测试会话 |
+| Scrapy `-s` | `scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test` | 单次测试 |
+| runner 参数 | `python run_v1_spider.py --db-name academicdb_test` | runner 测试 |
+
+**隔离保证**：测试库与生产库是两个独立 database；`SpiderRunLogPipeline`、断点续爬 (`resume.py`) 等所有组件都从 settings 读取 `MYSQL_DATABASE`，自动跟随切换，测试产生的数据、运行日志、审计记录全部落在测试库，不会污染生产库。
+
+**日志隔离**：文件日志同样跟随数据库切换 — 生产库写 `logs/`，其他库写 `logs/test/` (由 `logging_config.py` 的 `is_test_db()` 判断)。注意: Scrapy 用 `-s MYSQL_DATABASE=...` 切换时，settings.py 在启动早期读取环境变量决定日志目录，推荐测试时同时设置 `$env:MYSQL_DATABASE="academicdb_test"` 环境变量，确保日志也落到 `logs/test/`。
+
+### 5.7 存储估算
 
 | 表 | 行数 | 大小 |
 |----|------|------|
@@ -287,3 +373,4 @@ Cookie 已过期! API 返回: {"cause":"第三方应用独立请求时，无此�
 | 2026-08-12 | v3.0 | 数据库 v3: 删除 article_extended_data / type / cn_type / is_free; extendEntity 有价值字段提取到 articles; article_authors 新增 author_id; article_md5 改为 NULLABLE; links 合并 local_links |
 | 2026-08-13 | v3.1 | 删除所有表的 article_md5 字段 (可从 PDF 文件名推导); parsers 合并 author_id[] 到 authors[]; 修复 year 提取逻辑 |
 | 2026-08-13 | v3.2 | 去重逻辑: articles.dedup_key (二级降级: doi → title+source+year 哈希); 新建 articles_audit_log 审计表 (记录被覆盖旧数据); pipelines 去重写入 (SELECT→审计+UPDATE / INSERT) |
+| 2026-08-13 | v3.3 | 日志: ① 文件日志 50MB 轮转 × 10; ② 测试/生产日志隔离 (logs/ 与 logs/test/); ③ 自定义 ConciseLogFormatter — 每条文献只记一行摘要 (页码/标题/去重键), 不再打印完整 item dict; ④ 类型检查: pyproject 增加 [tool.pyright] (basic 模式抑制动态类型噪音), 修复 27 处类型标注缺陷 (Optional/返回类型/`json.loads(response.text)` 替代 `.json()` 等) |
