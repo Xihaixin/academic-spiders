@@ -16,6 +16,7 @@ from scrapy.http import Response
 
 from academic_spiders.items import ArticleItem
 from academic_spiders.utils.parsers import record_to_item
+from academic_spiders.utils.resume import V2_SPIDER_NAMES, resolve_start_page
 
 logger = logging.getLogger(__name__)
 
@@ -33,12 +34,16 @@ class PubscholarV2Spider(scrapy.Spider):
 
     name = "pubscholar_v2"
 
+    # 运行状态 (供 SpiderRunLogPipeline 读取)
+    last_page = 0
+
     # 默认配置
     api_url = "https://scholarin.cn/hky/api/v2/resources/article"
     user_id = "c9ca380e54f3455ca27bdeb6f921f7b0"
     page_size = 20
     max_pages = None
     start_page = 1
+    end_page = None
     query = ""
     order_field = "pub_date"
     order_direction = "desc"
@@ -51,7 +56,13 @@ class PubscholarV2Spider(scrapy.Spider):
         spider.user_id = s.get("V2_USER_ID", spider.user_id)
         spider.page_size = s.getint("V2_PAGE_SIZE")
         spider.max_pages = s.getint("V2_MAX_PAGES") or None
-        spider.start_page = max(s.getint("V2_START_PAGE"), 1)
+        spider.end_page = s.getint("V2_END_PAGE") or None
+        # 起始页: 显式指定 > 自动断点续爬 > 默认 1
+        raw_start = s.get("V2_START_PAGE")
+        if raw_start:
+            spider.start_page = max(int(raw_start), 1)
+        else:
+            spider.start_page = resolve_start_page(s, V2_SPIDER_NAMES)
         # query 来自命令行 -a 参数
         spider.query = kwargs.get("query", "") or s.get("V2_QUERY", "")
         # 使用 spider_opened 信号注入初始请求（绕过 Windows 上
@@ -96,6 +107,7 @@ class PubscholarV2Spider(scrapy.Spider):
 
     def parse(self, response: Response) -> Generator[Any, None, None]:
         page = response.meta["page"]
+        self.last_page = page  # 供运行日志记录最后爬取页码
 
         if response.status != 200:
             logger.error("第 %d 页 HTTP %d: %s", page, response.status,
@@ -131,6 +143,10 @@ class PubscholarV2Spider(scrapy.Spider):
         # 翻页
         if page >= total_pages:
             logger.info("已到最后一页 (第 %d 页)", page)
+            return
+
+        if self.end_page and page >= self.end_page:
+            logger.info("已达指定结束页: %d", self.end_page)
             return
 
         if self.max_pages and page >= (self.start_page + self.max_pages - 1):

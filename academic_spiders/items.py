@@ -1,69 +1,72 @@
 """
-Scrapy Item 定义 - 慧科研文献数据模型
+Scrapy Item 定义 - 慧科研文献数据模型 (v3.1)
 
-字段映射关系:
-  响应数据字段                 → Item 字段
+字段映射:
+  响应字段                       → Item 字段
   ─────────────────────────────────────────────
-  id                          → article_md5
-  title                       → title
-  abstracts                   → abstracts
-  keywords[]                  → key_words (JSON)
-  author[]                    → author_names (JSON)
-  authors[]                   → authors (原始JSON, 交给pipeline拆解)
-  source                      → source
+  title                         → title
+  abstracts                     → abstracts
+  keywords[]                    → key_words (JSON)
+  author[]                      → author_names (JSON)
+  author_id[]                   → 合并到 authors[].author_id
+  authors[]                     → authors (→ pipeline → article_authors)
+  source                        → source
   volume / issue / first_page / last_page → ...
-  date / year                 → date / year
-  doi / cstr                  → doi / cstr
-  type / article_type / cn_type / lang → ...
-  is_free                     → is_free
-  links[]                     → links (JSON)
-  extendEntity                → extend_entity (JSON)
-  semantic_entities           → semantic_entities (JSON)
+  date / year                   → date / year
+  doi / cstr                    → doi / cstr
+  article_type                  → article_type
+  links[] + local_links[]       → links (JSON, 合并)
+  extendEntity.cnKeywords       → cn_keywords (JSON)
+  extendEntity.enKeywords       → en_keywords (JSON)
+  extendEntity.contrib_institution → contrib_institutions (JSON)
   degree / major / school / tutor / graduation_institution → thesis_info
-  source_list / license / local_links / attachments → extended_data
 """
 
 import scrapy
 
 
 class ArticleItem(scrapy.Item):
-    """文献主记录 - 对应 articles 表"""
+    """文献主记录 - 对应 articles 表 + article_thesis_info 表"""
 
     # 元信息
-    _page = scrapy.Field()              # 来源页码（内部使用）
+    _page = scrapy.Field()                  # 来源页码 (内部使用)
 
-    # 核心字段
-    article_md5 = scrapy.Field()        # 平台文章ID (响应 id)
-    title = scrapy.Field()              # 中文标题
-    abstracts = scrapy.Field()          # 中文摘要
-    key_words = scrapy.Field()          # 关键词 JSON 数组
-    author_names = scrapy.Field()       # 作者姓名 JSON 数组
-    source = scrapy.Field()             # 来源期刊
-    volume = scrapy.Field()             # 卷
-    issue = scrapy.Field()              # 期
-    first_page = scrapy.Field()         # 起始页
-    last_page = scrapy.Field()          # 结束页
-    date = scrapy.Field()               # 出版日期
-    year = scrapy.Field()               # 出版年份
-    doi = scrapy.Field()                # DOI
-    cstr = scrapy.Field()               # CSTR
-    type = scrapy.Field()               # 文献类型
-    article_type = scrapy.Field()       # 文献分类
-    lang = scrapy.Field()               # 语种
-    cn_type = scrapy.Field()            # 中文类型
-    is_free = scrapy.Field()            # 是否免费
-    links = scrapy.Field()              # 外部链接 JSON
+    # ── 核心字段 ────────────────────────────────────────────
+    dedup_key = scrapy.Field()              # 去重键 (doi:/hash: 前缀)
+    title = scrapy.Field()                  # 文献标题
+    abstracts = scrapy.Field()              # 摘要 (与文献同语种)
+    key_words = scrapy.Field()              # 关键词 JSON (来自 keywords)
+    cn_keywords = scrapy.Field()            # 中文关键词 JSON (来自 extendEntity)
+    en_keywords = scrapy.Field()            # 英文关键词 JSON (来自 extendEntity)
+    author_names = scrapy.Field()           # 作者姓名 JSON (来自 author)
+    contrib_institutions = scrapy.Field()   # 贡献机构 JSON (来自 extendEntity)
 
-    # 子表数据（原始JSON，pipeline 负责拆解写入）
-    authors = scrapy.Field()            # 作者详细信息 (原始 JSON 数组)
-    extend_entity = scrapy.Field()      # 扩展实体
-    semantic_entities = scrapy.Field()  # 语义实体
-    source_list = scrapy.Field()        # 来源列表
-    license = scrapy.Field()            # 许可协议
-    local_links = scrapy.Field()        # 本地链接
-    attachments = scrapy.Field()        # 附件列表
+    # ── 来源/期刊信息 ─────────────────────────────────────
+    source = scrapy.Field()                 # 来源名称
+    volume = scrapy.Field()                 # 卷号
+    issue = scrapy.Field()                  # 期号
+    first_page = scrapy.Field()             # 起始页
+    last_page = scrapy.Field()              # 结束页
 
-    # 学位论文信息
+    # ── 日期 ──────────────────────────────────────────────
+    date = scrapy.Field()                   # 出版日期 (原始格式)
+    year = scrapy.Field()                   # 出版年份
+
+    # ── 文献标识符 ─────────────────────────────────────────
+    doi = scrapy.Field()                    # DOI
+    cstr = scrapy.Field()                   # CSTR
+
+    # ── 类型 ──────────────────────────────────────────────
+    article_type = scrapy.Field()           # 文献体裁 (期刊论文/学位论文/会议论文/预发布论文)
+    lang = scrapy.Field()                   # 语种
+
+    # ── 外部链接 (links + local_links 合并) ────────────────
+    links = scrapy.Field()                  # 链接 JSON
+
+    # ── 子表数据 (pipeline 负责拆解写入) ───────────────────
+    authors = scrapy.Field()                # 作者详情 JSON (→ article_authors)
+
+    # ── 学位论文专属 (→ article_thesis_info) ───────────────
     degree = scrapy.Field()
     major = scrapy.Field()
     school = scrapy.Field()

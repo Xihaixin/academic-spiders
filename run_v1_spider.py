@@ -12,12 +12,19 @@ import logging
 import sys
 import time
 from datetime import datetime
+from typing import Optional
 
 import requests
 
 from academic_spiders.items import ArticleItem
-from academic_spiders.pipelines import MySQLPipeline, JsonExportPipeline
+from academic_spiders.pipelines import (
+    MySQLPipeline,
+    JsonExportPipeline,
+    SpiderRunLogPipeline,
+)
+from academic_spiders.utils.logging_config import setup_file_logging
 from academic_spiders.utils.parsers import record_to_item
+from academic_spiders.utils.resume import V1_SPIDER_NAMES, resolve_start_page
 from academic_spiders.utils.signing import build_signature_headers
 
 logger = logging.getLogger("v1_runner")
@@ -36,14 +43,16 @@ class V1SpiderRunner:
         cookie: str = "",
         xsrf_token: str = "",
         page_size: int = 50,
-        max_pages: int = None,
+        max_pages: Optional[int] = None,
         start_page: int = 1,
+        end_page: Optional[int] = None,
         min_delay: float = 1.5,
         max_delay: float = 3.0,
     ):
         self.page_size = page_size
         self.max_pages = max_pages
         self.start_page = start_page
+        self.end_page = end_page
         self.min_delay = min_delay
         self.max_delay = max_delay
 
@@ -61,17 +70,20 @@ class V1SpiderRunner:
         # Pipelines
         self.json_pipeline = JsonExportPipeline(output_dir="output")
         self.mysql_pipeline: MySQLPipeline = None
+        self.run_log: SpiderRunLogPipeline = None
 
         # 统计
         self.stats = {"pages": 0, "items": 0, "errors": 0}
+        self.last_page = 0
 
     def init_mysql(self, settings: dict):
-        """初始化 MySQL pipeline"""
+        """初始化 MySQL pipeline + 运行日志 pipeline"""
         from scrapy.settings import Settings
         s = Settings()
         for k, v in settings.items():
             s.set(k, v)
         self.mysql_pipeline = MySQLPipeline(settings=s)
+        self.run_log = SpiderRunLogPipeline(settings=s)
 
     def _build_headers(self) -> dict:
         """构建请求头"""
@@ -148,6 +160,17 @@ class V1SpiderRunner:
             self.max_pages or "无限制",
         )
 
+        # 写入运行日志 (spider_run_log 表)
+        if self.run_log:
+            self.run_log.write_run_start(
+                "v1_runner",
+                extra={
+                    "start_page": self.start_page,
+                    "page_size": self.page_size,
+                    "max_pages": self.max_pages,
+                },
+            )
+
         try:
             page = self.start_page
             while True:
@@ -175,6 +198,7 @@ class V1SpiderRunner:
                 total = data.get("total", 0)
                 is_last = data.get("is_last", True)
                 total_pages = data.get("total_pages", 0)
+                self.last_page = page  # 供运行日志记录最后爬取页码
 
                 if page == self.start_page:
                     logger.info(
@@ -203,6 +227,10 @@ class V1SpiderRunner:
                     logger.info("已到最后一页 (第 %d 页)", page)
                     break
 
+                if self.end_page and page >= self.end_page:
+                    logger.info("已达指定结束页: %d", self.end_page)
+                    break
+
                 if self.max_pages and page >= (self.start_page + self.max_pages - 1):
                     logger.info("已达最大页数限制: %d", self.max_pages)
                     break
@@ -220,6 +248,16 @@ class V1SpiderRunner:
             "爬取结束: pages=%d, items=%d, errors=%d",
             self.stats["pages"], self.stats["items"], self.stats["errors"],
         )
+        # 更新运行日志 (spider_run_log 表)
+        if self.run_log:
+            has_errors = self.stats["errors"] > 0
+            self.run_log.write_run_end(
+                status="failed" if has_errors else "completed",
+                total_requests=self.stats["pages"],
+                total_items=self.stats["items"],
+                total_errors=self.stats["errors"],
+                last_page=self.last_page,
+            )
         self.json_pipeline.close_spider(None)
         if self.mysql_pipeline:
             self.mysql_pipeline.close_spider(None)
@@ -254,8 +292,10 @@ def main():
                         help="爬取全部页 (需配合 max-pages 或全部)")
     parser.add_argument("-s", "--page-size", type=int, default=50,
                         help="每页条数 (默认 50, 最大 50)")
-    parser.add_argument("--start-page", type=int, default=1,
-                        help="起始页码 (断点续爬)")
+    parser.add_argument("--start-page", type=int, default=None,
+                        help="起始页码 (默认: 自动从上次运行断点续爬)")
+    parser.add_argument("--end-page", type=int, default=None,
+                        help="结束页码 (爬到此页后停止, 默认无限制)")
     parser.add_argument("--cookie", type=str,
                         default="XSRF-TOKEN=115318a2-c245-446e-b005-1cee19f9fe49; JSESSIONID=ADE2864C54C437C14B2E7CB2C2CAB732",
                         help="Cookie 字符串")
@@ -278,36 +318,49 @@ def main():
 
     args = parser.parse_args()
 
-    # 日志
+    # 日志: 控制台 + 文件 (logs/runner_v1.log, 50MB 轮转 × 10)
     logging.basicConfig(
         level=logging.DEBUG if args.verbose else logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
         datefmt="%H:%M:%S",
     )
+    setup_file_logging("runner_v1.log",
+                        level=logging.DEBUG if args.verbose else logging.INFO)
 
     max_pages = None
     if not args.all:
         max_pages = args.pages
+
+    db_config = {
+        "MYSQL_HOST": args.db_host,
+        "MYSQL_PORT": args.db_port,
+        "MYSQL_USER": args.db_user,
+        "MYSQL_PASSWORD": args.db_password,
+        "MYSQL_DATABASE": args.db_name,
+        "MYSQL_POOL_SIZE": 4,
+    }
+
+    # 起始页: 显式指定 > 自动断点续爬 > 默认 1
+    if args.start_page is not None:
+        start_page = max(args.start_page, 1)
+    elif not args.no_mysql:
+        start_page = resolve_start_page(db_config, V1_SPIDER_NAMES)
+    else:
+        start_page = 1
 
     runner = V1SpiderRunner(
         cookie=args.cookie,
         xsrf_token=args.xsrf_token,
         page_size=min(args.page_size, 50),
         max_pages=max_pages,
-        start_page=args.start_page,
+        start_page=start_page,
+        end_page=args.end_page,
         min_delay=args.min_delay,
         max_delay=args.max_delay,
     )
 
     if not args.no_mysql:
-        runner.init_mysql({
-            "MYSQL_HOST": args.db_host,
-            "MYSQL_PORT": args.db_port,
-            "MYSQL_USER": args.db_user,
-            "MYSQL_PASSWORD": args.db_password,
-            "MYSQL_DATABASE": args.db_name,
-            "MYSQL_POOL_SIZE": 4,
-        })
+        runner.init_mysql(db_config)
 
     runner.run()
 

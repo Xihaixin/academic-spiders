@@ -16,6 +16,7 @@ from scrapy.http import Response
 
 from academic_spiders.items import ArticleItem
 from academic_spiders.utils.parsers import record_to_item
+from academic_spiders.utils.resume import V1_SPIDER_NAMES, resolve_start_page
 
 logger = logging.getLogger(__name__)
 
@@ -36,12 +37,16 @@ class PubscholarV1Spider(scrapy.Spider):
 
     name = "pubscholar_v1"
 
+    # 运行状态 (供 SpiderRunLogPipeline 读取)
+    last_page = 0
+
     # 默认配置（from_crawler 会使用 settings 中的值覆盖）
     api_url = "https://pubscholar.cn/hky/open/resources/api/v1/articles"
     user_id = "0b68c4370e9a43e4ad1690fdd31f643f"
     page_size = 50
     max_pages = None
     start_page = 1
+    end_page = None
     year_from = None
     year_to = None
 
@@ -53,9 +58,17 @@ class PubscholarV1Spider(scrapy.Spider):
         spider.user_id = s.get("PUBSCHOLAR_USER_ID", spider.user_id)
         spider.page_size = s.getint("V1_PAGE_SIZE")
         spider.max_pages = s.getint("V1_MAX_PAGES") or None
-        spider.start_page = max(s.getint("V1_START_PAGE"), 1)
+        spider.end_page = s.getint("V1_END_PAGE") or None
         spider.year_from = s.get("V1_YEAR_FROM")
         spider.year_to = s.get("V1_YEAR_TO")
+
+        # 起始页: 显式指定 > 自动断点续爬 > 默认 1
+        raw_start = s.get("V1_START_PAGE")
+        if raw_start:
+            spider.start_page = max(int(raw_start), 1)
+        else:
+            spider.start_page = resolve_start_page(s, V1_SPIDER_NAMES)
+
         # 使用 spider_opened 信号注入初始请求（绕过 Windows 上
         # Scrapy 2.17 start_requests() 生成器不被调用的 bug）
         crawler.signals.connect(spider._on_spider_opened, signal=signals.spider_opened)
@@ -109,6 +122,7 @@ class PubscholarV1Spider(scrapy.Spider):
     def parse(self, response: Response) -> Generator[Any, None, None]:
         """解析 API 响应，提取文献列表并翻页"""
         page = response.meta["page"]
+        self.last_page = page  # 供运行日志记录最后爬取页码
 
         # 检查 HTTP 状态
         if response.status != 200:
@@ -155,11 +169,20 @@ class PubscholarV1Spider(scrapy.Spider):
         )
 
         # ── 翻页判断 ────────────────────────────────────────
+        # ① API 自然结束 (返回 is_last=true)
         if is_last:
             logger.info("已到最后一页 (第 %d 页)，爬取结束", page)
             return
 
-        # 检查 max_pages 限制
+        # ② 绝对结束页限制 (用户指定 V1_END_PAGE)
+        if self.end_page and page >= self.end_page:
+            logger.info(
+                "已达指定结束页: end_page=%d, current_page=%d",
+                self.end_page, page,
+            )
+            return
+
+        # ③ 页数限制 (相对值, 用户指定 V1_MAX_PAGES)
         if self.max_pages and page >= (self.start_page + self.max_pages - 1):
             logger.info(
                 "已达最大页数限制: max_pages=%d, current_page=%d",

@@ -1,9 +1,17 @@
 # Scrapy settings for academic_spiders project
 
+import logging
+
+from academic_spiders.utils.logging_config import setup_file_logging
+
 BOT_NAME = "academic_spiders"
 
 SPIDER_MODULES = ["academic_spiders.spiders"]
 NEWSPIDER_MODULE = "academic_spiders.spiders"
+
+# ── 文件日志 (控制台 + 文件双输出) ─────────────────────────────
+# 日志文件: 项目根目录 logs/scrapy.log, 50MB 轮转 × 10
+setup_file_logging("scrapy.log")
 
 # ── 爬虫行为 ──────────────────────────────────────────────────
 ROBOTSTXT_OBEY = False
@@ -41,6 +49,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     "academic_spiders.pipelines.JsonExportPipeline": 100,
     "academic_spiders.pipelines.MySQLPipeline": 200,
+    "academic_spiders.pipelines.SpiderRunLogPipeline": 300,
 }
 
 # ── MySQL 配置 ────────────────────────────────────────────────
@@ -89,7 +98,12 @@ V1_FINGER = _v1cfg["finger"]
 # ── 爬取控制 ──────────────────────────────────────────────────
 V1_MAX_PAGES = None
 V1_PAGE_SIZE = _v1cfg["page_size"]
-V1_START_PAGE = 1
+# None = 自动断点续爬 (从 spider_run_log 查询上次 last_page + 1)
+# 数字 = 从指定页开始
+V1_START_PAGE = None
+# None = 不限制结束页 (爬到 API 返回 is_last 为止)
+# 数字 = 爬到这个绝对页码后停止 (用于分段并行, 如 -s V1_START_PAGE=1 -s V1_END_PAGE=500000)
+V1_END_PAGE = None
 V1_YEAR_FROM = None
 V1_YEAR_TO = None
 
@@ -98,7 +112,8 @@ V2_API_URL = "https://scholarin.cn/hky/api/v2/resources/article"
 V2_QUERY = ""
 V2_MAX_PAGES = None
 V2_PAGE_SIZE = _v2cfg["page_size"]
-V2_START_PAGE = 1
+V2_START_PAGE = None
+V2_END_PAGE = None
 V2_COOKIE = _v2cfg["cookie"]
 V2_XSRF_TOKEN = _v2cfg["xsrf_token"]
 V2_USER_ID = _v2cfg["user_id"]
