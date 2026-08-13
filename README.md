@@ -37,6 +37,34 @@ scrapy crawl pubscholar_v2 -a query="人工智能"
 
 ---
 
+## 开发 vs 生产环境
+
+同一个爬虫，用**数据库名**区分环境：默认 `academicdb` = 生产，改成其他库名 = 开发/测试（数据 + 日志自动隔离）。
+
+| 环境 | 数据库 | 日志目录 | 命令示例 |
+|------|--------|----------|----------|
+| 开发 | `academicdb_test` | `logs/test/` | `scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test -s V1_MAX_PAGES=1` |
+| 生产 | `academicdb` | `logs/` | `scrapy crawl pubscholar_v1` |
+
+```bash
+# ① 初始化测试库 (结构同生产, 数据隔离)
+python init_test_db.py
+
+# ② 开发: 环境变量方式 (数据 + 日志都隔离, 推荐)
+$env:MYSQL_DATABASE="academicdb_test"
+scrapy crawl pubscholar_v1 -s LOG_LEVEL=DEBUG -s V1_MAX_PAGES=1
+
+# ③ 生产: 全量爬取
+scrapy crawl pubscholar_v1          # Scrapy
+python run_v1_spider.py --all       # Windows runner
+```
+
+**原理**: `MYSQL_DATABASE` 是唯一环境开关 —— `settings.py` 读环境变量（默认 `academicdb`）；所有写库组件（MySQL 管道 / 运行日志 / 断点续爬）都从 settings 取库名自动跟随；`logging_config.py` 按库名分流日志到 `logs/` 或 `logs/test/`。
+
+> ⚠️ Scrapy 的 `-s MYSQL_DATABASE=...` 只切数据层（日志仍进 `logs/`），要连日志一起隔离请用环境变量或 runner 的 `--db-name`。
+
+---
+
 ## 两个接口
 
 | | v1 (开放) | v2 (登录) |

@@ -168,6 +168,35 @@ pdb 命令: `p` 打印变量 / `n` 下一行 / `s` 进入函数 / `c` 继续 / `
 | DEBUG 日志 | `-s LOG_LEVEL=DEBUG` / `-v` | 看全链路细节 |
 | 小页面 | `-s V1_PAGE_SIZE=3` / `-s 3` | 响应小好分析 |
 
+### 3.6 开发 vs 生产环境
+
+同一个爬虫 (`pubscholar_v1` / `run_v1_spider.py`)，通过**数据库名**区分环境，无需两套代码。
+
+| 环境 | 数据库名 | 日志目录 | 典型用途 |
+|------|----------|----------|----------|
+| 开发/测试 | `academicdb_test` (或其他非 `academicdb`) | `logs/test/` | 调试、验证字段、小批量试跑 |
+| 生产 | `academicdb` (默认) | `logs/` | 全量爬取 ~7400 万条 |
+
+**切换命令**：
+
+```bash
+# 开发 (环境变量方式: 数据 + 日志同时隔离)
+$env:MYSQL_DATABASE="academicdb_test"
+scrapy crawl pubscholar_v1 -s LOG_LEVEL=DEBUG -s V1_MAX_PAGES=1
+
+# 生产 (默认库, 全量)
+scrapy crawl pubscholar_v1
+python run_v1_spider.py --all
+```
+
+**实现原理 (三层隔离)**：
+
+1. **环境开关**: `settings.py` 中 `MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "academicdb")`，这是"环境"的唯一定义来源。
+2. **数据层**: `academicdb` 与 `academicdb_test` 是两个独立 database，表结构一致 (同一个 `sql/schema.sql`)。MySQLPipeline / SpiderRunLogPipeline / resume.py 都从 settings 读库名，自动跟随。
+3. **日志层**: `logging_config.py` 的 `is_test_db()` 判断库名 ≠ `academicdb` → 日志写 `logs/test/`，否则 `logs/`。
+
+> **注意**: Scrapy 的 `-s MYSQL_DATABASE=...` 只切数据层——`settings.py` 在模块加载早期读环境变量决定日志目录，所以用 `-s` 时日志仍进 `logs/`。要连日志一起隔离，用环境变量或 runner 的 `--db-name`。
+
 ---
 
 ## 4. 配置说明
