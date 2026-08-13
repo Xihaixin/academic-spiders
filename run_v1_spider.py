@@ -9,6 +9,7 @@ Linux/Mac 用户可直接用: scrapy crawl pubscholar_v1
 
 import json
 import logging
+import os
 import sys
 import time
 from datetime import datetime
@@ -190,15 +191,29 @@ class V1SpiderRunner:
                     page += 1
                     continue
 
-                self.stats["errors"] = 0  # 重置错误计数
-                self.stats["pages"] += 1
-
                 # 提取记录
                 content = data.get("content") or []
                 total = data.get("total", 0)
-                is_last = data.get("is_last", True)
+                is_last = data.get("is_last", False)  # 默认 False, 避免误判
                 total_pages = data.get("total_pages", 0)
                 self.last_page = page  # 供运行日志记录最后爬取页码
+
+                # 异常响应检测: total_pages=0 通常是 API 限流, 非真正最后一页
+                if total_pages <= 0:
+                    self.stats["errors"] += 1
+                    logger.warning(
+                        "第 %d 页响应异常 (total_pages=0, content=%d 条)，"
+                        "连续异常 %d 次",
+                        page, len(content), self.stats["errors"],
+                    )
+                    if self.stats["errors"] > 5:
+                        logger.error("连续异常过多，停止 (疑似 API 限流/Cookie 过期)")
+                        break
+                    page += 1
+                    continue
+
+                self.stats["errors"] = 0  # 重置错误计数
+                self.stats["pages"] += 1
 
                 if page == self.start_page:
                     logger.info(
@@ -312,7 +327,9 @@ def main():
     parser.add_argument("--db-port", type=int, default=3306)
     parser.add_argument("--db-user", type=str, default="root")
     parser.add_argument("--db-password", type=str, default="200310")
-    parser.add_argument("--db-name", type=str, default="academicdb")
+    parser.add_argument("--db-name", type=str,
+                        default=os.getenv("MYSQL_DATABASE", "academicdb"),
+                        help="数据库名 (默认: MYSQL_DATABASE 环境变量或 academicdb)")
     parser.add_argument("-v", "--verbose", action="store_true",
                         help="详细日志")
 
@@ -325,7 +342,8 @@ def main():
         datefmt="%H:%M:%S",
     )
     setup_file_logging("runner_v1.log",
-                        level=logging.DEBUG if args.verbose else logging.INFO)
+                        level=logging.DEBUG if args.verbose else logging.INFO,
+                        db_name=args.db_name)
 
     max_pages = None
     if not args.all:

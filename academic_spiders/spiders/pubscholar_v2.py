@@ -130,6 +130,20 @@ class PubscholarV2Spider(scrapy.Spider):
         total = data.get("totalElements", 0)
         total_pages = data.get("totalPages", 0)
 
+        # 异常响应检测: 正常响应必有 totalPages > 0
+        if total_pages <= 0:
+            self._abnormal_count = getattr(self, "_abnormal_count", 0) + 1
+            if self._abnormal_count <= 5:
+                logger.warning(
+                    "第 %d 页响应异常 (totalPages=0)，重试 %d/5",
+                    page, self._abnormal_count,
+                )
+                yield self._build_page_request(page)
+            else:
+                logger.error("第 %d 页连续异常，停止爬取", page)
+            return
+        self._abnormal_count = 0
+
         if page == self.start_page:
             logger.info("首请求成功: total=%d, total_pages=%d, page_size=%d",
                         total, total_pages, len(content))

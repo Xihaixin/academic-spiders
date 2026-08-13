@@ -455,13 +455,16 @@ class SpiderRunLogPipeline:
             total_errors=stats.get_value("log_count/ERROR") or 0,
             last_page=getattr(spider, "last_page", 0),
             error_message=None if status == "completed"
-            else f"关闭原因: {reason}",
+            else f"关闭原因: {reason}", # type: ignore
         )
 
     # ── 通用方法 (Scrapy signals 和 Windows runner 共用) ──────
 
     def write_run_start(self, spider_name: str, extra: dict = None):
         """写入运行开始记录 (status='running')"""
+        # 标记上次异常终止的遗留记录 (status 仍为 'running' 的僵尸记录)
+        self._mark_interrupted()
+
         self.run_id = str(uuid.uuid4())
         extra_info = json.dumps(extra or {}, ensure_ascii=False)
         try:
@@ -483,6 +486,30 @@ class SpiderRunLogPipeline:
                 conn.close()
         except Exception as e:
             logger.warning("写入 spider_run_log (启动) 失败: %s", e)
+
+    def _mark_interrupted(self):
+        """将上次异常终止的遗留 running 记录标记为 interrupted
+
+        爬虫正常结束时 write_run_end 会把记录更新为 completed/failed。
+        若爬虫崩溃/强杀，spider_closed 信号不会触发，记录会停在
+        status='running'。下次启动时在此统一标记为 interrupted。
+        """
+        try:
+            conn = self._connect()
+            try:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """UPDATE spider_run_log SET
+                               end_time = NOW(),
+                               status = 'interrupted',
+                               error_message = '异常终止 (上次运行未正常关闭)'
+                           WHERE status = 'running'"""
+                    )
+                conn.commit()
+            finally:
+                conn.close()
+        except Exception as e:
+            logger.warning("标记中断记录失败: %s", e)
 
     def write_run_end(
         self,

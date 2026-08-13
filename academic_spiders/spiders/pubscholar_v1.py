@@ -150,8 +150,28 @@ class PubscholarV1Spider(scrapy.Spider):
         # 提取文献列表
         content = data.get("content") or []
         total = data.get("total", 0)
-        is_last = data.get("is_last", True)
+        is_last = data.get("is_last", False)  # 默认 False, 避免缺字段误判为最后一页
         total_pages = data.get("total_pages", 0)
+
+        # 异常响应检测: 正常响应必有 total_pages > 0。
+        # total_pages=0 通常是 API 限流/风控返回的空响应, 而非真正的最后一页。
+        if total_pages <= 0:
+            self._abnormal_count = getattr(self, "_abnormal_count", 0) + 1
+            if self._abnormal_count <= 5:
+                logger.warning(
+                    "第 %d 页响应异常 (total_pages=0, content=%d 条)，"
+                    "重试 %d/5 (疑似 API 限流)",
+                    page, len(content), self._abnormal_count,
+                )
+                yield self._build_page_request(page)  # 重试当前页
+            else:
+                logger.error(
+                    "第 %d 页连续异常 %d 次，停止爬取 "
+                    "(可能原因: API 限流 / Cookie 过期)",
+                    page, self._abnormal_count,
+                )
+            return
+        self._abnormal_count = 0
 
         if page == self.start_page:
             logger.info(
