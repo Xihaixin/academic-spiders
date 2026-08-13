@@ -1,6 +1,6 @@
 # 慧科研 (pubscholar.cn) 文献爬虫系统 — 项目文档
 
-**版本**: 2.0 | **日期**: 2026-08-07
+**版本**: 3.2 | **日期**: 2026-08-13
 
 ---
 
@@ -143,35 +143,83 @@ python test_v1_api.py
 
 ---
 
-## 5. 数据库
+## 5. 数据库 (v3.2)
 
-### 5.1 表结构
+### 5.1 设计原则
+
+- **仅保留文献自身属性字段**，剔除 pubscholar 平台特有标记
+- **所有文献类型共用一张 articles 主表**，类型专属字段允许 NULL
+- **extendEntity 中有价值字段提取到 articles**，无价值子字段随表一起删除
+- **dedup_key 去重键**：二级降级策略，保证跨批次数据不重复
+
+### 5.2 表结构
 
 ```
-articles (1) ───── (1) article_extended_data
+articles (1) ──── (N) article_authors
      │
-     ├── (1) ───── (0..1) article_thesis_info   (仅学位论文)
-     ├── (1) ───── (N) article_authors
-     └── (1) ───── (N) article_keywords
+     ├── (1) ──── (0..1) article_thesis_info   (仅 article_type="学位论文")
+     └── (1) ──── (N) article_keywords
 
-spider_run_log   (爬虫运行统计，Pipeline 自动写入)
+articles_audit_log   (去重审计, 记录被覆盖的旧数据快照)
+spider_run_log       (爬虫运行统计)
 ```
 
-### 5.2 建表
+### 5.3 articles 字段分类
+
+| 分类 | 字段 | 所有类型共有? |
+|------|------|:--:|
+| 核心 | id, dedup_key, title, abstracts, article_type, lang, links | ✅ |
+| 关键词 | key_words, cn_keywords, en_keywords | ✅ |
+| 作者 | author_names, contrib_institutions | ✅ |
+| 来源 | source | ✅ |
+| 日期 | date, year | ✅ |
+| 标识符 | cstr | ✅ |
+| 期刊专属 | volume, issue, first_page, last_page, doi | ❌ |
+
+### 5.4 去重策略 (v3.2)
+
+**去重键生成（二级降级，`cstr` 不参与）**：
+
+| 优先级 | 条件 | 生成规则 | 示例 |
+|:--:|------|----------|------|
+| ① | `doi` 非空 | `"doi:" + 小写doi` | `doi:10.1016/j.jgg.2025.06.005` |
+| ② | 否则 | `"hash:" + md5(规范化title\|source\|year)` | `hash:31ce5b20724a...` |
+| ③ | 都为空 | `NULL`（无法去重，直接插入） | - |
+
+**规范化处理**：
+- doi → strip + 小写（DOI 大小写不敏感）
+- title → strip + 合并连续空白（`re.sub(r"\s+", " ", ...)`）
+
+**冲突处理（UPDATE + 审计）**：
+
+```
+SELECT 是否已存在 (WHERE dedup_key = ?)
+ ├─ 已存在 → 旧数据写 articles_audit_log → UPDATE articles
+ └─ 不存在 → INSERT (ON DUPLICATE KEY UPDATE 兜底竞态)
+```
+
+**审计表 `articles_audit_log`**：记录每次去重命中的新旧数据快照（old_data / new_data JSON），用于验证阶段排查：
+1. 去重是否真的命中了重复记录
+2. 命中的两条记录是否真的是同一篇文献（去重键可靠性）
+
+确认去重可靠后，可清空或删除此表。
+
+### 5.5 建表
 
 ```bash
 mysql -u root -p academicdb < sql/schema.sql
 ```
 
-### 5.3 存储估算
+### 5.6 存储估算
 
 | 表 | 行数 | 大小 |
 |----|------|------|
-| articles | 7400万 | ~90GB |
-| article_extended_data | 7400万 | ~60GB |
-| article_authors | 6亿 | ~150GB |
-| article_keywords | 5亿 | ~90GB |
-| **合计** | | **~400GB** |
+| articles | 7400万 | ~110GB |
+| article_authors | 6亿 | ~170GB |
+| article_keywords | 5亿 | ~95GB |
+| article_thesis_info | 100万 | <1GB |
+| articles_audit_log | 验证阶段少量 | - |
+| **合计** | | **~376GB** |
 
 ---
 
@@ -235,4 +283,7 @@ Cookie 已过期! API 返回: {"cause":"第三方应用独立请求时，无此�
 | 日期 | 版本 | 内容 |
 |------|------|------|
 | 2026-08-06 | v1.0 | 初版: 逆向分析、Scrapy 项目搭建、数据库设计 |
-| 2026-08-07 | v2.0 | Scrapy Windows 兼容性修复 (spider_opened + COOKIES_ENABLED)、代码重构 (parsers.py)、Cookie 管理规范化 (cookies.json)、自动登录模块 (auth.py)、spider_run_log 自动写入、过期 Cookie 优雅停机 |
+| 2026-08-07 | v2.0 | Scrapy Windows 兼容性修复、代码重构 (parsers.py)、Cookie 管理规范化 (cookies.json)、自动登录模块 (auth.py)、spider_run_log 自动写入 |
+| 2026-08-12 | v3.0 | 数据库 v3: 删除 article_extended_data / type / cn_type / is_free; extendEntity 有价值字段提取到 articles; article_authors 新增 author_id; article_md5 改为 NULLABLE; links 合并 local_links |
+| 2026-08-13 | v3.1 | 删除所有表的 article_md5 字段 (可从 PDF 文件名推导); parsers 合并 author_id[] 到 authors[]; 修复 year 提取逻辑 |
+| 2026-08-13 | v3.2 | 去重逻辑: articles.dedup_key (二级降级: doi → title+source+year 哈希); 新建 articles_audit_log 审计表 (记录被覆盖旧数据); pipelines 去重写入 (SELECT→审计+UPDATE / INSERT) |

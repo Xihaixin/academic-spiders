@@ -264,6 +264,69 @@ KeyError: 'ArticleItem does not support field: _page'
 | links 并入 articles (JSON) | 1-2 条/文, 无聚合查询需求, 减少 JOIN |
 | 子表冗余 article_md5 | Pipeline 中直接用响应 id 查询，无需 JOIN articles |
 
+**v3.0** (2026-08-12 修订版):
+- 删除 `article_extended_data` 表 → extendEntity 中有用字段 (cnKeywords, enKeywords, contrib_institution) 提取到 articles 主表
+- articles 删除 `type` (常量 "article")、`cn_type` (常量 "论文")、`is_free` (平台属性)
+- articles 新增 `cn_keywords`、`en_keywords`、`contrib_institutions` JSON 字段
+- `links` 合并 `local_links` (PDF 预览地址)
+- `article_md5` → NULLABLE (部分文献缺失)
+- `article_authors` 新增 `author_id` (从响应 author_id[] 按 sort_order 对应)
+- 存储优化: 删除 article_extended_data 节省 ~60GB
+
+### v3.0 关键设计决策
+
+| 决策 | 理由 |
+|------|------|
+| 删除 article_extended_data | 有价值字段仅 3 个 (cnKeywords/enKeywords/contrib_institution)，其余 40+ 子字段均为平台内部标记 |
+| 删除 type / cn_type | 经期刊论文/预印本/学位论文三类数据交叉验证: type 恒为 "article", cn_type 恒为 "论文" |
+| 删除 is_free | 平台下载状态属性，非文献自身属性; 同一文献在知网/万方/pubscholar 状态不同 |
+| extendEntity 有价值字段上提 | 降低表关联复杂度, 查询一篇文献只需扫 articles 主表 |
+| links 合并 local_links | 都是文献外部链接, 通过 name 字段区分来源即可 |
+| article_md5 → NULLABLE | 用户实际观察确认并非所有文献都有 id 字段 |
+
+**v3.1** (2026-08-13):
+- 删除所有表的 `article_md5` 字段 (用户决定: 该值后续可从 PDF 文件名推导，无需冗余存储)
+- `parsers.py` 合并 `author_id[]` 到 `authors[]` (按 sort_order 一一对应)
+- 修复 year 提取逻辑 (响应 year 缺失时 `int("")` 崩溃的问题)
+
+**v3.2** (2026-08-13, 去重逻辑):
+- articles 新增 `dedup_key` VARCHAR(512) + UNIQUE KEY
+- 新建 `articles_audit_log` 审计表
+- pipelines 去重写入: SELECT → 审计+UPDATE / INSERT
+
+### v3.2 去重方案设计
+
+**问题背景**: 删除 article_md5 后，articles 表失去了跨批次去重的唯一依据。自增主键无法防止同一篇文献被重复爬取。
+
+**去重键候选分析** (基于真实响应数据):
+
+| 标识符 | 期刊论文 | 预印本 | 学位论文 | 可靠性 |
+|--------|:--:|:--:|:--:|:--:|
+| doi | ✅ | 部分有 | ❌ | 最高 (国际标准) |
+| cstr | 部分有 | 部分有 | 可能有 | 用户判定不可靠 |
+| title+source+year | ✅ | ✅ | ✅ | 中 (可能误判) |
+
+**最终方案: 二级降级** (用户确认，cstr 不参与):
+
+```
+dedup_key =
+  ① doi 非空 → "doi:"  + 规范化(小写) doi
+  ② 否则     → "hash:" + md5(规范化title | source | year)
+  ③ 都为空   → NULL (无法可靠去重, 直接插入)
+```
+
+**冲突处理: UPDATE + 审计** (用户确认):
+- 遇到重复 → UPDATE 旧记录 + 旧数据快照写入 articles_audit_log
+- 目的: 验证阶段排查去重策略是否生效、是否可靠
+- 审计表记录 old_data / new_data 对比，可判断去重键是否误判
+
+**验证结果** (2026-08-13):
+- doi 小写规范化: `10.1000/ABC` == `10.1000/abc` ✅
+- 标题空白规范化: 连续空格合并后哈希一致 ✅
+- 重复记录: 第二次写入触发 UPDATE 而非新插入 ✅
+- 审计表: old_data 保留旧标题, new_data 是新标题 ✅
+- 真实爬取 5 条均为 `doi:` 前缀 (期刊论文都有 DOI); `hash:` 前缀待学位论文出现后观察
+
 ---
 
 ## <a id="7"></a>问题七：v1/v2 接口行为变化观察 (2026-08-07)
