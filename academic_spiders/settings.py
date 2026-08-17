@@ -3,9 +3,13 @@
 import logging
 import os
 
+from dotenv import load_dotenv
 from academic_spiders.utils.logging_config import setup_file_logging
 
+load_dotenv()
+
 BOT_NAME = "academic_spiders"
+ACADEMIC_JSON_OUTPUT=os.getenv("ACADEMIC_JSON_OUTPUT", default="./output")
 
 SPIDER_MODULES = ["academic_spiders.spiders"]
 NEWSPIDER_MODULE = "academic_spiders.spiders"

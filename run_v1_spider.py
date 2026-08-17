@@ -14,7 +14,6 @@ import sys
 import time
 from datetime import datetime
 from typing import Optional
-
 import requests
 
 from academic_spiders.items import ArticleItem
@@ -69,7 +68,7 @@ class V1SpiderRunner:
         self.xsrf_token = xsrf_token
 
         # Pipelines
-        self.json_pipeline = JsonExportPipeline(output_dir="output")
+        self.json_pipeline = JsonExportPipeline(output_dir=ACADEMIC_JSON_OUTPUT)
         self.mysql_pipeline: Optional[MySQLPipeline] = None
         self.run_log: Optional[SpiderRunLogPipeline] = None
 

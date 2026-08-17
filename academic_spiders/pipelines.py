@@ -31,7 +31,7 @@ class JsonExportPipeline:
         project_dir = os.path.dirname(
             os.path.dirname(os.path.abspath(__file__))
         )
-        output_dir = os.path.join(project_dir, "output")
+        output_dir = crawler.settings.get("ACADEMIC_JSON_OUTPUT")
         os.makedirs(output_dir, exist_ok=True)
         return cls(output_dir=output_dir)
 
