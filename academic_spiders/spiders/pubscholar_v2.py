@@ -1,5 +1,5 @@
 """
-慧科研 v2 接口爬虫
+公益学术平台v2 接口爬虫
 ─────────────────
 接口: POST https://scholarin.cn/hky/api/v2/resources/article
 认证: 需要登录 Cookie (pub_ticket / JSESSIONID)

@@ -1,5 +1,5 @@
 """
-慧科研 API 签名生成工具
+公益学术平台API 签名生成工具
 
 签名公式: SHA1(sorted([secret, timestamp, nonce]).join(""))
 - nonce: 6位随机大写字母+数字

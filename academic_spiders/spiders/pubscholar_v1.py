@@ -1,5 +1,5 @@
 """
-慧科研 v1 接口爬虫
+公益学术平台v1 接口爬虫
 ─────────────────
 接口: POST https://pubscholar.cn/hky/open/resources/api/v1/articles
 认证: 无需登录 (open API)，仅需签名头

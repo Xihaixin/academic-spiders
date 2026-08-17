@@ -282,7 +282,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="慧科研 v2 API 爬虫 — 按关键词搜索 (需登录 Cookie)",
+        description="公益学术平台v2 API 爬虫 — 按关键词搜索 (需登录 Cookie)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 示例:

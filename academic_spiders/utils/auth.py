@@ -257,7 +257,7 @@ def load_v1_cookies() -> dict:
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="慧科研 Cookie 管理工具")
+    parser = argparse.ArgumentParser(description="公益学术平台Cookie 管理工具")
     sub = parser.add_subparsers(dest="cmd")
 
     check_parser = sub.add_parser("check", help="检查当前 Cookie 有效性")

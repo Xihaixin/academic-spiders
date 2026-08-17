@@ -1,6 +1,6 @@
 # academic-spiders
 
-慧科研 (pubscholar.cn / scholarin.cn) 学术文献数据采集系统。基于 Scrapy 框架，已破解 API SHA1 签名反爬机制，支持全量中文文献抓取和关键词检索。
+公益学术平台(pubscholar.cn / scholarin.cn) 学术文献数据采集系统。基于 Scrapy 框架，已破解 API SHA1 签名反爬机制，支持全量中文文献抓取和关键词检索。
 
 **目标数据量**: ~7400 万条中文文献
 
