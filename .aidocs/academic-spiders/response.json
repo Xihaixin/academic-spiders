@@ -1,0 +1,3850 @@
+{
+    "type": {
+        "alias": "论文类型",
+        "selected_aggregation": [],
+        "aggregations": [
+            {
+                "origin_key": "期刊论文",
+                "value": 74123592,
+                "key": "期刊论文"
+            },
+            {
+                "origin_key": "学位论文",
+                "value": 190081,
+                "key": "学位论文"
+            },
+            {
+                "origin_key": "会议论文",
+                "value": 39858,
+                "key": "会议论文"
+            },
+            {
+                "origin_key": "预发布论文",
+                "value": 31291,
+                "key": "预印本论文"
+            }
+        ]
+    },
+    "subject": {
+        "alias": "学科分类",
+        "selected_aggregation": [],
+        "aggregations": [
+            {
+                "origin_key": "医药、卫生",
+                "value": 3205081,
+                "key": "医药、卫生"
+            },
+            {
+                "origin_key": "文化、科学、教育、体育",
+                "value": 2199287,
+                "key": "文化、科学、教育、体育"
+            },
+            {
+                "origin_key": "经济计划与管理",
+                "value": 2011072,
+                "key": "经济计划与管理"
+            },
+            {
+                "origin_key": "自然科学总论",
+                "value": 1652802,
+                "key": "自然科学总论"
+            },
+            {
+                "origin_key": "建筑工程",
+                "value": 1274749,
+                "key": "建筑工程"
+            },
+            {
+                "origin_key": "教育",
+                "value": 1264899,
+                "key": "教育"
+            },
+            {
+                "origin_key": "无线电电子学、电讯技术",
+                "value": 1233944,
+                "key": "无线电电子学、电讯技术"
+            },
+            {
+                "origin_key": "农业科学",
+                "value": 1165601,
+                "key": "农业科学"
+            },
+            {
+                "origin_key": "预防医学、卫生学",
+                "value": 1147021,
+                "key": "预防医学、卫生学"
+            },
+            {
+                "origin_key": "化学工业",
+                "value": 1110904,
+                "key": "化学工业"
+            },
+            {
+                "origin_key": "中国医学",
+                "value": 1061271,
+                "key": "中国医学"
+            },
+            {
+                "origin_key": "轻工业、手工业",
+                "value": 1048296,
+                "key": "轻工业、手工业"
+            },
+            {
+                "origin_key": "电脑、计算机",
+                "value": 998099,
+                "key": "电脑、计算机"
+            },
+            {
+                "origin_key": "信息与知识传播",
+                "value": 983642,
+                "key": "信息与知识传播"
+            },
+            {
+                "origin_key": "贸易经济",
+                "value": 971365,
+                "key": "贸易经济"
+            },
+            {
+                "origin_key": "临床医学",
+                "value": 772491,
+                "key": "临床医学"
+            },
+            {
+                "origin_key": "世界各国经济概况、经济史和经济地理",
+                "value": 760881,
+                "key": "世界各国经济概况、经济史和经济地理"
+            },
+            {
+                "origin_key": "机械、仪表工业",
+                "value": 747348,
+                "key": "机械、仪表工业"
+            },
+            {
+                "origin_key": "畜牧、动物医学、蚕、狩猎、蜂",
+                "value": 715733,
+                "key": "畜牧、动物医学、蚕、狩猎、蜂"
+            },
+            {
+                "origin_key": "一般工业技术",
+                "value": 640745,
+                "key": "一般工业技术"
+            },
+            {
+                "origin_key": "社会科学总论",
+                "value": 635345,
+                "key": "社会科学总论"
+            },
+            {
+                "origin_key": "药学",
+                "value": 633616,
+                "key": "药学"
+            },
+            {
+                "origin_key": "电工技术",
+                "value": 602814,
+                "key": "电工技术"
+            },
+            {
+                "origin_key": "各类教育",
+                "value": 564060,
+                "key": "各类教育"
+            },
+            {
+                "origin_key": "工业技术",
+                "value": 548953,
+                "key": "工业技术"
+            },
+            {
+                "origin_key": "公路运输",
+                "value": 506322,
+                "key": "公路运输"
+            },
+            {
+                "origin_key": "财政、金融",
+                "value": 482934,
+                "key": "财政、金融"
+            },
+            {
+                "origin_key": "内科学",
+                "value": 456879,
+                "key": "内科学"
+            },
+            {
+                "origin_key": "外科学",
+                "value": 446210,
+                "key": "外科学"
+            },
+            {
+                "origin_key": "水利工程",
+                "value": 401998,
+                "key": "水利工程"
+            },
+            {
+                "origin_key": "石油、天然气工业",
+                "value": 391205,
+                "key": "石油、天然气工业"
+            },
+            {
+                "origin_key": "冶金工业",
+                "value": 388477,
+                "key": "冶金工业"
+            },
+            {
+                "origin_key": "自然科学现状及发展",
+                "value": 378049,
+                "key": "自然科学现状及发展"
+            },
+            {
+                "origin_key": "经济",
+                "value": 375657,
+                "key": "经济"
+            },
+            {
+                "origin_key": "农业经济",
+                "value": 368200,
+                "key": "农业经济"
+            },
+            {
+                "origin_key": "投资经济、股票",
+                "value": 363213,
+                "key": "投资经济、股票"
+            },
+            {
+                "origin_key": "金属学、金属工艺",
+                "value": 363086,
+                "key": "金属学、金属工艺"
+            },
+            {
+                "origin_key": "林业",
+                "value": 362820,
+                "key": "林业"
+            },
+            {
+                "origin_key": "科学、科学研究",
+                "value": 361637,
+                "key": "科学、科学研究"
+            },
+            {
+                "origin_key": "工业经济",
+                "value": 330923,
+                "key": "工业经济"
+            },
+            {
+                "origin_key": "矿业工程",
+                "value": 323294,
+                "key": "矿业工程"
+            },
+            {
+                "origin_key": "农业基础科学",
+                "value": 318149,
+                "key": "农业基础科学"
+            },
+            {
+                "origin_key": "园艺",
+                "value": 307654,
+                "key": "园艺"
+            },
+            {
+                "origin_key": "体育",
+                "value": 304502,
+                "key": "体育"
+            },
+            {
+                "origin_key": "农业工程",
+                "value": 290059,
+                "key": "农业工程"
+            },
+            {
+                "origin_key": "政治经济学",
+                "value": 260605,
+                "key": "政治经济学"
+            },
+            {
+                "origin_key": "自动化技术、计算技术",
+                "value": 257487,
+                "key": "自动化技术、计算技术"
+            },
+            {
+                "origin_key": "自然科学教育与普及",
+                "value": 250949,
+                "key": "自然科学教育与普及"
+            },
+            {
+                "origin_key": "交通运输",
+                "value": 250578,
+                "key": "交通运输"
+            },
+            {
+                "origin_key": "中国政治",
+                "value": 247842,
+                "key": "中国政治"
+            },
+            {
+                "origin_key": "水路运输",
+                "value": 244966,
+                "key": "水路运输"
+            },
+            {
+                "origin_key": "基础医学",
+                "value": 238719,
+                "key": "基础医学"
+            },
+            {
+                "origin_key": "化学",
+                "value": 202803,
+                "key": "化学"
+            },
+            {
+                "origin_key": "动力工程",
+                "value": 199826,
+                "key": "动力工程"
+            },
+            {
+                "origin_key": "眼科学",
+                "value": 192863,
+                "key": "眼科学"
+            },
+            {
+                "origin_key": "特种医学",
+                "value": 185655,
+                "key": "特种医学"
+            },
+            {
+                "origin_key": "铁道运输",
+                "value": 177742,
+                "key": "铁道运输"
+            },
+            {
+                "origin_key": "自然科学丛书、文集、连续性出版物",
+                "value": 172380,
+                "key": "自然科学丛书、文集、连续性出版物"
+            },
+            {
+                "origin_key": "环境科学、安全科学",
+                "value": 172056,
+                "key": "环境科学、安全科学"
+            },
+            {
+                "origin_key": "工人、农民、青年、妇女运动与组织",
+                "value": 169327,
+                "key": "工人、农民、青年、妇女运动与组织"
+            },
+            {
+                "origin_key": "天文学、地球科学",
+                "value": 156370,
+                "key": "天文学、地球科学"
+            },
+            {
+                "origin_key": "物理学",
+                "value": 153393,
+                "key": "物理学"
+            },
+            {
+                "origin_key": "地质学",
+                "value": 152109,
+                "key": "地质学"
+            },
+            {
+                "origin_key": "水产、渔业",
+                "value": 151038,
+                "key": "水产、渔业"
+            },
+            {
+                "origin_key": "肿瘤学",
+                "value": 147790,
+                "key": "肿瘤学"
+            },
+            {
+                "origin_key": "农作物",
+                "value": 123793,
+                "key": "农作物"
+            },
+            {
+                "origin_key": "神经病学与精神病学",
+                "value": 121462,
+                "key": "神经病学与精神病学"
+            },
+            {
+                "origin_key": "生物科学",
+                "value": 116922,
+                "key": "生物科学"
+            },
+            {
+                "origin_key": "农学（农艺学）",
+                "value": 108436,
+                "key": "农学（农艺学）"
+            },
+            {
+                "origin_key": "政治、法律",
+                "value": 99141,
+                "key": "政治、法律"
+            },
+            {
+                "origin_key": "数学",
+                "value": 97762,
+                "key": "数学"
+            },
+            {
+                "origin_key": "文体活动（棋类，游戏，集邮）",
+                "value": 92186,
+                "key": "文体活动（棋类，游戏，集邮）"
+            },
+            {
+                "origin_key": "航空",
+                "value": 89907,
+                "key": "航空"
+            },
+            {
+                "origin_key": "哲学、宗教",
+                "value": 89619,
+                "key": "哲学、宗教"
+            },
+            {
+                "origin_key": "植物保护",
+                "value": 89568,
+                "key": "植物保护"
+            },
+            {
+                "origin_key": "原子能技术",
+                "value": 88310,
+                "key": "原子能技术"
+            },
+            {
+                "origin_key": "测绘学",
+                "value": 87198,
+                "key": "测绘学"
+            },
+            {
+                "origin_key": "交通运输经济",
+                "value": 80500,
+                "key": "交通运输经济"
+            },
+            {
+                "origin_key": "数理科学和化学",
+                "value": 77691,
+                "key": "数理科学和化学"
+            },
+            {
+                "origin_key": "管理学",
+                "value": 75161,
+                "key": "管理学"
+            },
+            {
+                "origin_key": "大气科学（气象学）",
+                "value": 74853,
+                "key": "大气科学（气象学）"
+            },
+            {
+                "origin_key": "地球物理学",
+                "value": 72453,
+                "key": "地球物理学"
+            },
+            {
+                "origin_key": "口腔科学",
+                "value": 70664,
+                "key": "口腔科学"
+            },
+            {
+                "origin_key": "法律",
+                "value": 69452,
+                "key": "法律"
+            },
+            {
+                "origin_key": "儿科学",
+                "value": 64766,
+                "key": "儿科学"
+            },
+            {
+                "origin_key": "社会学",
+                "value": 62981,
+                "key": "社会学"
+            },
+            {
+                "origin_key": "海洋学",
+                "value": 62866,
+                "key": "海洋学"
+            },
+            {
+                "origin_key": "航空、航天",
+                "value": 60633,
+                "key": "航空、航天"
+            },
+            {
+                "origin_key": "自然地理学",
+                "value": 59698,
+                "key": "自然地理学"
+            },
+            {
+                "origin_key": "航天（宇宙航行）",
+                "value": 58120,
+                "key": "航天（宇宙航行）"
+            },
+            {
+                "origin_key": "安全科学",
+                "value": 57343,
+                "key": "安全科学"
+            },
+            {
+                "origin_key": "皮肤病学与性病学",
+                "value": 55822,
+                "key": "皮肤病学与性病学"
+            },
+            {
+                "origin_key": "武器工业",
+                "value": 53394,
+                "key": "武器工业"
+            },
+            {
+                "origin_key": "动物学",
+                "value": 52905,
+                "key": "动物学"
+            },
+            {
+                "origin_key": "地理",
+                "value": 50096,
+                "key": "地理"
+            },
+            {
+                "origin_key": "中国文学",
+                "value": 47228,
+                "key": "中国文学"
+            },
+            {
+                "origin_key": "植物学",
+                "value": 46919,
+                "key": "植物学"
+            },
+            {
+                "origin_key": "环境科学基础理论",
+                "value": 44496,
+                "key": "环境科学基础理论"
+            },
+            {
+                "origin_key": "环境保护管理",
+                "value": 42796,
+                "key": "环境保护管理"
+            },
+            {
+                "origin_key": "力学",
+                "value": 41571,
+                "key": "力学"
+            }
+        ]
+    },
+    "year": {
+        "alias": "出版年",
+        "selected_aggregation": [],
+        "aggregations": [
+            {
+                "origin_key": "2026",
+                "value": 569181,
+                "key": 2026
+            },
+            {
+                "origin_key": "2025",
+                "value": 2221308,
+                "key": 2025
+            },
+            {
+                "origin_key": "2024",
+                "value": 2203901,
+                "key": 2024
+            },
+            {
+                "origin_key": "2023",
+                "value": 2397945,
+                "key": 2023
+            },
+            {
+                "origin_key": "2022",
+                "value": 2465749,
+                "key": 2022
+            },
+            {
+                "origin_key": "2021",
+                "value": 2905387,
+                "key": 2021
+            },
+            {
+                "origin_key": "2020",
+                "value": 3390489,
+                "key": 2020
+            },
+            {
+                "origin_key": "2019",
+                "value": 3626704,
+                "key": 2019
+            },
+            {
+                "origin_key": "2018",
+                "value": 3076346,
+                "key": 2018
+            },
+            {
+                "origin_key": "2017",
+                "value": 2807094,
+                "key": 2017
+            },
+            {
+                "origin_key": "2016",
+                "value": 3078477,
+                "key": 2016
+            },
+            {
+                "origin_key": "2015",
+                "value": 3058236,
+                "key": 2015
+            },
+            {
+                "origin_key": "2014",
+                "value": 2837539,
+                "key": 2014
+            },
+            {
+                "origin_key": "2013",
+                "value": 3007872,
+                "key": 2013
+            },
+            {
+                "origin_key": "2012",
+                "value": 3360751,
+                "key": 2012
+            },
+            {
+                "origin_key": "2011",
+                "value": 3462520,
+                "key": 2011
+            },
+            {
+                "origin_key": "2010",
+                "value": 3316174,
+                "key": 2010
+            },
+            {
+                "origin_key": "2009",
+                "value": 3293881,
+                "key": 2009
+            },
+            {
+                "origin_key": "2008",
+                "value": 2856968,
+                "key": 2008
+            },
+            {
+                "origin_key": "2007",
+                "value": 2583874,
+                "key": 2007
+            },
+            {
+                "origin_key": "2006",
+                "value": 1661577,
+                "key": 2006
+            },
+            {
+                "origin_key": "2005",
+                "value": 2344677,
+                "key": 2005
+            },
+            {
+                "origin_key": "2004",
+                "value": 2057161,
+                "key": 2004
+            },
+            {
+                "origin_key": "2003",
+                "value": 1756322,
+                "key": 2003
+            },
+            {
+                "origin_key": "2002",
+                "value": 1484265,
+                "key": 2002
+            },
+            {
+                "origin_key": "2001",
+                "value": 1276235,
+                "key": 2001
+            },
+            {
+                "origin_key": "2000",
+                "value": 1114959,
+                "key": 2000
+            },
+            {
+                "origin_key": "1999",
+                "value": 894066,
+                "key": 1999
+            },
+            {
+                "origin_key": "1998",
+                "value": 789633,
+                "key": 1998
+            },
+            {
+                "origin_key": "1997",
+                "value": 750676,
+                "key": 1997
+            },
+            {
+                "origin_key": "1996",
+                "value": 715510,
+                "key": 1996
+            },
+            {
+                "origin_key": "1995",
+                "value": 650020,
+                "key": 1995
+            },
+            {
+                "origin_key": "1994",
+                "value": 607475,
+                "key": 1994
+            },
+            {
+                "origin_key": "1993",
+                "value": 424032,
+                "key": 1993
+            },
+            {
+                "origin_key": "1992",
+                "value": 398680,
+                "key": 1992
+            },
+            {
+                "origin_key": "1991",
+                "value": 373218,
+                "key": 1991
+            },
+            {
+                "origin_key": "1990",
+                "value": 123681,
+                "key": 1990
+            },
+            {
+                "origin_key": "1989",
+                "value": 137000,
+                "key": 1989
+            },
+            {
+                "origin_key": "1988",
+                "value": 57723,
+                "key": 1988
+            },
+            {
+                "origin_key": "1987",
+                "value": 52998,
+                "key": 1987
+            },
+            {
+                "origin_key": "1986",
+                "value": 47355,
+                "key": 1986
+            },
+            {
+                "origin_key": "1985",
+                "value": 52859,
+                "key": 1985
+            },
+            {
+                "origin_key": "1984",
+                "value": 43231,
+                "key": 1984
+            },
+            {
+                "origin_key": "1983",
+                "value": 36933,
+                "key": 1983
+            },
+            {
+                "origin_key": "1982",
+                "value": 32115,
+                "key": 1982
+            },
+            {
+                "origin_key": "1981",
+                "value": 24633,
+                "key": 1981
+            },
+            {
+                "origin_key": "1980",
+                "value": 17598,
+                "key": 1980
+            },
+            {
+                "origin_key": "1979",
+                "value": 10726,
+                "key": 1979
+            },
+            {
+                "origin_key": "1978",
+                "value": 6447,
+                "key": 1978
+            },
+            {
+                "origin_key": "1977",
+                "value": 4878,
+                "key": 1977
+            },
+            {
+                "origin_key": "1976",
+                "value": 3707,
+                "key": 1976
+            },
+            {
+                "origin_key": "1975",
+                "value": 3790,
+                "key": 1975
+            },
+            {
+                "origin_key": "1974",
+                "value": 2745,
+                "key": 1974
+            },
+            {
+                "origin_key": "1973",
+                "value": 2063,
+                "key": 1973
+            },
+            {
+                "origin_key": "1972",
+                "value": 1155,
+                "key": 1972
+            },
+            {
+                "origin_key": "1971",
+                "value": 296,
+                "key": 1971
+            },
+            {
+                "origin_key": "1970",
+                "value": 260,
+                "key": 1970
+            },
+            {
+                "origin_key": "1969",
+                "value": 10,
+                "key": 1969
+            },
+            {
+                "origin_key": "1968",
+                "value": 40,
+                "key": 1968
+            },
+            {
+                "origin_key": "1967",
+                "value": 107,
+                "key": 1967
+            },
+            {
+                "origin_key": "1966",
+                "value": 2158,
+                "key": 1966
+            },
+            {
+                "origin_key": "1965",
+                "value": 4173,
+                "key": 1965
+            },
+            {
+                "origin_key": "1964",
+                "value": 3809,
+                "key": 1964
+            },
+            {
+                "origin_key": "1963",
+                "value": 3014,
+                "key": 1963
+            },
+            {
+                "origin_key": "1962",
+                "value": 2871,
+                "key": 1962
+            },
+            {
+                "origin_key": "1961",
+                "value": 2513,
+                "key": 1961
+            },
+            {
+                "origin_key": "1960",
+                "value": 4213,
+                "key": 1960
+            },
+            {
+                "origin_key": "1959",
+                "value": 6220,
+                "key": 1959
+            },
+            {
+                "origin_key": "1958",
+                "value": 5165,
+                "key": 1958
+            },
+            {
+                "origin_key": "1957",
+                "value": 3974,
+                "key": 1957
+            },
+            {
+                "origin_key": "1956",
+                "value": 2733,
+                "key": 1956
+            },
+            {
+                "origin_key": "1955",
+                "value": 2286,
+                "key": 1955
+            },
+            {
+                "origin_key": "1954",
+                "value": 1792,
+                "key": 1954
+            },
+            {
+                "origin_key": "1953",
+                "value": 1663,
+                "key": 1953
+            },
+            {
+                "origin_key": "1952",
+                "value": 646,
+                "key": 1952
+            },
+            {
+                "origin_key": "1951",
+                "value": 1146,
+                "key": 1951
+            },
+            {
+                "origin_key": "1950",
+                "value": 627,
+                "key": 1950
+            },
+            {
+                "origin_key": "1949",
+                "value": 50,
+                "key": 1949
+            },
+            {
+                "origin_key": "1948",
+                "value": 127,
+                "key": 1948
+            },
+            {
+                "origin_key": "1947",
+                "value": 94,
+                "key": 1947
+            },
+            {
+                "origin_key": "1946",
+                "value": 91,
+                "key": 1946
+            },
+            {
+                "origin_key": "1945",
+                "value": 40,
+                "key": 1945
+            },
+            {
+                "origin_key": "1944",
+                "value": 65,
+                "key": 1944
+            },
+            {
+                "origin_key": "1943",
+                "value": 84,
+                "key": 1943
+            },
+            {
+                "origin_key": "1942",
+                "value": 72,
+                "key": 1942
+            },
+            {
+                "origin_key": "1941",
+                "value": 102,
+                "key": 1941
+            },
+            {
+                "origin_key": "1940",
+                "value": 78,
+                "key": 1940
+            },
+            {
+                "origin_key": "1939",
+                "value": 65,
+                "key": 1939
+            },
+            {
+                "origin_key": "1938",
+                "value": 145,
+                "key": 1938
+            },
+            {
+                "origin_key": "1937",
+                "value": 249,
+                "key": 1937
+            },
+            {
+                "origin_key": "1936",
+                "value": 425,
+                "key": 1936
+            },
+            {
+                "origin_key": "1935",
+                "value": 406,
+                "key": 1935
+            },
+            {
+                "origin_key": "1934",
+                "value": 269,
+                "key": 1934
+            },
+            {
+                "origin_key": "1933",
+                "value": 217,
+                "key": 1933
+            },
+            {
+                "origin_key": "1932",
+                "value": 128,
+                "key": 1932
+            },
+            {
+                "origin_key": "1931",
+                "value": 57,
+                "key": 1931
+            },
+            {
+                "origin_key": "1930",
+                "value": 100,
+                "key": 1930
+            },
+            {
+                "origin_key": "1929",
+                "value": 118,
+                "key": 1929
+            },
+            {
+                "origin_key": "1928",
+                "value": 40,
+                "key": 1928
+            },
+            {
+                "origin_key": "1927",
+                "value": 79,
+                "key": 1927
+            },
+            {
+                "origin_key": "1926",
+                "value": 10,
+                "key": 1926
+            },
+            {
+                "origin_key": "1925",
+                "value": 174,
+                "key": 1925
+            },
+            {
+                "origin_key": "1924",
+                "value": 166,
+                "key": 1924
+            },
+            {
+                "origin_key": "1923",
+                "value": 162,
+                "key": 1923
+            },
+            {
+                "origin_key": "1921",
+                "value": 139,
+                "key": 1921
+            },
+            {
+                "origin_key": "1920",
+                "value": 6,
+                "key": 1920
+            },
+            {
+                "origin_key": "1910",
+                "value": 1,
+                "key": 1910
+            },
+            {
+                "origin_key": "1900",
+                "value": 94,
+                "key": 1900
+            }
+        ]
+    },
+    "keyword": {
+        "alias": "关键词",
+        "selected_aggregation": [],
+        "aggregations": [
+            {
+                "origin_key": "中国",
+                "value": 1204038,
+                "key": "中国"
+            },
+            {
+                "origin_key": "应用",
+                "value": 693691,
+                "key": "应用"
+            },
+            {
+                "origin_key": "对策",
+                "value": 537655,
+                "key": "对策"
+            },
+            {
+                "origin_key": "治疗",
+                "value": 528428,
+                "key": "治疗"
+            },
+            {
+                "origin_key": "学生",
+                "value": 418527,
+                "key": "学生"
+            },
+            {
+                "origin_key": "护理",
+                "value": 387571,
+                "key": "护理"
+            },
+            {
+                "origin_key": "企业",
+                "value": 382976,
+                "key": "企业"
+            },
+            {
+                "origin_key": "问题",
+                "value": 363881,
+                "key": "问题"
+            },
+            {
+                "origin_key": "诊断",
+                "value": 351643,
+                "key": "诊断"
+            },
+            {
+                "origin_key": "高校",
+                "value": 321726,
+                "key": "高校"
+            },
+            {
+                "origin_key": "管理",
+                "value": 312717,
+                "key": "管理"
+            },
+            {
+                "origin_key": "创新",
+                "value": 300223,
+                "key": "创新"
+            },
+            {
+                "origin_key": "课堂教学",
+                "value": 290423,
+                "key": "课堂教学"
+            },
+            {
+                "origin_key": "设计",
+                "value": 290380,
+                "key": "设计"
+            },
+            {
+                "origin_key": "大学生",
+                "value": 285672,
+                "key": "大学生"
+            },
+            {
+                "origin_key": "教学",
+                "value": 265106,
+                "key": "教学"
+            },
+            {
+                "origin_key": "发展",
+                "value": 261465,
+                "key": "发展"
+            },
+            {
+                "origin_key": "教学改革",
+                "value": 246389,
+                "key": "教学改革"
+            },
+            {
+                "origin_key": "影响因素",
+                "value": 246040,
+                "key": "影响因素"
+            },
+            {
+                "origin_key": "小学",
+                "value": 245846,
+                "key": "小学"
+            },
+            {
+                "origin_key": "教学方法",
+                "value": 239765,
+                "key": "教学方法"
+            },
+            {
+                "origin_key": "现状",
+                "value": 236779,
+                "key": "现状"
+            },
+            {
+                "origin_key": "策略",
+                "value": 231160,
+                "key": "策略"
+            },
+            {
+                "origin_key": "教师",
+                "value": 223957,
+                "key": "教师"
+            },
+            {
+                "origin_key": "儿童",
+                "value": 222721,
+                "key": "儿童"
+            },
+            {
+                "origin_key": "语文教学",
+                "value": 222118,
+                "key": "语文教学"
+            },
+            {
+                "origin_key": "培养",
+                "value": 209063,
+                "key": "培养"
+            },
+            {
+                "origin_key": "可持续发展",
+                "value": 202757,
+                "key": "可持续发展"
+            },
+            {
+                "origin_key": "分析",
+                "value": 195336,
+                "key": "分析"
+            },
+            {
+                "origin_key": "美国",
+                "value": 192327,
+                "key": "美国"
+            },
+            {
+                "origin_key": "措施",
+                "value": 186665,
+                "key": "措施"
+            },
+            {
+                "origin_key": "经济发展",
+                "value": 185916,
+                "key": "经济发展"
+            },
+            {
+                "origin_key": "疗效",
+                "value": 185126,
+                "key": "疗效"
+            },
+            {
+                "origin_key": "信息技术",
+                "value": 182447,
+                "key": "信息技术"
+            },
+            {
+                "origin_key": "小学语文",
+                "value": 178780,
+                "key": "小学语文"
+            },
+            {
+                "origin_key": "防治",
+                "value": 175745,
+                "key": "防治"
+            },
+            {
+                "origin_key": "改革",
+                "value": 173695,
+                "key": "改革"
+            },
+            {
+                "origin_key": "并发症",
+                "value": 172617,
+                "key": "并发症"
+            },
+            {
+                "origin_key": "中学",
+                "value": 172106,
+                "key": "中学"
+            },
+            {
+                "origin_key": "糖尿病",
+                "value": 171034,
+                "key": "糖尿病"
+            },
+            {
+                "origin_key": "高职院校",
+                "value": 169976,
+                "key": "高职院校"
+            },
+            {
+                "origin_key": "小学数学",
+                "value": 169578,
+                "key": "小学数学"
+            },
+            {
+                "origin_key": "小学生",
+                "value": 167857,
+                "key": "小学生"
+            },
+            {
+                "origin_key": "技术",
+                "value": 167285,
+                "key": "技术"
+            },
+            {
+                "origin_key": "老年人",
+                "value": 164569,
+                "key": "老年人"
+            },
+            {
+                "origin_key": "教学模式",
+                "value": 160956,
+                "key": "教学模式"
+            },
+            {
+                "origin_key": "素质教育",
+                "value": 160522,
+                "key": "素质教育"
+            },
+            {
+                "origin_key": "市场",
+                "value": 155424,
+                "key": "市场"
+            },
+            {
+                "origin_key": "研究",
+                "value": 154229,
+                "key": "研究"
+            },
+            {
+                "origin_key": "孩子",
+                "value": 153061,
+                "key": "孩子"
+            },
+            {
+                "origin_key": "影响",
+                "value": 151077,
+                "key": "影响"
+            },
+            {
+                "origin_key": "课外阅读",
+                "value": 148466,
+                "key": "课外阅读"
+            },
+            {
+                "origin_key": "世界",
+                "value": 148331,
+                "key": "世界"
+            },
+            {
+                "origin_key": "核心素养",
+                "value": 147547,
+                "key": "核心素养"
+            },
+            {
+                "origin_key": "质量控制",
+                "value": 146206,
+                "key": "质量控制"
+            },
+            {
+                "origin_key": "人才培养",
+                "value": 145019,
+                "key": "人才培养"
+            },
+            {
+                "origin_key": "乡村振兴",
+                "value": 143285,
+                "key": "乡村振兴"
+            },
+            {
+                "origin_key": "预防",
+                "value": 142496,
+                "key": "预防"
+            },
+            {
+                "origin_key": "国有企业",
+                "value": 141987,
+                "key": "国有企业"
+            },
+            {
+                "origin_key": "数值模拟",
+                "value": 141023,
+                "key": "数值模拟"
+            },
+            {
+                "origin_key": "财务管理",
+                "value": 141009,
+                "key": "财务管理"
+            },
+            {
+                "origin_key": "经济效益",
+                "value": 140501,
+                "key": "经济效益"
+            },
+            {
+                "origin_key": "互联网",
+                "value": 138192,
+                "key": "互联网"
+            },
+            {
+                "origin_key": "语文学习",
+                "value": 137954,
+                "key": "语文学习"
+            },
+            {
+                "origin_key": "作文",
+                "value": 137560,
+                "key": "作文"
+            },
+            {
+                "origin_key": "发展趋势",
+                "value": 137334,
+                "key": "发展趋势"
+            },
+            {
+                "origin_key": "实践",
+                "value": 137202,
+                "key": "实践"
+            },
+            {
+                "origin_key": "老师",
+                "value": 135496,
+                "key": "老师"
+            },
+            {
+                "origin_key": "人工智能",
+                "value": 135001,
+                "key": "人工智能"
+            },
+            {
+                "origin_key": "信息化",
+                "value": 132890,
+                "key": "信息化"
+            },
+            {
+                "origin_key": "施工技术",
+                "value": 132379,
+                "key": "施工技术"
+            },
+            {
+                "origin_key": "中医药疗法",
+                "value": 131785,
+                "key": "中医药疗法"
+            },
+            {
+                "origin_key": "教育",
+                "value": 129312,
+                "key": "教育"
+            },
+            {
+                "origin_key": "企业管理",
+                "value": 128037,
+                "key": "企业管理"
+            },
+            {
+                "origin_key": "高血压",
+                "value": 127483,
+                "key": "高血压"
+            },
+            {
+                "origin_key": "数学教学",
+                "value": 126359,
+                "key": "数学教学"
+            },
+            {
+                "origin_key": "北京",
+                "value": 125575,
+                "key": "北京"
+            },
+            {
+                "origin_key": "教学策略",
+                "value": 125251,
+                "key": "教学策略"
+            },
+            {
+                "origin_key": "建筑工程",
+                "value": 122378,
+                "key": "建筑工程"
+            },
+            {
+                "origin_key": "原因",
+                "value": 121745,
+                "key": "原因"
+            },
+            {
+                "origin_key": "消费者",
+                "value": 121611,
+                "key": "消费者"
+            },
+            {
+                "origin_key": "上海",
+                "value": 121509,
+                "key": "上海"
+            },
+            {
+                "origin_key": "优化",
+                "value": 120939,
+                "key": "优化"
+            },
+            {
+                "origin_key": "预后",
+                "value": 120042,
+                "key": "预后"
+            },
+            {
+                "origin_key": "初中",
+                "value": 119813,
+                "key": "初中"
+            },
+            {
+                "origin_key": "高质量发展",
+                "value": 119309,
+                "key": "高质量发展"
+            },
+            {
+                "origin_key": "生活质量",
+                "value": 118818,
+                "key": "生活质量"
+            },
+            {
+                "origin_key": "农村",
+                "value": 118810,
+                "key": "农村"
+            },
+            {
+                "origin_key": "方法",
+                "value": 118767,
+                "key": "方法"
+            },
+            {
+                "origin_key": "阅读教学",
+                "value": 116861,
+                "key": "阅读教学"
+            },
+            {
+                "origin_key": "语文",
+                "value": 116719,
+                "key": "语文"
+            },
+            {
+                "origin_key": "计算机",
+                "value": 115494,
+                "key": "计算机"
+            },
+            {
+                "origin_key": "产量",
+                "value": 114908,
+                "key": "产量"
+            },
+            {
+                "origin_key": "高中",
+                "value": 114726,
+                "key": "高中"
+            },
+            {
+                "origin_key": "综述",
+                "value": 114251,
+                "key": "综述"
+            },
+            {
+                "origin_key": "图书馆",
+                "value": 114117,
+                "key": "图书馆"
+            },
+            {
+                "origin_key": "思想政治教育",
+                "value": 113151,
+                "key": "思想政治教育"
+            },
+            {
+                "origin_key": "大数据",
+                "value": 112625,
+                "key": "大数据"
+            },
+            {
+                "origin_key": "中学生",
+                "value": 112407,
+                "key": "中学生"
+            },
+            {
+                "origin_key": "日本",
+                "value": 111388,
+                "key": "日本"
+            }
+        ]
+    },
+    "collection": {
+        "alias": "核心收录",
+        "selected_aggregation": [],
+        "aggregations": [
+            {
+                "origin_key": "北大核心",
+                "value": 8081617,
+                "key": "北大核心"
+            },
+            {
+                "origin_key": "CSCD",
+                "value": 5860153,
+                "key": "CSCD"
+            },
+            {
+                "origin_key": "南大核心",
+                "value": 1649432,
+                "key": "南大核心"
+            },
+            {
+                "origin_key": "SCI",
+                "value": 292903,
+                "key": "SCI"
+            },
+            {
+                "origin_key": "WJCI",
+                "value": 26880,
+                "key": "WJCI"
+            },
+            {
+                "origin_key": "JST",
+                "value": 25764,
+                "key": "JST"
+            },
+            {
+                "origin_key": "CSTPCD",
+                "value": 14814,
+                "key": "CSTPCD"
+            },
+            {
+                "origin_key": "SCOPUS",
+                "value": 14543,
+                "key": "SCOPUS"
+            },
+            {
+                "origin_key": "EI",
+                "value": 10102,
+                "key": "EI"
+            },
+            {
+                "origin_key": "SCIE",
+                "value": 8314,
+                "key": "SCIE"
+            },
+            {
+                "origin_key": "SSCI",
+                "value": 3259,
+                "key": "SSCI"
+            },
+            {
+                "origin_key": "DOAJ",
+                "value": 1026,
+                "key": "DOAJ"
+            },
+            {
+                "origin_key": "COAJ",
+                "value": 1025,
+                "key": "COAJ"
+            },
+            {
+                "origin_key": "CACJ",
+                "value": 1025,
+                "key": "CACJ"
+            },
+            {
+                "origin_key": "CA",
+                "value": 1025,
+                "key": "CA"
+            },
+            {
+                "origin_key": "AMI",
+                "value": 613,
+                "key": "AMI"
+            },
+            {
+                "origin_key": "CJFD",
+                "value": 509,
+                "key": "CJFD"
+            },
+            {
+                "origin_key": "ASPT",
+                "value": 506,
+                "key": "ASPT"
+            },
+            {
+                "origin_key": "GEOBASE",
+                "value": 417,
+                "key": "GEOBASE"
+            },
+            {
+                "origin_key": "GEOREF",
+                "value": 330,
+                "key": "GEOREF"
+            },
+            {
+                "origin_key": "INSPEC",
+                "value": 119,
+                "key": "INSPEC"
+            },
+            {
+                "origin_key": "人文核心",
+                "value": 90,
+                "key": "人文核心"
+            },
+            {
+                "origin_key": "ESCI",
+                "value": 80,
+                "key": "ESCI"
+            },
+            {
+                "origin_key": "武大中国学术期刊评价研究报告",
+                "value": 78,
+                "key": "武大中国学术期刊评价研究报告"
+            },
+            {
+                "origin_key": "中信所中国科技期刊引证报告",
+                "value": 78,
+                "key": "中信所中国科技期刊引证报告"
+            },
+            {
+                "origin_key": "CSSCI",
+                "value": 64,
+                "key": "CSSCI"
+            },
+            {
+                "origin_key": "EBSCO",
+                "value": 46,
+                "key": "EBSCO"
+            },
+            {
+                "origin_key": "AMI核心",
+                "value": 46,
+                "key": "AMI核心"
+            },
+            {
+                "origin_key": "RSSCE",
+                "value": 46,
+                "key": "RSSCE"
+            },
+            {
+                "origin_key": "科技核心",
+                "value": 38,
+                "key": "科技核心"
+            },
+            {
+                "origin_key": "ULRICHSWEB",
+                "value": 25,
+                "key": "ULRICHSWEB"
+            },
+            {
+                "origin_key": "CPCI",
+                "value": 7,
+                "key": "CPCI"
+            },
+            {
+                "origin_key": "ISTP",
+                "value": 1,
+                "key": "ISTP"
+            },
+            {
+                "origin_key": "SJR",
+                "value": 1,
+                "key": "SJR"
+            },
+            {
+                "origin_key": "SNIP",
+                "value": 1,
+                "key": "SNIP"
+            }
+        ]
+    },
+    "lang": {
+        "alias": "语种",
+        "selected_aggregation": [
+            "C"
+        ],
+        "aggregations": [
+            {
+                "origin_key": "C",
+                "value": 74540267,
+                "key": "中文"
+            }
+        ]
+    },
+    "source": {
+        "alias": "出版物",
+        "selected_aggregation": [],
+        "aggregations": [
+            {
+                "origin_key": "考试周刊",
+                "value": 183118,
+                "key": "考试周刊"
+            },
+            {
+                "origin_key": "中国医药指南",
+                "value": 129967,
+                "key": "中国医药指南"
+            },
+            {
+                "origin_key": "科技信息",
+                "value": 118213,
+                "key": "科技信息"
+            },
+            {
+                "origin_key": "黑龙江科技信息",
+                "value": 112101,
+                "key": "黑龙江科技信息"
+            },
+            {
+                "origin_key": "中国科技博览",
+                "value": 107951,
+                "key": "中国科技博览"
+            },
+            {
+                "origin_key": "科技资讯",
+                "value": 101527,
+                "key": "科技资讯"
+            },
+            {
+                "origin_key": "山西建筑",
+                "value": 101020,
+                "key": "山西建筑"
+            },
+            {
+                "origin_key": "中国实用医药",
+                "value": 94242,
+                "key": "中国实用医药"
+            },
+            {
+                "origin_key": "教育教学论坛",
+                "value": 93746,
+                "key": "教育教学论坛"
+            },
+            {
+                "origin_key": "课程教育研究",
+                "value": 91773,
+                "key": "课程教育研究"
+            },
+            {
+                "origin_key": "现代经济信息",
+                "value": 89287,
+                "key": "现代经济信息"
+            },
+            {
+                "origin_key": "安徽农业科学",
+                "value": 87267,
+                "key": "安徽农业科学"
+            },
+            {
+                "origin_key": "世界最新医学信息文摘（电子版）",
+                "value": 87256,
+                "key": "世界最新医学信息文摘（电子版）"
+            },
+            {
+                "origin_key": "科技风",
+                "value": 84600,
+                "key": "科技风"
+            },
+            {
+                "origin_key": "商场现代化",
+                "value": 82337,
+                "key": "商场现代化"
+            },
+            {
+                "origin_key": "中小企业管理与科技",
+                "value": 82020,
+                "key": "中小企业管理与科技"
+            },
+            {
+                "origin_key": "科技创新导报",
+                "value": 81418,
+                "key": "科技创新导报"
+            },
+            {
+                "origin_key": "经营管理者",
+                "value": 77625,
+                "key": "经营管理者"
+            },
+            {
+                "origin_key": "现代农业科技",
+                "value": 77167,
+                "key": "现代农业科技"
+            },
+            {
+                "origin_key": "科学咨询",
+                "value": 74837,
+                "key": "科学咨询"
+            },
+            {
+                "origin_key": "科技创新与应用",
+                "value": 74272,
+                "key": "科技创新与应用"
+            },
+            {
+                "origin_key": "商情",
+                "value": 73405,
+                "key": "商情"
+            },
+            {
+                "origin_key": "价值工程",
+                "value": 71919,
+                "key": "价值工程"
+            },
+            {
+                "origin_key": "现代商业",
+                "value": 67801,
+                "key": "现代商业"
+            },
+            {
+                "origin_key": "农民致富之友",
+                "value": 67637,
+                "key": "农民致富之友"
+            },
+            {
+                "origin_key": "中国社区医师：医学专业",
+                "value": 66739,
+                "key": "中国社区医师：医学专业"
+            },
+            {
+                "origin_key": "山东医药",
+                "value": 66661,
+                "key": "山东医药"
+            },
+            {
+                "origin_key": "经济技术协作信息",
+                "value": 66109,
+                "key": "经济技术协作信息"
+            },
+            {
+                "origin_key": "财经界",
+                "value": 65572,
+                "key": "财经界"
+            },
+            {
+                "origin_key": "中国误诊学杂志",
+                "value": 63604,
+                "key": "中国误诊学杂志"
+            },
+            {
+                "origin_key": "中国市场",
+                "value": 62840,
+                "key": "中国市场"
+            },
+            {
+                "origin_key": "基层医学论坛",
+                "value": 61731,
+                "key": "基层医学论坛"
+            },
+            {
+                "origin_key": "科技视界",
+                "value": 61726,
+                "key": "科技视界"
+            },
+            {
+                "origin_key": "管理观察",
+                "value": 61717,
+                "key": "管理观察"
+            },
+            {
+                "origin_key": "科教文汇",
+                "value": 61051,
+                "key": "科教文汇"
+            },
+            {
+                "origin_key": "中国科技信息",
+                "value": 59047,
+                "key": "中国科技信息"
+            },
+            {
+                "origin_key": "化工管理",
+                "value": 59003,
+                "key": "化工管理"
+            },
+            {
+                "origin_key": "成才之路",
+                "value": 58666,
+                "key": "成才之路"
+            },
+            {
+                "origin_key": "文教资料",
+                "value": 58566,
+                "key": "文教资料"
+            },
+            {
+                "origin_key": "中国现代药物应用",
+                "value": 58564,
+                "key": "中国现代药物应用"
+            },
+            {
+                "origin_key": "神州",
+                "value": 58503,
+                "key": "神州"
+            },
+            {
+                "origin_key": "中外医疗",
+                "value": 58397,
+                "key": "中外医疗"
+            },
+            {
+                "origin_key": "当代医学",
+                "value": 58249,
+                "key": "当代医学"
+            },
+            {
+                "origin_key": "吉林医学",
+                "value": 57887,
+                "key": "吉林医学"
+            },
+            {
+                "origin_key": "广西教育",
+                "value": 57740,
+                "key": "广西教育"
+            },
+            {
+                "origin_key": "科技致富向导",
+                "value": 57174,
+                "key": "科技致富向导"
+            },
+            {
+                "origin_key": "现代商贸工业",
+                "value": 57127,
+                "key": "现代商贸工业"
+            },
+            {
+                "origin_key": "现代中西医结合杂志",
+                "value": 55615,
+                "key": "现代中西医结合杂志"
+            },
+            {
+                "origin_key": "中国科教创新导刊",
+                "value": 55114,
+                "key": "中国科教创新导刊"
+            },
+            {
+                "origin_key": "中国科技纵横",
+                "value": 55071,
+                "key": "中国科技纵横"
+            },
+            {
+                "origin_key": "中国新技术新产品",
+                "value": 54346,
+                "key": "中国新技术新产品"
+            },
+            {
+                "origin_key": "中国经贸",
+                "value": 54157,
+                "key": "中国经贸"
+            },
+            {
+                "origin_key": "临床合理用药杂志",
+                "value": 54058,
+                "key": "临床合理用药杂志"
+            },
+            {
+                "origin_key": "内蒙古中医药",
+                "value": 54010,
+                "key": "内蒙古中医药"
+            },
+            {
+                "origin_key": "经济师",
+                "value": 52944,
+                "key": "经济师"
+            },
+            {
+                "origin_key": "现代医药卫生",
+                "value": 52936,
+                "key": "现代医药卫生"
+            },
+            {
+                "origin_key": "建材发展导向",
+                "value": 52113,
+                "key": "建材发展导向"
+            },
+            {
+                "origin_key": "中国社区医师",
+                "value": 52024,
+                "key": "中国社区医师"
+            },
+            {
+                "origin_key": "产业与科技论坛",
+                "value": 51283,
+                "key": "产业与科技论坛"
+            },
+            {
+                "origin_key": "中外医学研究",
+                "value": 50148,
+                "key": "中外医学研究"
+            },
+            {
+                "origin_key": "区域治理",
+                "value": 49847,
+                "key": "区域治理"
+            },
+            {
+                "origin_key": "中国集体经济",
+                "value": 49035,
+                "key": "中国集体经济"
+            },
+            {
+                "origin_key": "中国医药导报",
+                "value": 48819,
+                "key": "中国医药导报"
+            },
+            {
+                "origin_key": "中外企业家",
+                "value": 48607,
+                "key": "中外企业家"
+            },
+            {
+                "origin_key": "经济研究导刊",
+                "value": 48584,
+                "key": "经济研究导刊"
+            },
+            {
+                "origin_key": "读写算（教师版）：素质教育论坛",
+                "value": 48194,
+                "key": "读写算（教师版）：素质教育论坛"
+            },
+            {
+                "origin_key": "校园英语",
+                "value": 48058,
+                "key": "校园英语"
+            },
+            {
+                "origin_key": "卫生职业教育",
+                "value": 48019,
+                "key": "卫生职业教育"
+            },
+            {
+                "origin_key": "当代体育科技",
+                "value": 48001,
+                "key": "当代体育科技"
+            },
+            {
+                "origin_key": "医学理论与实践",
+                "value": 46942,
+                "key": "医学理论与实践"
+            },
+            {
+                "origin_key": "中国当代医药",
+                "value": 46456,
+                "key": "中国当代医药"
+            },
+            {
+                "origin_key": "中国老年学杂志",
+                "value": 46178,
+                "key": "中国老年学杂志"
+            },
+            {
+                "origin_key": "计算机工程与应用",
+                "value": 45759,
+                "key": "计算机工程与应用"
+            },
+            {
+                "origin_key": "中国卫生产业",
+                "value": 45572,
+                "key": "中国卫生产业"
+            },
+            {
+                "origin_key": "教师",
+                "value": 44742,
+                "key": "教师"
+            },
+            {
+                "origin_key": "城市建筑",
+                "value": 44559,
+                "key": "城市建筑"
+            },
+            {
+                "origin_key": "中学生作文指导",
+                "value": 44317,
+                "key": "中学生作文指导"
+            },
+            {
+                "origin_key": "时代金融",
+                "value": 43972,
+                "key": "时代金融"
+            },
+            {
+                "origin_key": "科教导刊",
+                "value": 43572,
+                "key": "科教导刊"
+            },
+            {
+                "origin_key": "中学教学参考",
+                "value": 43195,
+                "key": "中学教学参考"
+            },
+            {
+                "origin_key": "甘肃教育",
+                "value": 43130,
+                "key": "甘肃教育"
+            },
+            {
+                "origin_key": "职业",
+                "value": 42790,
+                "key": "职业"
+            },
+            {
+                "origin_key": "商",
+                "value": 42588,
+                "key": "商"
+            },
+            {
+                "origin_key": "齐齐哈尔医学院学报",
+                "value": 42568,
+                "key": "齐齐哈尔医学院学报"
+            },
+            {
+                "origin_key": "市场周刊·理论版",
+                "value": 42523,
+                "key": "市场周刊·理论版"
+            },
+            {
+                "origin_key": "课程教育研究：学法教法研究",
+                "value": 42383,
+                "key": "课程教育研究：学法教法研究"
+            },
+            {
+                "origin_key": "江西建材",
+                "value": 42374,
+                "key": "江西建材"
+            },
+            {
+                "origin_key": "广东化工",
+                "value": 42184,
+                "key": "广东化工"
+            },
+            {
+                "origin_key": "知识经济",
+                "value": 41823,
+                "key": "知识经济"
+            },
+            {
+                "origin_key": "内蒙古科技与经济",
+                "value": 41557,
+                "key": "内蒙古科技与经济"
+            },
+            {
+                "origin_key": "电脑爱好者",
+                "value": 41543,
+                "key": "电脑爱好者"
+            },
+            {
+                "origin_key": "科技情报开发与经济",
+                "value": 41452,
+                "key": "科技情报开发与经济"
+            },
+            {
+                "origin_key": "交通世界",
+                "value": 41431,
+                "key": "交通世界"
+            },
+            {
+                "origin_key": "文理导航",
+                "value": 41327,
+                "key": "文理导航"
+            },
+            {
+                "origin_key": "食品科学",
+                "value": 40957,
+                "key": "食品科学"
+            },
+            {
+                "origin_key": "股市动态分析",
+                "value": 40827,
+                "key": "股市动态分析"
+            },
+            {
+                "origin_key": "企业改革与管理",
+                "value": 40690,
+                "key": "企业改革与管理"
+            },
+            {
+                "origin_key": "现代园艺",
+                "value": 40675,
+                "key": "现代园艺"
+            },
+            {
+                "origin_key": "中国医学创新",
+                "value": 40443,
+                "key": "中国医学创新"
+            },
+            {
+                "origin_key": "中国中医药现代远程教育",
+                "value": 40349,
+                "key": "中国中医药现代远程教育"
+            }
+        ]
+    },
+    "correspAuthor": {
+        "alias": "通讯作者",
+        "selected_aggregation": [],
+        "aggregations": [
+            {
+                "origin_key": "林文雄",
+                "value": 61,
+                "key": "林文雄"
+            },
+            {
+                "origin_key": "刘秀丽",
+                "value": 52,
+                "key": "刘秀丽"
+            },
+            {
+                "origin_key": "LIU Xiu-li",
+                "value": 44,
+                "key": "LIU Xiu-li"
+            },
+            {
+                "origin_key": "Liu, Xiuli",
+                "value": 44,
+                "key": "Liu, Xiuli"
+            },
+            {
+                "origin_key": "Liu, Xiu-li",
+                "value": 44,
+                "key": "Liu, Xiu-li"
+            },
+            {
+                "origin_key": "LIU Xiuli",
+                "value": 44,
+                "key": "LIU Xiuli"
+            },
+            {
+                "origin_key": "Liu Xiuli",
+                "value": 44,
+                "key": "Liu Xiuli"
+            },
+            {
+                "origin_key": "Liu Xiu Li",
+                "value": 44,
+                "key": "Liu Xiu Li"
+            },
+            {
+                "origin_key": "Xiuli LIU",
+                "value": 44,
+                "key": "Xiuli LIU"
+            },
+            {
+                "origin_key": "杨军",
+                "value": 40,
+                "key": "杨军"
+            },
+            {
+                "origin_key": "孙伟",
+                "value": 35,
+                "key": "孙伟"
+            },
+            {
+                "origin_key": "孙然好",
+                "value": 33,
+                "key": "孙然好"
+            },
+            {
+                "origin_key": "沈彦俊",
+                "value": 32,
+                "key": "沈彦俊"
+            },
+            {
+                "origin_key": "于贵瑞",
+                "value": 32,
+                "key": "于贵瑞"
+            },
+            {
+                "origin_key": "陈伟",
+                "value": 30,
+                "key": "陈伟"
+            },
+            {
+                "origin_key": "刘金铜",
+                "value": 29,
+                "key": "刘金铜"
+            },
+            {
+                "origin_key": "何卫民",
+                "value": 29,
+                "key": "何卫民"
+            },
+            {
+                "origin_key": "刘细文",
+                "value": 28,
+                "key": "刘细文"
+            },
+            {
+                "origin_key": "邵全琴",
+                "value": 27,
+                "key": "邵全琴"
+            },
+            {
+                "origin_key": "刘小京",
+                "value": 27,
+                "key": "刘小京"
+            },
+            {
+                "origin_key": "胡春胜",
+                "value": 26,
+                "key": "胡春胜"
+            },
+            {
+                "origin_key": "余晔",
+                "value": 26,
+                "key": "余晔"
+            },
+            {
+                "origin_key": "SUN Ran-hao",
+                "value": 26,
+                "key": "SUN Ran-hao"
+            },
+            {
+                "origin_key": "Sun Ran Hao",
+                "value": 26,
+                "key": "Sun Ran Hao"
+            },
+            {
+                "origin_key": "Ranhao SUN",
+                "value": 26,
+                "key": "Ranhao SUN"
+            },
+            {
+                "origin_key": "Sun Ranhao",
+                "value": 26,
+                "key": "Sun Ranhao"
+            },
+            {
+                "origin_key": "Sun, Ranhao",
+                "value": 26,
+                "key": "Sun, Ranhao"
+            },
+            {
+                "origin_key": "SUN Ranhao",
+                "value": 26,
+                "key": "SUN Ranhao"
+            },
+            {
+                "origin_key": "Sun, Ran-hao",
+                "value": 26,
+                "key": "Sun, Ran-hao"
+            },
+            {
+                "origin_key": "刘强",
+                "value": 25,
+                "key": "刘强"
+            },
+            {
+                "origin_key": "于建荣",
+                "value": 25,
+                "key": "于建荣"
+            },
+            {
+                "origin_key": "张正斌",
+                "value": 25,
+                "key": "张正斌"
+            },
+            {
+                "origin_key": "梁德青",
+                "value": 24,
+                "key": "梁德青"
+            },
+            {
+                "origin_key": "周青",
+                "value": 24,
+                "key": "周青"
+            },
+            {
+                "origin_key": "周广胜",
+                "value": 24,
+                "key": "周广胜"
+            },
+            {
+                "origin_key": "WANG Liang-sheng",
+                "value": 23,
+                "key": "WANG Liang-sheng"
+            },
+            {
+                "origin_key": "张浩",
+                "value": 23,
+                "key": "张浩"
+            },
+            {
+                "origin_key": "范怡平",
+                "value": 23,
+                "key": "范怡平"
+            },
+            {
+                "origin_key": "Liangsheng WANG",
+                "value": 23,
+                "key": "Liangsheng WANG"
+            },
+            {
+                "origin_key": "Wang, Liang-sheng",
+                "value": 23,
+                "key": "Wang, Liang-sheng"
+            },
+            {
+                "origin_key": "刘超",
+                "value": 23,
+                "key": "刘超"
+            },
+            {
+                "origin_key": "WANG Liangsheng",
+                "value": 23,
+                "key": "WANG Liangsheng"
+            },
+            {
+                "origin_key": "Wang Liang Sheng",
+                "value": 23,
+                "key": "Wang Liang Sheng"
+            },
+            {
+                "origin_key": "Wang, Liangsheng",
+                "value": 23,
+                "key": "Wang, Liangsheng"
+            },
+            {
+                "origin_key": "Wang Liangsheng",
+                "value": 23,
+                "key": "Wang Liangsheng"
+            },
+            {
+                "origin_key": "张耀南",
+                "value": 22,
+                "key": "张耀南"
+            },
+            {
+                "origin_key": "刘宇",
+                "value": 22,
+                "key": "刘宇"
+            },
+            {
+                "origin_key": "熊燕",
+                "value": 22,
+                "key": "熊燕"
+            },
+            {
+                "origin_key": "肖波",
+                "value": 21,
+                "key": "肖波"
+            },
+            {
+                "origin_key": "王鹏",
+                "value": 21,
+                "key": "王鹏"
+            },
+            {
+                "origin_key": "刘宏民",
+                "value": 21,
+                "key": "刘宏民"
+            },
+            {
+                "origin_key": "Wei, Yunjie",
+                "value": 20,
+                "key": "Wei, Yunjie"
+            },
+            {
+                "origin_key": "何国金",
+                "value": 20,
+                "key": "何国金"
+            },
+            {
+                "origin_key": "Yang Yanping",
+                "value": 19,
+                "key": "Yang Yanping"
+            },
+            {
+                "origin_key": "Li Gen Bao",
+                "value": 19,
+                "key": "Li Gen Bao"
+            },
+            {
+                "origin_key": "陈大明",
+                "value": 19,
+                "key": "陈大明"
+            },
+            {
+                "origin_key": "YANG Yan-ping",
+                "value": 19,
+                "key": "YANG Yan-ping"
+            },
+            {
+                "origin_key": "Genbao LI",
+                "value": 19,
+                "key": "Genbao LI"
+            },
+            {
+                "origin_key": "Li, Gen-bao",
+                "value": 19,
+                "key": "Li, Gen-bao"
+            },
+            {
+                "origin_key": "Yang, Yanping",
+                "value": 19,
+                "key": "Yang, Yanping"
+            },
+            {
+                "origin_key": "YANG Yanping",
+                "value": 19,
+                "key": "YANG Yanping"
+            },
+            {
+                "origin_key": "Yang, Yan-ping",
+                "value": 19,
+                "key": "Yang, Yan-ping"
+            },
+            {
+                "origin_key": "Li Genbao",
+                "value": 19,
+                "key": "Li Genbao"
+            },
+            {
+                "origin_key": "LI Gen-bao",
+                "value": 19,
+                "key": "LI Gen-bao"
+            },
+            {
+                "origin_key": "Li, Genbao",
+                "value": 19,
+                "key": "Li, Genbao"
+            },
+            {
+                "origin_key": "Yanping YANG",
+                "value": 19,
+                "key": "Yanping YANG"
+            },
+            {
+                "origin_key": "Yang Yan Ping",
+                "value": 19,
+                "key": "Yang Yan Ping"
+            },
+            {
+                "origin_key": "LI Genbao",
+                "value": 19,
+                "key": "LI Genbao"
+            },
+            {
+                "origin_key": "李江",
+                "value": 19,
+                "key": "李江"
+            },
+            {
+                "origin_key": "Bo XIAO",
+                "value": 18,
+                "key": "Bo XIAO"
+            },
+            {
+                "origin_key": "Po XIAO",
+                "value": 18,
+                "key": "Po XIAO"
+            },
+            {
+                "origin_key": "黄国勤",
+                "value": 18,
+                "key": "黄国勤"
+            },
+            {
+                "origin_key": "XIAO Bo",
+                "value": 18,
+                "key": "XIAO Bo"
+            },
+            {
+                "origin_key": "Xiao Po",
+                "value": 18,
+                "key": "Xiao Po"
+            },
+            {
+                "origin_key": "施斌",
+                "value": 18,
+                "key": "施斌"
+            },
+            {
+                "origin_key": "XIAO Po",
+                "value": 18,
+                "key": "XIAO Po"
+            },
+            {
+                "origin_key": "王斌",
+                "value": 18,
+                "key": "王斌"
+            },
+            {
+                "origin_key": "Xiao, Po",
+                "value": 18,
+                "key": "Xiao, Po"
+            },
+            {
+                "origin_key": "马林",
+                "value": 18,
+                "key": "马林"
+            },
+            {
+                "origin_key": "付巧妹",
+                "value": 18,
+                "key": "付巧妹"
+            },
+            {
+                "origin_key": "Xiao, Bo",
+                "value": 18,
+                "key": "Xiao, Bo"
+            },
+            {
+                "origin_key": "Xiao Bo",
+                "value": 18,
+                "key": "Xiao Bo"
+            },
+            {
+                "origin_key": "杨艳萍",
+                "value": 18,
+                "key": "杨艳萍"
+            },
+            {
+                "origin_key": "毛开云",
+                "value": 17,
+                "key": "毛开云"
+            },
+            {
+                "origin_key": "崔晓鹏",
+                "value": 17,
+                "key": "崔晓鹏"
+            },
+            {
+                "origin_key": "兰恒星",
+                "value": 17,
+                "key": "兰恒星"
+            },
+            {
+                "origin_key": "Xiaopeng CUI",
+                "value": 17,
+                "key": "Xiaopeng CUI"
+            },
+            {
+                "origin_key": "CUI Xiaopeng",
+                "value": 17,
+                "key": "CUI Xiaopeng"
+            },
+            {
+                "origin_key": "CUI Xiao-peng",
+                "value": 17,
+                "key": "CUI Xiao-peng"
+            },
+            {
+                "origin_key": "Liu, Xi-wen",
+                "value": 17,
+                "key": "Liu, Xi-wen"
+            },
+            {
+                "origin_key": "Cui, Xiao-peng",
+                "value": 17,
+                "key": "Cui, Xiao-peng"
+            },
+            {
+                "origin_key": "Cui Xiaopeng",
+                "value": 17,
+                "key": "Cui Xiaopeng"
+            },
+            {
+                "origin_key": "Liu Xiwen",
+                "value": 17,
+                "key": "Liu Xiwen"
+            },
+            {
+                "origin_key": "Cui, Xiaopeng",
+                "value": 17,
+                "key": "Cui, Xiaopeng"
+            },
+            {
+                "origin_key": "LIU Xiwen",
+                "value": 17,
+                "key": "LIU Xiwen"
+            },
+            {
+                "origin_key": "Cui Xiao Peng",
+                "value": 17,
+                "key": "Cui Xiao Peng"
+            },
+            {
+                "origin_key": "LIU Xi-wen",
+                "value": 17,
+                "key": "LIU Xi-wen"
+            },
+            {
+                "origin_key": "Liu, Xiwen",
+                "value": 17,
+                "key": "Liu, Xiwen"
+            },
+            {
+                "origin_key": "Liu Xi Wen",
+                "value": 17,
+                "key": "Liu Xi Wen"
+            },
+            {
+                "origin_key": "Xiwen LIU",
+                "value": 17,
+                "key": "Xiwen LIU"
+            }
+        ]
+    },
+    "funding": {
+        "alias": "基金资助机构",
+        "selected_aggregation": [],
+        "aggregations": [
+            {
+                "origin_key": "国家自然科学基金资助项目",
+                "value": 1239,
+                "key": "国家自然科学基金资助项目"
+            },
+            {
+                "origin_key": "国家自然科学基金",
+                "value": 954,
+                "key": "国家自然科学基金"
+            },
+            {
+                "origin_key": "(No.ZX069)",
+                "value": 622,
+                "key": "(No.ZX069)"
+            },
+            {
+                "origin_key": "National Natural Science Foundation of China",
+                "value": 620,
+                "key": "National Natural Science Foundation of China"
+            },
+            {
+                "origin_key": "国家自然科学基金项目",
+                "value": 573,
+                "key": "国家自然科学基金项目"
+            },
+            {
+                "origin_key": "国家自然科学基金项目（面上项目，重点项目，重大项目）",
+                "value": 252,
+                "key": "国家自然科学基金项目（面上项目，重点项目，重大项目）"
+            },
+            {
+                "origin_key": "国家自然科学基金资助项目（）",
+                "value": 221,
+                "key": "国家自然科学基金资助项目（）"
+            },
+            {
+                "origin_key": "国家重点研发计划",
+                "value": 204,
+                "key": "国家重点研发计划"
+            },
+            {
+                "origin_key": "(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18)",
+                "value": 203,
+                "key": "(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18)"
+            },
+            {
+                "origin_key": "国家自然科学基金(11605241;11875290;11975276)",
+                "value": 193,
+                "key": "国家自然科学基金(11605241;11875290;11975276)"
+            },
+            {
+                "origin_key": "国家自然科学基金项目.",
+                "value": 171,
+                "key": "国家自然科学基金项目."
+            },
+            {
+                "origin_key": "(No.ZX069);(No.ZX069)",
+                "value": 112,
+                "key": "(No.ZX069);(No.ZX069)"
+            },
+            {
+                "origin_key": "国家自然科学基金项目(42076139)",
+                "value": 109,
+                "key": "国家自然科学基金项目(42076139)"
+            },
+            {
+                "origin_key": "中国科学院（XDA19090110）",
+                "value": 99,
+                "key": "中国科学院（XDA19090110）"
+            },
+            {
+                "origin_key": "江苏高校优势学科建设工程资助项目",
+                "value": 87,
+                "key": "江苏高校优势学科建设工程资助项目"
+            },
+            {
+                "origin_key": "中国科学院心理研究所",
+                "value": 82,
+                "key": "中国科学院心理研究所"
+            },
+            {
+                "origin_key": "国家自然科学基金(52108300)",
+                "value": 82,
+                "key": "国家自然科学基金(52108300)"
+            },
+            {
+                "origin_key": "中国科学院（Y22Q0203TD）",
+                "value": 79,
+                "key": "中国科学院（Y22Q0203TD）"
+            },
+            {
+                "origin_key": "国家重点研发计划项目",
+                "value": 78,
+                "key": "国家重点研发计划项目"
+            },
+            {
+                "origin_key": "国家“”计划项目",
+                "value": 75,
+                "key": "国家“”计划项目"
+            },
+            {
+                "origin_key": "中国科学院（2018）",
+                "value": 66,
+                "key": "中国科学院（2018）"
+            },
+            {
+                "origin_key": "国家自然科学基金(41867010)",
+                "value": 63,
+                "key": "国家自然科学基金(41867010)"
+            },
+            {
+                "origin_key": "(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18)",
+                "value": 60,
+                "key": "(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18)"
+            },
+            {
+                "origin_key": "国家&quot()",
+                "value": 59,
+                "key": "国家&quot()"
+            },
+            {
+                "origin_key": "国家重点基础研究发展计划（973计划）",
+                "value": 49,
+                "key": "国家重点基础研究发展计划（973计划）"
+            },
+            {
+                "origin_key": "Fundamental Research Funds for the Central Universities",
+                "value": 49,
+                "key": "Fundamental Research Funds for the Central Universities"
+            },
+            {
+                "origin_key": "* 国家自然科学基金",
+                "value": 48,
+                "key": "* 国家自然科学基金"
+            },
+            {
+                "origin_key": "863&quot()",
+                "value": 48,
+                "key": "863&quot()"
+            },
+            {
+                "origin_key": "国家重点研发计划基金资助项目",
+                "value": 47,
+                "key": "国家重点研发计划基金资助项目"
+            },
+            {
+                "origin_key": "国家自然科学基金资助项目(41676146号)",
+                "value": 47,
+                "key": "国家自然科学基金资助项目(41676146号)"
+            },
+            {
+                "origin_key": "中央高校基本科研业务费专项资金资助项目",
+                "value": 45,
+                "key": "中央高校基本科研业务费专项资金资助项目"
+            },
+            {
+                "origin_key": "国家自然科学基金项目（）",
+                "value": 43,
+                "key": "国家自然科学基金项目（）"
+            },
+            {
+                "origin_key": "模拟集成电路国家重点实验室基金资助项目",
+                "value": 42,
+                "key": "模拟集成电路国家重点实验室基金资助项目"
+            },
+            {
+                "origin_key": "中央高校基本科研业务费专项资金",
+                "value": 41,
+                "key": "中央高校基本科研业务费专项资金"
+            },
+            {
+                "origin_key": "中央高校基本科研业务费专项基金资助项目",
+                "value": 36,
+                "key": "中央高校基本科研业务费专项基金资助项目"
+            },
+            {
+                "origin_key": "江苏省自然科学基金资助项目",
+                "value": 35,
+                "key": "江苏省自然科学基金资助项目"
+            },
+            {
+                "origin_key": "973&quot()",
+                "value": 35,
+                "key": "973&quot()"
+            },
+            {
+                "origin_key": "国家自然科学基金重点项目",
+                "value": 31,
+                "key": "国家自然科学基金重点项目"
+            },
+            {
+                "origin_key": "*国家自然科学基金",
+                "value": 31,
+                "key": "*国家自然科学基金"
+            },
+            {
+                "origin_key": "中国博士后科学基金",
+                "value": 30,
+                "key": "中国博士后科学基金"
+            },
+            {
+                "origin_key": "中国科学院地理科学与资源研究所（11852701YZ）",
+                "value": 29,
+                "key": "中国科学院地理科学与资源研究所（11852701YZ）"
+            },
+            {
+                "origin_key": "(No.ZX069);(No.ZX069);(No.ZX069)",
+                "value": 29,
+                "key": "(No.ZX069);(No.ZX069);(No.ZX069)"
+            },
+            {
+                "origin_key": "国家重点研发计划项目.",
+                "value": 28,
+                "key": "国家重点研发计划项目."
+            },
+            {
+                "origin_key": "航空科学基金资助项目",
+                "value": 27,
+                "key": "航空科学基金资助项目"
+            },
+            {
+                "origin_key": "江苏高校优势学科建设工程资助项目(PAPD)",
+                "value": 26,
+                "key": "江苏高校优势学科建设工程资助项目(PAPD)"
+            },
+            {
+                "origin_key": "National Nature Science Foundation of China",
+                "value": 26,
+                "key": "National Nature Science Foundation of China"
+            },
+            {
+                "origin_key": "National Key Research and Development Program of China",
+                "value": 24,
+                "key": "National Key Research and Development Program of China"
+            },
+            {
+                "origin_key": "模拟集成电路国家级重点实验室基金资助项目",
+                "value": 24,
+                "key": "模拟集成电路国家级重点实验室基金资助项目"
+            },
+            {
+                "origin_key": "国家高技术研究发展计划（863计划）",
+                "value": 23,
+                "key": "国家高技术研究发展计划（863计划）"
+            },
+            {
+                "origin_key": "广东省科技计划项目（科技创新平台类）(2019B121201002)",
+                "value": 23,
+                "key": "广东省科技计划项目（科技创新平台类）(2019B121201002)"
+            },
+            {
+                "origin_key": "China Postdoctoral Science Foundation",
+                "value": 22,
+                "key": "China Postdoctoral Science Foundation"
+            },
+            {
+                "origin_key": "国家自然科学基金面上项目",
+                "value": 22,
+                "key": "国家自然科学基金面上项目"
+            },
+            {
+                "origin_key": "National Natural Science Foundation of China (NSFC)",
+                "value": 22,
+                "key": "National Natural Science Foundation of China (NSFC)"
+            },
+            {
+                "origin_key": "国家自然科学基金重点项目(40432005)",
+                "value": 21,
+                "key": "国家自然科学基金重点项目(40432005)"
+            },
+            {
+                "origin_key": "江苏高校优势学科建设工程基金资助项目",
+                "value": 21,
+                "key": "江苏高校优势学科建设工程基金资助项目"
+            },
+            {
+                "origin_key": "国家自然科学基金（编号:）~~",
+                "value": 20,
+                "key": "国家自然科学基金（编号:）~~"
+            },
+            {
+                "origin_key": "中国科学院知识创新项目",
+                "value": 20,
+                "key": "中国科学院知识创新项目"
+            },
+            {
+                "origin_key": "中国博士后科学基金资助项目",
+                "value": 20,
+                "key": "中国博士后科学基金资助项目"
+            },
+            {
+                "origin_key": "国家水体污染控制与治理科技重大专项(2017ZX07102-002)",
+                "value": 19,
+                "key": "国家水体污染控制与治理科技重大专项(2017ZX07102-002)"
+            },
+            {
+                "origin_key": "国家重点研发计划资助项目",
+                "value": 19,
+                "key": "国家重点研发计划资助项目"
+            },
+            {
+                "origin_key": "国家自然科学基金资助项目（，）",
+                "value": 19,
+                "key": "国家自然科学基金资助项目（，）"
+            },
+            {
+                "origin_key": "National Basic Research Program of China",
+                "value": 19,
+                "key": "National Basic Research Program of China"
+            },
+            {
+                "origin_key": "浙江省自然科学基金资助项目",
+                "value": 19,
+                "key": "浙江省自然科学基金资助项目"
+            },
+            {
+                "origin_key": "(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18)",
+                "value": 19,
+                "key": "(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18);(03-Y20A04-9001-17/18;30-Y20A07-9003-17/18)"
+            },
+            {
+                "origin_key": "NSFC-山东省联合基金(U1606404)",
+                "value": 19,
+                "key": "NSFC-山东省联合基金(U1606404)"
+            },
+            {
+                "origin_key": "青岛海洋科学与技术国家实验室鳌山卫科技创新计划项目(2016ASKJ02)",
+                "value": 18,
+                "key": "青岛海洋科学与技术国家实验室鳌山卫科技创新计划项目(2016ASKJ02)"
+            },
+            {
+                "origin_key": "中国科学院战略性先导科技专项（A类）(XDA11030202)",
+                "value": 17,
+                "key": "中国科学院战略性先导科技专项（A类）(XDA11030202)"
+            },
+            {
+                "origin_key": "?国家自然科学基金项目",
+                "value": 17,
+                "key": "?国家自然科学基金项目"
+            },
+            {
+                "origin_key": "&quot()",
+                "value": 17,
+                "key": "&quot()"
+            },
+            {
+                "origin_key": "973 Program",
+                "value": 16,
+                "key": "973 Program"
+            },
+            {
+                "origin_key": "大尺寸有障碍空间角度与基面位置测量的关键技术()",
+                "value": 16,
+                "key": "大尺寸有障碍空间角度与基面位置测量的关键技术()"
+            },
+            {
+                "origin_key": "863 Program",
+                "value": 15,
+                "key": "863 Program"
+            },
+            {
+                "origin_key": "江苏高校优势学科建设工程资助项目（PAPD）",
+                "value": 15,
+                "key": "江苏高校优势学科建设工程资助项目（PAPD）"
+            },
+            {
+                "origin_key": "无()",
+                "value": 15,
+                "key": "无()"
+            },
+            {
+                "origin_key": "国家科技攻关计划",
+                "value": 15,
+                "key": "国家科技攻关计划"
+            },
+            {
+                "origin_key": "新疆***自治区（2022D01E099）",
+                "value": 14,
+                "key": "新疆***自治区（2022D01E099）"
+            },
+            {
+                "origin_key": "中国科学院青年创新促进会项目",
+                "value": 14,
+                "key": "中国科学院青年创新促进会项目"
+            },
+            {
+                "origin_key": "中国科学院重点部署项目(KZZD-EW-14)",
+                "value": 13,
+                "key": "中国科学院重点部署项目(KZZD-EW-14)"
+            },
+            {
+                "origin_key": "国家863高技术研究发展计划资助项目(No.2015AA123703)",
+                "value": 13,
+                "key": "国家863高技术研究发展计划资助项目(No.2015AA123703)"
+            },
+            {
+                "origin_key": "?",
+                "value": 13,
+                "key": "?"
+            },
+            {
+                "origin_key": "国家重点基础研究发展计划(973计划)",
+                "value": 13,
+                "key": "国家重点基础研究发展计划(973计划)"
+            },
+            {
+                "origin_key": "中央高校基本科研业务费专项",
+                "value": 13,
+                "key": "中央高校基本科研业务费专项"
+            },
+            {
+                "origin_key": "国家水体污染控制与治理科技重大专项项目(2017ZX07102)",
+                "value": 13,
+                "key": "国家水体污染控制与治理科技重大专项项目(2017ZX07102)"
+            },
+            {
+                "origin_key": "国家重点研发计划项目（2021YFD1000500）",
+                "value": 13,
+                "key": "国家重点研发计划项目（2021YFD1000500）"
+            },
+            {
+                "origin_key": "国家青年自然科学基金资助项目",
+                "value": 12,
+                "key": "国家青年自然科学基金资助项目"
+            },
+            {
+                "origin_key": "&ldquo()",
+                "value": 12,
+                "key": "&ldquo()"
+            },
+            {
+                "origin_key": "中国工程物理研究院超精密加工技术重点实验室基金资助项目",
+                "value": 12,
+                "key": "中国工程物理研究院超精密加工技术重点实验室基金资助项目"
+            },
+            {
+                "origin_key": "22076029",
+                "value": 12,
+                "key": 22076029
+            },
+            {
+                "origin_key": "国家科技重大专项资助项目",
+                "value": 12,
+                "key": "国家科技重大专项资助项目"
+            },
+            {
+                "origin_key": "国家自然科学青年基金资助项目",
+                "value": 12,
+                "key": "国家自然科学青年基金资助项目"
+            },
+            {
+                "origin_key": "上海市司法鉴定专业技术服务平台资助项目",
+                "value": 12,
+                "key": "上海市司法鉴定专业技术服务平台资助项目"
+            },
+            {
+                "origin_key": "江苏高校优势学科建设工程资助项目。",
+                "value": 12,
+                "key": "江苏高校优势学科建设工程资助项目。"
+            },
+            {
+                "origin_key": "国家高技术研究发展计划(863计划)",
+                "value": 12,
+                "key": "国家高技术研究发展计划(863计划)"
+            },
+            {
+                "origin_key": "国家自然科学基金委员会资助项目()",
+                "value": 12,
+                "key": "国家自然科学基金委员会资助项目()"
+            },
+            {
+                "origin_key": "国家自然科学基金(No.91114201)",
+                "value": 12,
+                "key": "国家自然科学基金(No.91114201)"
+            },
+            {
+                "origin_key": "江苏省高校优势学科建设工程资助项目",
+                "value": 12,
+                "key": "江苏省高校优势学科建设工程资助项目"
+            },
+            {
+                "origin_key": "51779262)",
+                "value": 12,
+                "key": "51779262)"
+            },
+            {
+                "origin_key": "国家863高技术研究发展计划资助项目(No.863-2-5-1-13B)()",
+                "value": 12,
+                "key": "国家863高技术研究发展计划资助项目(No.863-2-5-1-13B)()"
+            },
+            {
+                "origin_key": "51867014)",
+                "value": 11,
+                "key": "51867014)"
+            },
+            {
+                "origin_key": "Chinese Academy of Sciences",
+                "value": 11,
+                "key": "Chinese Academy of Sciences"
+            }
+        ]
+    },
+    "institution": {
+        "alias": "作者机构",
+        "selected_aggregation": [],
+        "aggregations": [
+            {
+                "origin_key": "上海交通大学",
+                "value": 202696,
+                "key": "上海交通大学"
+            },
+            {
+                "origin_key": "北京大学",
+                "value": 181669,
+                "key": "北京大学"
+            },
+            {
+                "origin_key": "浙江大学",
+                "value": 179744,
+                "key": "浙江大学"
+            },
+            {
+                "origin_key": "华中科技大学",
+                "value": 179721,
+                "key": "华中科技大学"
+            },
+            {
+                "origin_key": "武汉大学",
+                "value": 160268,
+                "key": "武汉大学"
+            },
+            {
+                "origin_key": "四川大学",
+                "value": 158504,
+                "key": "四川大学"
+            },
+            {
+                "origin_key": "中山大学",
+                "value": 154031,
+                "key": "中山大学"
+            },
+            {
+                "origin_key": "中南大学",
+                "value": 147538,
+                "key": "中南大学"
+            },
+            {
+                "origin_key": "复旦大学",
+                "value": 142618,
+                "key": "复旦大学"
+            },
+            {
+                "origin_key": "首都医科大学",
+                "value": 138519,
+                "key": "首都医科大学"
+            },
+            {
+                "origin_key": "吉林大学",
+                "value": 131591,
+                "key": "吉林大学"
+            },
+            {
+                "origin_key": "山东大学",
+                "value": 128548,
+                "key": "山东大学"
+            },
+            {
+                "origin_key": "清华大学",
+                "value": 127658,
+                "key": "清华大学"
+            },
+            {
+                "origin_key": "同济大学",
+                "value": 124643,
+                "key": "同济大学"
+            },
+            {
+                "origin_key": "郑州大学",
+                "value": 118403,
+                "key": "郑州大学"
+            },
+            {
+                "origin_key": "西安交通大学",
+                "value": 111421,
+                "key": "西安交通大学"
+            },
+            {
+                "origin_key": "东南大学",
+                "value": 90961,
+                "key": "东南大学"
+            },
+            {
+                "origin_key": "南京大学",
+                "value": 90319,
+                "key": "南京大学"
+            },
+            {
+                "origin_key": "苏州大学",
+                "value": 88882,
+                "key": "苏州大学"
+            },
+            {
+                "origin_key": "华南理工大学",
+                "value": 86788,
+                "key": "华南理工大学"
+            },
+            {
+                "origin_key": "中国人民银行总行",
+                "value": 79495,
+                "key": "中国人民银行总行"
+            },
+            {
+                "origin_key": "哈尔滨工业大学",
+                "value": 75051,
+                "key": "哈尔滨工业大学"
+            },
+            {
+                "origin_key": "中国科学院大学",
+                "value": 74733,
+                "key": "中国科学院大学"
+            },
+            {
+                "origin_key": "天津大学",
+                "value": 73989,
+                "key": "天津大学"
+            },
+            {
+                "origin_key": "武汉理工大学",
+                "value": 72870,
+                "key": "武汉理工大学"
+            },
+            {
+                "origin_key": "重庆大学",
+                "value": 72036,
+                "key": "重庆大学"
+            },
+            {
+                "origin_key": "中国矿业大学",
+                "value": 71860,
+                "key": "中国矿业大学"
+            },
+            {
+                "origin_key": "南京医科大学",
+                "value": 71590,
+                "key": "南京医科大学"
+            },
+            {
+                "origin_key": "北京师范大学",
+                "value": 71381,
+                "key": "北京师范大学"
+            },
+            {
+                "origin_key": "中国人民大学",
+                "value": 71101,
+                "key": "中国人民大学"
+            },
+            {
+                "origin_key": "南方医科大学",
+                "value": 71008,
+                "key": "南方医科大学"
+            },
+            {
+                "origin_key": "第二军医大学",
+                "value": 69813,
+                "key": "第二军医大学"
+            },
+            {
+                "origin_key": "第三军医大学",
+                "value": 67858,
+                "key": "第三军医大学"
+            },
+            {
+                "origin_key": "华东师范大学",
+                "value": 67457,
+                "key": "华东师范大学"
+            },
+            {
+                "origin_key": "厦门大学",
+                "value": 67230,
+                "key": "厦门大学"
+            },
+            {
+                "origin_key": "第四军医大学",
+                "value": 62941,
+                "key": "第四军医大学"
+            },
+            {
+                "origin_key": "暨南大学",
+                "value": 62441,
+                "key": "暨南大学"
+            },
+            {
+                "origin_key": "西北工业大学",
+                "value": 62248,
+                "key": "西北工业大学"
+            },
+            {
+                "origin_key": "中国医科大学",
+                "value": 61880,
+                "key": "中国医科大学"
+            },
+            {
+                "origin_key": "南昌大学",
+                "value": 61556,
+                "key": "南昌大学"
+            },
+            {
+                "origin_key": "西南交通大学",
+                "value": 57588,
+                "key": "西南交通大学"
+            },
+            {
+                "origin_key": "江苏大学",
+                "value": 57068,
+                "key": "江苏大学"
+            },
+            {
+                "origin_key": "南京师范大学",
+                "value": 56729,
+                "key": "南京师范大学"
+            },
+            {
+                "origin_key": "重庆医科大学",
+                "value": 56536,
+                "key": "重庆医科大学"
+            },
+            {
+                "origin_key": "中国农业大学",
+                "value": 56342,
+                "key": "中国农业大学"
+            },
+            {
+                "origin_key": "西北农林科技大学",
+                "value": 55932,
+                "key": "西北农林科技大学"
+            },
+            {
+                "origin_key": "大连理工大学",
+                "value": 55319,
+                "key": "大连理工大学"
+            },
+            {
+                "origin_key": "湖南大学",
+                "value": 54486,
+                "key": "湖南大学"
+            },
+            {
+                "origin_key": "青岛大学",
+                "value": 53608,
+                "key": "青岛大学"
+            },
+            {
+                "origin_key": "兰州大学",
+                "value": 53196,
+                "key": "兰州大学"
+            },
+            {
+                "origin_key": "南开大学",
+                "value": 51976,
+                "key": "南开大学"
+            },
+            {
+                "origin_key": "河北医科大学",
+                "value": 51640,
+                "key": "河北医科大学"
+            },
+            {
+                "origin_key": "河海大学",
+                "value": 51514,
+                "key": "河海大学"
+            },
+            {
+                "origin_key": "西南大学",
+                "value": 51397,
+                "key": "西南大学"
+            },
+            {
+                "origin_key": "中国地质大学",
+                "value": 51100,
+                "key": "中国地质大学"
+            },
+            {
+                "origin_key": "广西大学",
+                "value": 50962,
+                "key": "广西大学"
+            },
+            {
+                "origin_key": "扬州大学",
+                "value": 50961,
+                "key": "扬州大学"
+            },
+            {
+                "origin_key": "安徽医科大学",
+                "value": 50102,
+                "key": "安徽医科大学"
+            },
+            {
+                "origin_key": "哈尔滨医科大学",
+                "value": 50028,
+                "key": "哈尔滨医科大学"
+            },
+            {
+                "origin_key": "上海大学",
+                "value": 49643,
+                "key": "上海大学"
+            },
+            {
+                "origin_key": "广西医科大学",
+                "value": 48682,
+                "key": "广西医科大学"
+            },
+            {
+                "origin_key": "解放军总医院",
+                "value": 48588,
+                "key": "解放军总医院"
+            },
+            {
+                "origin_key": "合肥工业大学",
+                "value": 48393,
+                "key": "合肥工业大学"
+            },
+            {
+                "origin_key": "长江大学",
+                "value": 47614,
+                "key": "长江大学"
+            },
+            {
+                "origin_key": "北京航空航天大学",
+                "value": 47430,
+                "key": "北京航空航天大学"
+            },
+            {
+                "origin_key": "北京交通大学",
+                "value": 47286,
+                "key": "北京交通大学"
+            },
+            {
+                "origin_key": "南京航空航天大学",
+                "value": 47181,
+                "key": "南京航空航天大学"
+            },
+            {
+                "origin_key": "东北大学",
+                "value": 47112,
+                "key": "东北大学"
+            },
+            {
+                "origin_key": "河南大学",
+                "value": 46802,
+                "key": "河南大学"
+            },
+            {
+                "origin_key": "南京农业大学",
+                "value": 46492,
+                "key": "南京农业大学"
+            },
+            {
+                "origin_key": "江南大学",
+                "value": 46171,
+                "key": "江南大学"
+            },
+            {
+                "origin_key": "华中师范大学",
+                "value": 45637,
+                "key": "华中师范大学"
+            },
+            {
+                "origin_key": "中国石油大学",
+                "value": 45621,
+                "key": "中国石油大学"
+            },
+            {
+                "origin_key": "贵州大学",
+                "value": 45351,
+                "key": "贵州大学"
+            },
+            {
+                "origin_key": "华北电力大学",
+                "value": 45045,
+                "key": "华北电力大学"
+            },
+            {
+                "origin_key": "新疆医科大学",
+                "value": 44400,
+                "key": "新疆医科大学"
+            },
+            {
+                "origin_key": "北京科技大学",
+                "value": 43615,
+                "key": "北京科技大学"
+            },
+            {
+                "origin_key": "河北大学",
+                "value": 43583,
+                "key": "河北大学"
+            },
+            {
+                "origin_key": "陕西师范大学",
+                "value": 43342,
+                "key": "陕西师范大学"
+            },
+            {
+                "origin_key": "南通大学",
+                "value": 42724,
+                "key": "南通大学"
+            },
+            {
+                "origin_key": "华南师范大学",
+                "value": 42711,
+                "key": "华南师范大学"
+            },
+            {
+                "origin_key": "温州医科大学",
+                "value": 42243,
+                "key": "温州医科大学"
+            },
+            {
+                "origin_key": "长安大学",
+                "value": 42155,
+                "key": "长安大学"
+            },
+            {
+                "origin_key": "天津医科大学",
+                "value": 42063,
+                "key": "天津医科大学"
+            },
+            {
+                "origin_key": "广州中医药大学",
+                "value": 41637,
+                "key": "广州中医药大学"
+            },
+            {
+                "origin_key": "中国科学技术大学",
+                "value": 41529,
+                "key": "中国科学技术大学"
+            },
+            {
+                "origin_key": "福建医科大学",
+                "value": 40983,
+                "key": "福建医科大学"
+            },
+            {
+                "origin_key": "国防科学技术大学",
+                "value": 40935,
+                "key": "国防科学技术大学"
+            },
+            {
+                "origin_key": "中南财经政法大学",
+                "value": 40548,
+                "key": "中南财经政法大学"
+            },
+            {
+                "origin_key": "福建师范大学",
+                "value": 40011,
+                "key": "福建师范大学"
+            },
+            {
+                "origin_key": "石河子大学",
+                "value": 39864,
+                "key": "石河子大学"
+            },
+            {
+                "origin_key": "山西医科大学",
+                "value": 39604,
+                "key": "山西医科大学"
+            },
+            {
+                "origin_key": "华南农业大学",
+                "value": 39274,
+                "key": "华南农业大学"
+            },
+            {
+                "origin_key": "广州医科大学",
+                "value": 39219,
+                "key": "广州医科大学"
+            },
+            {
+                "origin_key": "北京理工大学",
+                "value": 38967,
+                "key": "北京理工大学"
+            },
+            {
+                "origin_key": "昆明医科大学",
+                "value": 38899,
+                "key": "昆明医科大学"
+            },
+            {
+                "origin_key": "中国海洋大学",
+                "value": 38493,
+                "key": "中国海洋大学"
+            },
+            {
+                "origin_key": "华北理工大学",
+                "value": 38388,
+                "key": "华北理工大学"
+            },
+            {
+                "origin_key": "昆明理工大学",
+                "value": 38224,
+                "key": "昆明理工大学"
+            }
+        ]
+    },
+    "license": {
+        "alias": "使用许可",
+        "selected_aggregation": [],
+        "aggregations": [
+            {
+                "origin_key": "CC BY",
+                "value": 18576,
+                "key": "CC BY"
+            },
+            {
+                "origin_key": "CC BY_NC_ND",
+                "value": 10176,
+                "key": "CC BY_NC_ND"
+            },
+            {
+                "origin_key": "CC BY_NC",
+                "value": 526,
+                "key": "CC BY_NC"
+            },
+            {
+                "origin_key": "CC BY_NC_SA",
+                "value": 89,
+                "key": "CC BY_NC_SA"
+            },
+            {
+                "origin_key": "CC BY_ND",
+                "value": 77,
+                "key": "CC BY_ND"
+            },
+            {
+                "origin_key": "CC BY_SA",
+                "value": 13,
+                "key": "CC BY_SA"
+            },
+            {
+                "origin_key": "CC BY-NC-ND",
+                "value": 3,
+                "key": "CC BY-NC-ND"
+            },
+            {
+                "origin_key": "CC-BY-NC-ND",
+                "value": 1,
+                "key": "CC-BY-NC-ND"
+            },
+            {
+                "origin_key": "CC BY 4.0",
+                "value": 1,
+                "key": "CC BY 4.0"
+            }
+        ]
+    }
+}

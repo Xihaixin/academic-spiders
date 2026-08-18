@@ -77,11 +77,11 @@ class PubscholarV1Spider(scrapy.Spider):
 
     def _on_spider_opened(self):
         logger.info(
-            "v1 爬虫启动: start_page=%d, page_size=%d, max_pages=%s, "
+            "pubscholar_v1 start crawling: start_page=%d, page_size=%d, max_pages=%s, "
             "year_range=%s-%s",
             self.start_page, self.page_size,
-            self.max_pages or "无限制",
-            self.year_from or "无", self.year_to or "无",
+            self.max_pages or "No Limit",
+            self.year_from or "None", self.year_to or "None",
         )
         crawler = self.crawler
         if crawler is not None and crawler.engine is not None:
@@ -159,6 +159,8 @@ class PubscholarV1Spider(scrapy.Spider):
         # 异常响应检测: 正常响应必有 total_pages > 0。
         # total_pages=0 通常是 API 限流/风控返回的空响应, 而非真正的最后一页。
         if total_pages <= 0:
+            logger.debug(f"message: total_pages < 0 ......")
+            logger.debug(f"status: {response.status} | content: {response.text}.")
             self._abnormal_count = getattr(self, "_abnormal_count", 0) + 1
             if self._abnormal_count <= 5:
                 logger.warning(
@@ -175,6 +177,7 @@ class PubscholarV1Spider(scrapy.Spider):
                 )
             return
         self._abnormal_count = 0
+        
 
         if page == self.start_page:
             logger.info(
