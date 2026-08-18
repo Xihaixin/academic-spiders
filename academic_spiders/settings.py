@@ -57,7 +57,10 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     "academic_spiders.pipelines.JsonExportPipeline": 100,
     "academic_spiders.pipelines.MySQLPipeline": 200,
-    "academic_spiders.pipelines.SpiderRunLogPipeline": 300,
+}
+
+EXTENSIONS = {
+    'academic_spiders.extensions.SpiderRunLogExtension': 500,
 }
 
 # ── MySQL 配置 (支持环境变量覆盖, 用于测试/生产环境隔离) ──────

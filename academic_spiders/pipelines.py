@@ -32,17 +32,20 @@ class JsonExportPipeline:
             os.path.dirname(os.path.abspath(__file__))
         )
         output_dir = crawler.settings.get("ACADEMIC_JSON_OUTPUT")
+        if crawler.settings.get("MYSQL_DATABASE") == "academicdb_test":
+            output_dir = os.path.join(output_dir, "test")
+            
         os.makedirs(output_dir, exist_ok=True)
         return cls(output_dir=output_dir)
 
-    def process_item(self, item, spider):
+    def process_item(self, item, spider=None):
         page = item.get("_page", "unknown")
         if page not in self.buffers:
             self.buffers[page] = []
         self.buffers[page].append(dict(item))
         return item
 
-    def close_spider(self, spider):
+    def close_spider(self, spider=None):
         for page, items in self.buffers.items():
             filename = os.path.join(
                 self.output_dir, f"page_{page:06d}.json"
@@ -87,12 +90,12 @@ class MySQLPipeline:
         )
         logger.info("MySQL 连接池已初始化")
 
-    def close_spider(self, spider):
+    def close_spider(self, spider=None):
         if self.pool:
             self.pool.close()
             logger.info("MySQL 连接池已关闭")
 
-    def process_item(self, item, spider):
+    def process_item(self, item, spider=None):
         if self.pool is None:
             return item
         try:
@@ -397,168 +400,3 @@ class MySQLPipeline:
             return int(value)
         except (TypeError, ValueError):
             return None
-
-
-# ============================================================
-# Spider 运行日志管道 → spider_run_log 表
-# ============================================================
-class SpiderRunLogPipeline:
-    """记录每次爬虫运行的统计信息到 spider_run_log 表
-
-    生命周期:
-      spider_opened → INSERT (status='running', start_time=NOW())
-      spider_closed → UPDATE (end_time, status, 统计信息)
-
-    统计来源: Scrapy crawler.stats (request_count / item_scraped_count / log_count/ERROR)
-    """
-
-    def __init__(self, settings: Settings):
-        self.settings = settings
-        self.run_id: Optional[str] = None
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        pipe = cls(settings=crawler.settings)
-        crawler.signals.connect(
-            pipe.spider_opened, signal=signals.spider_opened
-        )
-        crawler.signals.connect(
-            pipe.spider_closed, signal=signals.spider_closed
-        )
-        return pipe
-
-    def _connect(self):
-        return pymysql.connect(
-            host=self.settings.get("MYSQL_HOST"),
-            port=self.settings.getint("MYSQL_PORT"),
-            user=self.settings.get("MYSQL_USER"),
-            password=self.settings.get("MYSQL_PASSWORD"),
-            database=self.settings.get("MYSQL_DATABASE"),
-            charset="utf8mb4",
-            cursorclass=pymysql.cursors.DictCursor,
-        )
-
-    def spider_opened(self, spider):
-        """Scrapy 信号: 爬虫启动"""
-        extra = {
-            "start_page": getattr(spider, "start_page", None),
-            "page_size": getattr(spider, "page_size", None),
-            "max_pages": getattr(spider, "max_pages", None),
-        }
-        self.write_run_start(spider.name, extra)
-
-    def spider_closed(self, spider, reason):
-        """Scrapy 信号: 爬虫关闭"""
-        stats = spider.crawler.stats
-        status = "completed" if reason == "finished" else "failed"
-        self.write_run_end(
-            status=status,
-            total_requests=stats.get_value("downloader/request_count") or 0,
-            total_items=stats.get_value("item_scraped_count") or 0,
-            total_errors=stats.get_value("log_count/ERROR") or 0,
-            last_page=getattr(spider, "last_page", 0),
-            error_message=None if status == "completed"
-            else f"关闭原因: {reason}", # type: ignore
-        )
-
-    # ── 通用方法 (Scrapy signals 和 Windows runner 共用) ──────
-
-    def write_run_start(self, spider_name: str, extra: Optional[dict] = None):
-        """写入运行开始记录 (status='running')"""
-        # 标记上次异常终止的遗留记录 (status 仍为 'running' 的僵尸记录)
-        self._mark_interrupted()
-
-        self.run_id = str(uuid.uuid4())
-        extra_info = json.dumps(extra or {}, ensure_ascii=False)
-        try:
-            conn = self._connect()
-            try:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        """INSERT INTO spider_run_log
-                           (run_id, spider_name, start_time, status, extra_info)
-                           VALUES (%s, %s, NOW(), 'running', %s)""",
-                        (self.run_id, spider_name, extra_info),
-                    )
-                conn.commit()
-                logger.info(
-                    "运行日志已记录: run_id=%s, spider=%s",
-                    self.run_id, spider_name,
-                )
-            finally:
-                conn.close()
-        except Exception as e:
-            logger.warning("写入 spider_run_log (启动) 失败: %s", e)
-
-    def _mark_interrupted(self):
-        """将上次异常终止的遗留 running 记录标记为 interrupted
-
-        爬虫正常结束时 write_run_end 会把记录更新为 completed/failed。
-        若爬虫崩溃/强杀，spider_closed 信号不会触发，记录会停在
-        status='running'。下次启动时在此统一标记为 interrupted。
-        """
-        try:
-            conn = self._connect()
-            try:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        """UPDATE spider_run_log SET
-                               end_time = NOW(),
-                               status = 'interrupted',
-                               error_message = '异常终止 (上次运行未正常关闭)'
-                           WHERE status = 'running'"""
-                    )
-                conn.commit()
-            finally:
-                conn.close()
-        except Exception as e:
-            logger.warning("标记中断记录失败: %s", e)
-
-    def write_run_end(
-        self,
-        status: str,
-        total_requests: int = 0,
-        total_items: int = 0,
-        total_errors: int = 0,
-        last_page: int = 0,
-        error_message: Optional[str] = None,
-    ):
-        """更新运行结束记录 (status + 统计信息)"""
-        if not self.run_id:
-            return
-
-        try:
-            conn = self._connect()
-            try:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        """UPDATE spider_run_log SET
-                               end_time = NOW(),
-                               status = %s,
-                               total_requests = %s,
-                               total_items = %s,
-                               total_errors = %s,
-                               last_page = %s,
-                               error_message = %s
-                           WHERE run_id = %s""",
-                        (
-                            status,
-                            total_requests,
-                            total_items,
-                            total_errors,
-                            last_page,
-                            error_message,
-                            self.run_id,
-                        ),
-                    )
-                conn.commit()
-                logger.info(
-                    "运行日志已更新: run_id=%s, status=%s, "
-                    "requests=%d, items=%d, errors=%d, last_page=%d",
-                    self.run_id, status, total_requests,
-                    total_items, total_errors, last_page,
-                )
-            finally:
-                conn.close()
-        except Exception as e:
-            logger.warning("写入 spider_run_log (关闭) 失败: %s", e)
