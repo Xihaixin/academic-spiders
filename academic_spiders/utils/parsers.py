@@ -79,7 +79,8 @@ def record_to_item(record: dict, page: int, api_version: str = "v1") -> ArticleI
         links.append({"local_link": local_link_value})
 
     # ── 日期与年份 ─────────────────────────────────────────
-    date_str = record.get("date", "")
+    # date 列 VARCHAR(10), 截断为 YYYY-MM-DD 前缀 (部分记录返回带时间的完整串)
+    date_str = (record.get("date") or "")[:10]
     raw_year = record.get("year")
     if raw_year is not None:
         year = int(raw_year) if isinstance(raw_year, str) else raw_year

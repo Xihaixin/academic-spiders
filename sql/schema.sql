@@ -55,6 +55,8 @@
 --    存储文献核心书目信息，是所有文献类型的公共超集
 --    预计数据量: ~7400万行
 -- ============================================================
+DROP TABLE IF EXISTS `crawl_plan`;
+DROP TABLE IF EXISTS `crawl_query_state`;
 DROP TABLE IF EXISTS `articles_audit_log`;
 DROP TABLE IF EXISTS `article_authors`;
 DROP TABLE IF EXISTS `article_keywords`;
@@ -241,6 +243,57 @@ CREATE TABLE `spider_run_log` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
   COMMENT='爬虫运行日志表';
+
+
+-- ============================================================
+-- 7. 查询桶状态表 (crawl_query_state)
+--    记录聚合分桶模式下每个"查询桶"的参数、状态与进度
+--    支持: 组合查询调度 / 进度记录 / 断点续爬
+-- ============================================================
+CREATE TABLE `crawl_query_state` (
+    `id`                BIGINT          NOT NULL AUTO_INCREMENT,
+    `run_id`            VARCHAR(36)     NOT NULL COMMENT '最近处理的运行批次 (spider_run_log.run_id)',
+    `query_hash`        VARCHAR(64)     NOT NULL COMMENT '查询参数规范化 MD5 (唯一标识一个查询桶)',
+    `query_params`      JSON            NOT NULL COMMENT '筛选参数 (aggregations 对象, 含 collection/lang/year/subject/source...)',
+    `collection`        VARCHAR(50)     NULL COMMENT '核心收录 (北大核心/南大核心, 冗余便于筛选)',
+    `total`             BIGINT          DEFAULT 0 COMMENT '聚合计数 (预期命中数)',
+    `page_size`         INT             DEFAULT 50 COMMENT '桶内每页条数',
+    `max_page`          INT             DEFAULT 0 COMMENT '桶内翻页边界 (min(ceil(total/size), 窗口页数))',
+    `status`            VARCHAR(20)     DEFAULT 'pending' COMMENT 'pending/running/completed/failed',
+    `cur_page`          INT             DEFAULT 0 COMMENT '当前已爬页码',
+    `items_collected`   BIGINT          DEFAULT 0 COMMENT '已入库条数',
+    `start_time`        DATETIME        NULL COMMENT '开始爬取时间',
+    `end_time`          DATETIME        NULL COMMENT '完成/失败时间',
+    `error_message`     TEXT            NULL COMMENT '失败原因',
+
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_query_hash` (`query_hash`),
+    INDEX `idx_status` (`status`),
+    INDEX `idx_run_id` (`run_id`),
+    INDEX `idx_collection` (`collection`)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+  COMMENT='查询桶状态表 - 聚合分桶模式的查询参数与进度记录';
+
+
+-- ============================================================
+-- 8. 分桶计划标记表 (crawl_plan)
+--    记录已完成构建的分桶计划 (集合+阈值+深度 的哈希), 用于续爬时跳过计划重建
+-- ============================================================
+CREATE TABLE `crawl_plan` (
+    `id`            BIGINT          NOT NULL AUTO_INCREMENT,
+    `plan_key`      VARCHAR(64)     NOT NULL COMMENT '集合+阈值+深度 规范化哈希',
+    `collections`   VARCHAR(255)    NOT NULL COMMENT 'collection 列表 (逗号分隔)',
+    `threshold`     INT             NOT NULL COMMENT '叶子桶阈值',
+    `depth`         INT             NOT NULL COMMENT '切分深度',
+    `bucket_count`  INT             DEFAULT 0 COMMENT '叶子桶数量',
+    `created_at`    DATETIME        DEFAULT CURRENT_TIMESTAMP COMMENT '构建完成时间',
+
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_plan_key` (`plan_key`)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+  COMMENT='分桶计划标记表 - 已构建计划的记录, 续爬跳过重建';
 
 
 -- ============================================================

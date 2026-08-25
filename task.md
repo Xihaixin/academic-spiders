@@ -1,6 +1,6 @@
 # 📋 公益学术平台(pubscholar.cn) 文献爬虫系统 — 任务列表
 
-**更新日期**: 2026-08-07
+**更新日期**: 2026-08-25
 
 ---
 
@@ -25,6 +25,15 @@
 ### ✅ 3. Scrapy 项目结构
 - `items.py`, `pipelines.py`, `settings.py`, `middlewares.py`, `utils/signing.py`
 - Spiders: `pubscholar_v1.py`, `pubscholar_v2.py`
+
+### ✅ 4. 聚合分桶爬取 (v3.4, 2026-08-25)
+- **问题**: 单查询存在 offset 10000 条窗口上限 (page×size ≤ 10000), 线性翻页只能拿到前 10000 条
+- **验证**: `fetch_aggregations.py` / `verify_window_limit.py` — 确认窗口按查询重置、year 完备、subject 单值但 top-100 截断、窄上下文 source 完备
+- **实现**: `pubscholar_v1.py` 双模式 — 分桶 (collection→year→subject→source 递归切分, 逐桶滑窗爬取), 线性模式保留
+- **记录器**: `crawl_query_state` (桶状态/进度) + `crawl_plan` (计划标记) + `utils/query_state.py`
+- **覆盖率**: 北大核心 ~92.5% / 南大核心 ~87.7% (残差为 subject top-100 外, 按需求接受)
+- **断点续爬**: query_hash 幂等 + running→pending 重置 + 计划跳过重建
+- 完整过程: `.aidocs/academic-spiders/bucket-crawl-implementation-record.md`
 
 ---
 
@@ -82,3 +91,19 @@
 | `test_v1_api.py` | 适配 `build_signature_headers()` finger 参数 |
 | `.aidocs/project-guide.md` | 修正运行方式为 `scrapy crawl` |
 | `.aidocs/troubleshooting-record.md` | 修正根因分析 |
+
+## 改动文件清单 (v3.4 分桶模式, 未提交)
+
+| 文件 | 改动内容 |
+|------|----------|
+| `sql/schema.sql` | 新增 `crawl_query_state` / `crawl_plan` 两张表 |
+| `academic_spiders/utils/api_client.py` | (新) 轻量 API 客户端 (签名+Cookie+聚合/文章接口) |
+| `academic_spiders/utils/query_plan.py` | (新) 分桶切分维度/纯函数 |
+| `academic_spiders/utils/query_state.py` | (新) 桶状态 CRUD (持久连接 + 批量插入 + 计划标记) |
+| `academic_spiders/spiders/pubscholar_v1.py` | 双模式: 线性 + 分桶 (聚合驱动, 桶状态/断点续爬) |
+| `academic_spiders/settings.py` | 新增 `V1_BUCKET_*` 分桶配置 |
+| `academic_spiders/utils/parsers.py` | 修复 `date` 截断 (VARCHAR(10)) |
+| `fetch_aggregations.py` | (新) 验证工具: 抓聚合响应存 JSON |
+| `verify_window_limit.py` | (新) 验证工具: 窗口探测 + 分桶可行性预览 |
+| `.aidocs/academic-spiders/bucket-crawl-implementation-record.md` | (新) 分析与实现全记录 |
+| `.aidocs/project-guide.md` | v3.4 章节: 分桶模式/配置/数据库/变更记录 |

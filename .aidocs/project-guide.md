@@ -1,6 +1,6 @@
 # 公益学术平台(pubscholar.cn) 文献爬虫系统 — 项目文档
 
-**版本**: 3.3 | **日期**: 2026-08-13
+**版本**: 3.4 | **日期**: 2026-08-25
 
 ---
 
@@ -46,7 +46,10 @@ academic-spiders/
 │   │   ├── signing.py                  # 签名工具 (nonce/timestamp/SHA1/finger)
 │   │   ├── parsers.py                  # 统一字段解析 (API record → ArticleItem)
 │   │   ├── cookie_config.py            # Cookie 加载器 (文件 + 环境变量)
-│   │   └── auth.py                     # CSTCloud Passport 自动登录模块
+│   │   ├── auth.py                     # CSTCloud Passport 自动登录模块
+│   │   ├── api_client.py               # 轻量 API 客户端 (聚合/文章接口, 验证脚本与分桶计划构建共用)
+│   │   ├── query_plan.py               # 分桶模式: 切分维度/纯函数 (v3.4)
+│   │   └── query_state.py              # 分桶模式: 查询桶状态记录器 (v3.4)
 │   └── spiders/
 │       ├── pubscholar_v1.py            # v1 全量爬虫 (spider_opened signal 驱动)
 │       └── pubscholar_v2.py            # v2 搜索爬虫 (待验证)
@@ -54,9 +57,13 @@ academic-spiders/
 ├── run_v1_spider.py                    # 备选运行器 (requests 直连)
 ├── run_v2_spider.py                    # 备选运行器 (requests 直连)
 ├── test_v1_api.py                      # API 连通性诊断工具
+├── fetch_aggregations.py               # v3.4 验证工具: 抓取聚合响应存 JSON
+├── verify_window_limit.py              # v3.4 验证工具: 窗口探测 + 分桶可行性预览
 │
 ├── result/                             # v1 接口抓包样本
 ├── .aidocs/                            # 项目文档与逆向分析
+│   └── academic-spiders/
+│       └── bucket-crawl-implementation-record.md  # v3.4 分桶爬取分析与实现全记录
 ├── output/                             # JSON 输出目录 (gitignore)
 └── task.md                             # 任务列表
 ```
@@ -76,6 +83,15 @@ scrapy crawl pubscholar_v1
 
 # v1 — 断点续爬
 scrapy crawl pubscholar_v1 -s V1_START_PAGE=10000
+
+# v1 — 分桶模式 (v3.4, 突破单查询 10000 条窗口限制, 抓取北大+南大核心)
+scrapy crawl pubscholar_v1 -s V1_BUCKET_MODE=1
+
+# v1 — 分桶模式 (测试, 限 2 个桶)
+scrapy crawl pubscholar_v1 -s V1_BUCKET_MODE=1 -s V1_BUCKET_MAX_BUCKETS=2
+
+# v1 — 分桶模式 (强制重建分桶计划)
+scrapy crawl pubscholar_v1 -s V1_BUCKET_MODE=1 -s V1_BUCKET_FORCE_PLAN=1
 
 # v2 — 关键词搜索 (需 scholarin.cn 登录 Cookie)
 scrapy crawl pubscholar_v2 -a query="人工智能" -s V2_MAX_PAGES=10
@@ -197,6 +213,27 @@ python run_v1_spider.py --all
 
 > **注意**: Scrapy 的 `-s MYSQL_DATABASE=...` 只切数据层——`settings.py` 在模块加载早期读环境变量决定日志目录，所以用 `-s` 时日志仍进 `logs/`。要连日志一起隔离，用环境变量或 runner 的 `--db-name`。
 
+### 3.7 分桶模式 (v3.4, 突破分页窗口)
+
+**背景**: 单查询存在 offset 10000 条的窗口上限 (page×size ≤ 10000)，线性翻页无法覆盖大集合。
+
+**原理**: 首请求聚合接口 → 按 `collection → year → subject → source` 递归切分到每桶 ≤ 阈值 → 逐桶滑动翻页爬取，换查询参数后窗口重置，从而覆盖全量。桶状态写入 `crawl_query_state`，支持断点续爬。
+
+```bash
+# 分桶模式 (默认: 北大核心 + 南大核心, lang=C)
+scrapy crawl pubscholar_v1 -s V1_BUCKET_MODE=1
+
+# 测试: 限爬 2 个桶 (快速验证)
+scrapy crawl pubscholar_v1 -s V1_BUCKET_MODE=1 -s V1_BUCKET_MAX_BUCKETS=2
+
+# 强制重建分桶计划 (更换 collection/阈值后)
+scrapy crawl pubscholar_v1 -s V1_BUCKET_MODE=1 -s V1_BUCKET_FORCE_PLAN=1
+```
+
+**覆盖率** (depth=3, 阈值 9900): 北大核心 ~92.5% (~747万)、南大核心 ~87.7% (~145万)。缺口为各年 subject top-100 之外的残差 (聚合接口无法完整枚举，按需求接受)。预计请求数 ~153k (北大) + ~31k (南大)。
+
+**详细设计、验证数据与实现过程**: 见 [bucket-crawl-implementation-record.md](academic-spiders/bucket-crawl-implementation-record.md)。
+
 ---
 
 ## 4. 配置说明
@@ -221,6 +258,14 @@ python run_v1_spider.py --all
 | `COOKIES_ENABLED` | Scrapy cookie jar | False (自行管理) |
 | `RETRY_TIMES` | 重试次数 | 3 |
 | `RETRY_HTTP_CODES` | 触发重试的状态码 | 429, 500, 502, 503, 504 |
+| `V1_BUCKET_MODE` | 分桶模式开关 (1=启用, 0=线性模式) | 0 |
+| `V1_BUCKET_COLLECTIONS` | 顶层核心收录集合 (逗号/顿号分隔) | `北大核心,南大核心` |
+| `V1_BUCKET_THRESHOLD` | 叶子桶阈值 (≤ 窗口 10000) | 9900 |
+| `V1_BUCKET_DEPTH` | 切分深度 (year→subject→source) | 3 |
+| `V1_BUCKET_WINDOW` | 桶内并发在途请求数 | 4 |
+| `V1_BUCKET_CONCURRENCY` | 同时爬取的桶数 | 2 |
+| `V1_BUCKET_MAX_BUCKETS` | 测试用: 限制本次爬取桶数 | None (全部) |
+| `V1_BUCKET_FORCE_PLAN` | 强制重建分桶计划 | 0 |
 
 ### 4.3 长时间运行
 
@@ -253,6 +298,8 @@ articles (1) ──── (N) article_authors
 
 articles_audit_log   (去重审计, 记录被覆盖的旧数据快照)
 spider_run_log       (爬虫运行统计)
+crawl_query_state    (v3.4 分桶模式: 查询桶参数/状态/进度, 断点续爬)
+crawl_plan           (v3.4 分桶模式: 已构建计划标记, 续爬跳过重建)
 ```
 
 ### 5.3 articles 字段分类
@@ -403,3 +450,4 @@ Cookie 已过期! API 返回: {"cause":"第三方应用独立请求时，无此�
 | 2026-08-13 | v3.1 | 删除所有表的 article_md5 字段 (可从 PDF 文件名推导); parsers 合并 author_id[] 到 authors[]; 修复 year 提取逻辑 |
 | 2026-08-13 | v3.2 | 去重逻辑: articles.dedup_key (二级降级: doi → title+source+year 哈希); 新建 articles_audit_log 审计表 (记录被覆盖旧数据); pipelines 去重写入 (SELECT→审计+UPDATE / INSERT) |
 | 2026-08-13 | v3.3 | 日志: ① 文件日志 50MB 轮转 × 10; ② 测试/生产日志隔离 (logs/ 与 logs/test/); ③ 自定义 ConciseLogFormatter — 每条文献只记一行摘要 (页码/标题/去重键), 不再打印完整 item dict; ④ 类型检查: pyproject 增加 [tool.pyright] (basic 模式抑制动态类型噪音), 修复 27 处类型标注缺陷 (Optional/返回类型/`json.loads(response.text)` 替代 `.json()` 等) |
+| 2026-08-25 | v3.4 | 聚合分桶爬取 (突破单查询 10000 条窗口): ① 验证工具 fetch_aggregations.py / verify_window_limit.py (窗口探测、维度完备性、分桶可行性预览); ② 新增 crawl_query_state / crawl_plan 表 + utils/query_state.py (持久连接+批量插入) + utils/query_plan.py; ③ pubscholar_v1.py 双模式 — 线性保留 + 分桶 (collection→year→subject→source 递归切分, 逐桶滑窗爬取, 断点续爬); ④ api_client.py 轻量客户端; ⑤ parsers 修复 date 截断 VARCHAR(10); ⑥ 完整记录见 .aidocs/academic-spiders/bucket-crawl-implementation-record.md |
