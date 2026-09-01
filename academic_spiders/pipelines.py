@@ -5,8 +5,9 @@
 import json
 import logging
 import os
-import uuid
-from typing import Optional
+import tempfile
+from concurrent.futures import ThreadPoolExecutor
+from typing import Optional, Tuple
 
 import pymysql
 from dbutils.pooled_db import PooledDB
@@ -20,40 +21,113 @@ logger = logging.getLogger(__name__)
 # JSON 导出管道
 # ============================================================
 class JsonExportPipeline:
-    """按页码分批保存到 ./output/ 目录"""
+    """按 (query_hash, cur_page) 分组, 每页原子写入 ./output/ 目录
+
+    设计要点:
+      - 文件名 = query_hash + cur_page, 可快速定位属于哪次分桶记录。
+      - 每页 (同一 query_hash+cur_page) 攒满后, 写入临时文件再 os.replace 原子替换,
+        避免半截文件; 单页写入失败 try/except 隔离, 不影响其他页。
+      - 数据格式校验 (每页须为非空 dict 列表), 非法数据丢弃并告警。
+      - 写入通过线程池异步执行, 不阻塞 Scrapy 事件循环。
+      - os.makedirs 在 __init__ 中执行 (含 runner 直接实例化场景),
+        并对空串/None 输出目录做校验。
+    """
 
     def __init__(self, output_dir: str):
+        output_dir = (output_dir or "").strip()
+        if not output_dir:
+            raise ValueError("ACADEMIC_JSON_OUTPUT 不能为空 (output_dir 为空)")
         self.output_dir = output_dir
-        self.buffers: dict = {}
+        os.makedirs(self.output_dir, exist_ok=True)
+        self.buffers: dict = {}                  # (query_hash, cur_page) -> [item, ...]
+        self._executor = ThreadPoolExecutor(
+            max_workers=2, thread_name_prefix="json-export"
+        )
 
     @classmethod
     def from_crawler(cls, crawler):
-        project_dir = os.path.dirname(
-            os.path.dirname(os.path.abspath(__file__))
-        )
-        output_dir = crawler.settings.get("ACADEMIC_JSON_OUTPUT")
+        output_dir = crawler.settings.get("ACADEMIC_JSON_OUTPUT") or "./output"
         if crawler.settings.get("MYSQL_DATABASE") == "academicdb_test":
             output_dir = os.path.join(output_dir, "test")
-            
-        os.makedirs(output_dir, exist_ok=True)
         return cls(output_dir=output_dir)
 
+    @staticmethod
+    def _page_key(item) -> Tuple[str, str]:
+        """从 item 提取 (query_hash, cur_page), 缺失/非法时归入兜底分组"""
+        qh = item.get("_query_hash") or "unknown"
+        cur_page = item.get("_cur_page")
+        if not isinstance(cur_page, int) or cur_page < 1:
+            cur_page = "unknown"
+        return str(qh), str(cur_page)
+
     def process_item(self, item, spider=None):
-        page = item.get("_page", "unknown")
-        if page not in self.buffers:
-            self.buffers[page] = []
-        self.buffers[page].append(dict(item))
+        key = self._page_key(item)
+        if key not in self.buffers:
+            # 新页面出现 → 先 flush 上一个页面 (把内存限制在单页)
+            self._flush_previous(key)
+            self.buffers[key] = []
+        # 剔除内部元信息字段 (_page/_query_hash/_cur_page), 仅导出业务字段
+        self.buffers[key].append(
+            {k: v for k, v in dict(item).items() if not str(k).startswith("_")}
+        )
         return item
 
-    def close_spider(self, spider=None):
-        for page, items in self.buffers.items():
-            filename = os.path.join(
-                self.output_dir, f"page_{page:06d}.json"
-            )
-            with open(filename, "w", encoding="utf-8") as f:
-                json.dump(items, f, ensure_ascii=False, indent=2)
-            logger.info("已保存 %d 条到 %s", len(items), filename)
+    def _flush_previous(self, current_key: Tuple[str, str]):
+        """把当前 key 之前已攒满的页面写出; 保留当前 key 的缓冲"""
+        for key in list(self.buffers.keys()):
+            if key == current_key:
+                continue
+            items = self.buffers.pop(key)
+            self._async_write(key, items)
 
+    def _async_write(self, key: Tuple[str, str], items: list):
+        """异步提交一次原子写入 (失败仅记日志, 不影响其他页)"""
+        qh, cur_page = key
+        out_dir = self.output_dir
+        self._executor.submit(self._write_page, out_dir, qh, cur_page, items)
+
+    @staticmethod
+    def _validate_page(items: list) -> bool:
+        """格式校验: 每页须为非空 dict 列表"""
+        if not items:
+            return False
+        return all(isinstance(it, dict) for it in items)
+
+    @staticmethod
+    def _write_page(out_dir: str, qh: str, cur_page: str, items: list):
+        """真正执行一次原子写盘 (在后台线程运行)"""
+        if not JsonExportPipeline._validate_page(items):
+            logger.error(
+                "JSON 写入跳过: 页面数据格式非法 (qhash=%s, page=%s, 条数=%d)",
+                qh[:8], cur_page, len(items),
+            )
+            return
+        final_path = os.path.join(out_dir, f"page_{qh}_{cur_page:0>8}.json")
+        # 临时文件 + os.replace 原子替换, 避免残留半截文件
+        fd, tmp_path = tempfile.mkstemp(dir=out_dir, suffix=".json.tmp")
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                json.dump(items, f, ensure_ascii=False, indent=2)
+            os.replace(tmp_path, final_path)
+            logger.info("已原子保存 %d 条到 %s", len(items), final_path)
+        except Exception as e:
+            logger.error(
+                "JSON 写入失败 (qhash=%s, page=%s, %d 条): %s",
+                qh[:8], cur_page, len(items), e,
+            )
+            try:
+                os.unlink(tmp_path)
+            except OSError:
+                pass
+
+    def close_spider(self, spider=None):
+        # 先写出所有剩余缓冲
+        for key in list(self.buffers.keys()):
+            items = self.buffers.pop(key)
+            self._async_write(key, items)
+        # 关闭线程池并等待所有写盘完成, 确保数据落盘后才结束
+        self._executor.shutdown(wait=True)
+        logger.info("JSON 导出管道已关闭")
 
 # ============================================================
 # MySQL 管道 (4 张业务表)

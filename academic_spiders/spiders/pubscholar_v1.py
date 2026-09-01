@@ -4,16 +4,14 @@
 接口: POST https://pubscholar.cn/hky/open/resources/api/v1/articles
 认证: 无需登录 (open API)，仅需签名头
 
-两种模式:
-  线性模式 (默认): 按页码遍历单一查询 (lang=C), 受单查询窗口限制 (offset<=10000)
-  分桶模式 (V1_BUCKET_MODE=1): 启动时同步调用聚合接口构建分桶计划
-    (顶层 collection 固定, 桶内按 year→subject→source 递归切分到每桶 <= 阈值),
-    然后逐桶滑动翻页爬取, 突破窗口限制; 桶状态写入 crawl_query_state 表, 支持断点续爬。
+分桶模式 (唯一模式): 启动时同步调用聚合接口构建分桶计划
+  (顶层 collection 固定, 桶内按 year→subject→source 递归切分到每桶 <= 阈值),
+  然后逐桶滑动翻页爬取, 突破单查询窗口 (offset<=10000) 限制;
+  桶状态写入 crawl_query_state 表, 支持断点续爬。
 
 启动示例:
-  scrapy crawl pubscholar_v1                          # 线性模式 (自动断点续爬)
-  scrapy crawl pubscholar_v1 -s V1_BUCKET_MODE=1      # 分桶模式 (北大+南大核心)
-  scrapy crawl pubscholar_v1 -s V1_BUCKET_MODE=1 -s V1_BUCKET_MAX_BUCKETS=2   # 测试限爬2桶
+  scrapy crawl pubscholar_v1                              # 分桶模式 (北大+南大核心)
+  scrapy crawl pubscholar_v1 -s V1_BUCKET_MAX_BUCKETS=2   # 测试限爬2桶
 """
 
 import json
@@ -27,7 +25,7 @@ from scrapy import Request, signals
 from scrapy.http import Response
 
 from academic_spiders.items import ArticleItem
-from academic_spiders.utils.api_client import PubscholarClient, build_payload, default_filters
+from academic_spiders.utils.api_client import PubscholarClient, build_payload
 from academic_spiders.utils.parsers import record_to_item
 from academic_spiders.utils.query_plan import (
     PARTITION_ORDER,
@@ -36,7 +34,6 @@ from academic_spiders.utils.query_plan import (
     dim_values,
 )
 from academic_spiders.utils.query_state import QueryStateStore
-from academic_spiders.utils.resume import V1_SPIDER_NAMES, resolve_start_page
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +43,7 @@ PLAN_AGG_DELAY = 0.2
 
 class PubscholarV1Spider(scrapy.Spider):
     """
-    v1 开放接口爬虫 (线性 + 分桶双模式)
+    v1 开放接口爬虫 (仅分桶模式)
     """
 
     name = "pubscholar_v1"
@@ -59,14 +56,8 @@ class PubscholarV1Spider(scrapy.Spider):
     api_url = "https://pubscholar.cn/hky/open/resources/api/v1/articles"
     user_id = "0b68c4370e9a43e4ad1690fdd31f643f"
     page_size = 50
-    max_pages = None
-    start_page = 1
-    end_page = None
-    year_from = None
-    year_to = None
 
     # 分桶模式配置
-    bucket_mode = False
     bucket_collections = ["北大核心", "南大核心"]
     bucket_threshold = 9900
     bucket_depth = 3
@@ -80,7 +71,6 @@ class PubscholarV1Spider(scrapy.Spider):
         self._store: Optional[QueryStateStore] = None
         self._active_buckets: dict = {}  # query_hash -> 桶运行状态
         self._claimed_buckets = 0        # 本次已领取桶数 (配合 MAX_BUCKETS)
-        self._page_seq = 0               # 全局页码序列 (分桶模式 JSON 输出防覆盖)
         self._plan_batch: list = []      # 计划构建期待入库叶子桶缓冲
 
     @classmethod
@@ -90,13 +80,8 @@ class PubscholarV1Spider(scrapy.Spider):
         spider.api_url = s.get("PUBSCHOLAR_V1_URL", spider.api_url)
         spider.user_id = s.get("PUBSCHOLAR_USER_ID", spider.user_id)
         spider.page_size = s.getint("V1_PAGE_SIZE")
-        spider.max_pages = s.getint("V1_MAX_PAGES") or None
-        spider.end_page = s.getint("V1_END_PAGE") or None
-        spider.year_from = s.get("V1_YEAR_FROM")
-        spider.year_to = s.get("V1_YEAR_TO")
 
         # 分桶模式配置
-        spider.bucket_mode = s.getbool("V1_BUCKET_MODE", False)
         spider.bucket_threshold = s.getint("V1_BUCKET_THRESHOLD", 9900)
         spider.bucket_depth = s.getint("V1_BUCKET_DEPTH", 3)
         spider.bucket_window = s.getint("V1_BUCKET_WINDOW", 4)
@@ -108,14 +93,6 @@ class PubscholarV1Spider(scrapy.Spider):
         raw_max = s.get("V1_BUCKET_MAX_BUCKETS")
         spider.bucket_max_buckets = int(raw_max) if raw_max else None
         spider.bucket_force_plan = s.getbool("V1_BUCKET_FORCE_PLAN", False)
-
-        if not spider.bucket_mode:
-            # 线性模式: 起始页 = 显式指定 > 自动断点续爬 > 默认 1
-            raw_start = s.get("V1_START_PAGE")
-            if raw_start:
-                spider.start_page = max(int(raw_start), 1)
-            else:
-                spider.start_page = resolve_start_page(s, V1_SPIDER_NAMES)
 
         # 使用 spider_opened 信号注入初始请求 (绕过 Windows 上
         # Scrapy 2.17 start_requests() 生成器不被调用的 bug)
@@ -132,157 +109,21 @@ class PubscholarV1Spider(scrapy.Spider):
         if crawler is None or crawler.engine is None:
             return
 
-        if self.bucket_mode:
-            self._store = QueryStateStore(crawler.settings)
-            self._store.mark_interrupted()
-            logger.info(
-                "pubscholar_v1 [分桶模式] 启动: collections=%s, threshold=%d, "
-                "depth=%d, window=%d, concurrency=%d, max_buckets=%s, page_size=%d",
-                self.bucket_collections, self.bucket_threshold, self.bucket_depth,
-                self.bucket_window, self.bucket_concurrency,
-                self.bucket_max_buckets or "全部", self.page_size,
-            )
-            self._build_plan_and_start()
-            return
-
+        self._store = QueryStateStore(crawler.settings)
+        self._store.mark_interrupted()
         logger.info(
-            "pubscholar_v1 start crawling: start_page=%d, page_size=%d, max_pages=%s, "
-            "year_range=%s-%s",
-            self.start_page, self.page_size,
-            self.max_pages or "No Limit",
-            self.year_from or "None", self.year_to or "None",
+            "pubscholar_v1 [分桶模式] 启动: collections=%s, threshold=%d, "
+            "depth=%d, window=%d, concurrency=%d, max_buckets=%s, page_size=%d",
+            self.bucket_collections, self.bucket_threshold, self.bucket_depth,
+            self.bucket_window, self.bucket_concurrency,
+            self.bucket_max_buckets or "全部", self.page_size,
         )
-        crawler.engine.crawl(self._build_page_request(self.start_page))
+        self._build_plan_and_start()
 
     def _on_spider_closed(self, spider=None, reason=None):
         """释放查询状态持久连接"""
         if self._store is not None:
             self._store.close()
-
-    # ═══════════════════════════════════════════════════════════
-    # 线性模式 (原有逻辑)
-    # ═══════════════════════════════════════════════════════════
-
-    def _build_page_request(self, page: int) -> Request:
-        """构造分页 POST 请求 (线性模式基础查询)"""
-        payload = build_payload(
-            self._linear_filters(), page, self.page_size, self.user_id
-        )
-        return Request(
-            url=self.api_url,
-            method="POST",
-            body=json.dumps(payload, ensure_ascii=False),
-            headers={"Content-Type": "application/json;charset=UTF-8"},
-            callback=self.parse,
-            errback=self._on_error,
-            meta={"page": page},
-            dont_filter=True,
-        )
-
-    def _linear_filters(self) -> dict:
-        """线性模式查询参数: lang 固定中文 C, 其余为空"""
-        return default_filters(lang="C")
-
-    def parse(self, response: Response) -> Generator[Any, None, None]:
-        """线性模式: 解析 API 响应, 提取文献列表并翻页"""
-        page = response.meta["page"]
-        self.last_page = page  # 供运行日志记录最后爬取页码
-
-        # 检查 HTTP 状态
-        if response.status != 200:
-            logger.error(
-                "第 %d 页请求失败: HTTP %d, body=%s",
-                page, response.status, response.text[:200],
-            )
-            return
-
-        # 解析 JSON
-        try:
-            data = json.loads(response.text)
-        except json.JSONDecodeError as e:
-            logger.error("第 %d 页 JSON 解析失败: %s", page, e)
-            return
-
-        # 检查业务错误
-        if isinstance(data, dict) and data.get("failure") is True:
-            logger.error(
-                "第 %d 页 API 业务错误: %s", page,
-                data.get("cause", data.get("message", "未知")),
-            )
-            return
-
-        # 提取文献列表
-        content = data.get("content") or []
-        total = data.get("total", 0)
-        is_last = data.get("is_last", False)  # 默认 False, 避免缺字段误判为最后一页
-        total_pages = data.get("total_pages", 0)
-
-        # 异常响应检测: 正常响应必有 total_pages > 0。
-        # total_pages=0 通常是 API 限流/风控返回的空响应, 而非真正的最后一页。
-        if total_pages <= 0:
-            self._abnormal_count = getattr(self, "_abnormal_count", 0) + 1
-            if self._abnormal_count <= 5:
-                logger.warning(
-                    "第 %d 页响应异常 (total_pages=0, content=%d 条)，"
-                    "重试 %d/5 (疑似 API 限流)",
-                    page, len(content), self._abnormal_count,
-                )
-                yield self._build_page_request(page)  # 重试当前页
-            else:
-                logger.error(
-                    "第 %d 页连续异常 %d 次，停止爬取 "
-                    "(可能原因: API 限流 / Cookie 过期)",
-                    page, self._abnormal_count,
-                )
-            return
-        self._abnormal_count = 0
-
-        if page == self.start_page:
-            logger.info(
-                "首请求成功: total=%d, total_pages=%d, page_size=%d",
-                total, total_pages, len(content),
-            )
-
-        # 逐条生成 Item
-        for record in content:
-            yield self._parse_record(record, page)
-
-        logger.info(
-            "第 %d/%d 页完成，获取 %d 条，累计约 %d 条",
-            page, total_pages, len(content), page * self.page_size,
-        )
-
-        # ── 翻页判断 ────────────────────────────────────────
-        # ① API 自然结束 (返回 is_last=true)
-        if is_last:
-            logger.info("已到最后一页 (第 %d 页)，爬取结束", page)
-            return
-
-        # ② 绝对结束页限制 (用户指定 V1_END_PAGE)
-        if self.end_page and page >= self.end_page:
-            logger.info(
-                "已达指定结束页: end_page=%d, current_page=%d",
-                self.end_page, page,
-            )
-            return
-
-        # ③ 页数限制 (相对值, 用户指定 V1_MAX_PAGES)
-        if self.max_pages and page >= (self.start_page + self.max_pages - 1):
-            logger.info(
-                "已达最大页数限制: max_pages=%d, current_page=%d",
-                self.max_pages, page,
-            )
-            return
-
-        yield self._build_page_request(page + 1)
-
-    def _on_error(self, failure):
-        """线性模式: 请求异常回调"""
-        request = failure.request
-        page = request.meta.get("page", "?")
-        logger.error(
-            "第 %s 页网络异常: %s", page, failure.value,
-        )
 
     # ═══════════════════════════════════════════════════════════
     # 分桶模式: 计划构建 (同步 requests, 规避聚合接口在 Scrapy 下载器中的挂起问题)
@@ -551,10 +392,11 @@ class PubscholarV1Spider(scrapy.Spider):
 
         # ── 数据产出 ──
         self.last_page = page
-        seq = self._page_seq
-        self._page_seq += 1
         for record in content:
-            yield self._parse_record(record, seq)
+            item = self._parse_record(record, page)
+            item["_query_hash"] = qh          # 所属分桶 query_hash
+            item["_cur_page"] = page          # 桶内当前页码
+            yield item
         state["items"] += len(content)
         state["retries"] = 0
         self._store.update_progress(qh, page, len(content))

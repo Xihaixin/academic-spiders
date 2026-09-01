@@ -6,6 +6,7 @@
 功能: 按关键词搜索文献，支持自动翻页
 """
 
+import hashlib
 import json
 import logging
 from typing import Any, Generator
@@ -34,7 +35,7 @@ class PubscholarV2Spider(scrapy.Spider):
 
     name = "pubscholar_v2"
 
-    # 运行状态 (供 SpiderRunLogPipeline 读取)
+    # 运行状态 (供 SpiderRunLogExtension 读取)
     last_page = 0
     _abnormal_count = 0
 
@@ -177,4 +178,11 @@ class PubscholarV2Spider(scrapy.Spider):
         logger.error("第 %s 页网络异常: %s", page, failure.value)
 
     def _parse_record(self, record: dict, page: int) -> ArticleItem:
-        return record_to_item(record, page, api_version="v2")
+        item = record_to_item(record, page, api_version="v2")
+        # JSON 导出用: 以查询词派生稳定 query_hash, cur_page = 真实页码
+        if self.query:
+            item["_query_hash"] = hashlib.md5(
+                self.query.strip().encode("utf-8")
+            ).hexdigest()
+        item["_cur_page"] = page
+        return item

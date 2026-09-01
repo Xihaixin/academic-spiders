@@ -29,7 +29,9 @@ class ArticleItem(scrapy.Item):
     """文献主记录 - 对应 articles 表 + article_thesis_info 表"""
 
     # 元信息
-    _page = scrapy.Field()                  # 来源页码 (内部使用)
+    _page = scrapy.Field()                  # 来源页码 (内部使用, 兼容保留)
+    _query_hash = scrapy.Field()            # 所属分桶 query_hash (JSON 导出分组用)
+    _cur_page = scrapy.Field()              # 桶内当前页码 (JSON 导出命名用)
 
     # ── 核心字段 ────────────────────────────────────────────
     dedup_key = scrapy.Field()              # 去重键 (doi:/hash: 前缀)

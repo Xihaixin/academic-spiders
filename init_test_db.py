@@ -147,7 +147,6 @@ def main():
         )
         logger.info("✅ 测试数据库初始化完成: %s", args.db_name)
         logger.info("使用方式: scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=%s", args.db_name)
-        logger.info("     或: python run_v1_spider.py --db-name %s", args.db_name)
     except Exception as e:
         logger.error("初始化失败: %s", e)
         sys.exit(1)

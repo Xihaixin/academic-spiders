@@ -109,22 +109,13 @@ V1_XSRF_TOKEN = _v1cfg["xsrf_token"]
 V1_FINGER = _v1cfg["finger"]
 
 # ── 爬取控制 ──────────────────────────────────────────────────
-V1_MAX_PAGES = None
+# 仅分桶模式 (v1 线性模式已移除, 单查询受 10000 条窗口限制无意义)
 V1_PAGE_SIZE = _v1cfg["page_size"]
-# None = 自动断点续爬 (从 spider_run_log 查询上次 last_page + 1)
-# 数字 = 从指定页开始
-V1_START_PAGE = None
-# None = 不限制结束页 (爬到 API 返回 is_last 为止)
-# 数字 = 爬到这个绝对页码后停止 (用于分段并行, 如 -s V1_START_PAGE=1 -s V1_END_PAGE=500000)
-V1_END_PAGE = None
-V1_YEAR_FROM = None
-V1_YEAR_TO = None
 
-# ── v1 聚合分桶模式 (V1_BUCKET_MODE=True 时启用) ──────────────────
-# 分桶模式: 首请求请求聚合接口, 顶层 collection 固定 (北大核心/南大核心),
+# ── v1 聚合分桶模式 ───────────────────────────────────────────
+# 首请求聚合接口, 顶层 collection 固定 (北大核心/南大核心),
 # lang 固定中文 C; 桶内按 year→subject→source 递归切分, 每桶 <= threshold。
 # 桶状态写入 crawl_query_state 表, 支持断点续爬。
-V1_BUCKET_MODE = os.getenv("V1_BUCKET_MODE", "0") == "1"
 V1_BUCKET_COLLECTIONS = os.getenv("V1_BUCKET_COLLECTIONS", "北大核心,南大核心")
 V1_BUCKET_THRESHOLD = int(os.getenv("V1_BUCKET_THRESHOLD", "9900"))
 V1_BUCKET_DEPTH = int(os.getenv("V1_BUCKET_DEPTH", "3"))

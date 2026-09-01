@@ -9,9 +9,10 @@ import pymysql
 
 logger = logging.getLogger(__name__)
 
-# 查询时同时匹配 Scrapy 和 runner 的 spider 名称 (跨运行方式续爬)
-V1_SPIDER_NAMES = ("pubscholar_v1", "v1_runner")
-V2_SPIDER_NAMES = ("pubscholar_v2", "v2_runner")
+# 查询时匹配 Scrapy spider 名称
+# (v1 仅分桶模式, 断点续爬走 crawl_query_state, 不在此查询)
+V1_SPIDER_NAMES = ("pubscholar_v1",)
+V2_SPIDER_NAMES = ("pubscholar_v2",)
 
 
 def get_last_page(config, spider_names: Sequence[str]) -> Optional[int]:

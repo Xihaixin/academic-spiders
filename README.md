@@ -23,15 +23,10 @@ mysql -u root -p academicdb < sql/schema.sql
 ### 3. 运行爬虫
 
 ```bash
-# v1 — 全量获取中文文献 (无需登录)
-python run_v1_spider.py -p 3 -s 10 --no-mysql   # 测试: 3 页, 不写库
-python run_v1_spider.py --all -s 50             # 生产: 全量爬取
+# v1 — 全量获取中文文献 (仅分桶模式, 突破单查询窗口限制)
+scrapy crawl pubscholar_v1                          # 全量爬取 (北大+南大核心)
 
 # v2 — 按关键词搜索 (需登录 Cookie)
-python run_v2_spider.py -q "人工智能" --cookie "..." --xsrf-token "..." --uid "..."
-
-# Linux/Mac 可直接用 Scrapy
-scrapy crawl pubscholar_v1 -s V1_MAX_PAGES=10
 scrapy crawl pubscholar_v2 -a query="人工智能"
 ```
 
@@ -43,7 +38,7 @@ scrapy crawl pubscholar_v2 -a query="人工智能"
 
 | 环境 | 数据库 | 日志目录 | 命令示例 |
 |------|--------|----------|----------|
-| 开发 | `academicdb_test` | `logs/test/` | `scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test -s V1_MAX_PAGES=1` |
+| 开发 | `academicdb_test` | `logs/test/` | `scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test` |
 | 生产 | `academicdb` | `logs/` | `scrapy crawl pubscholar_v1` |
 
 ```bash
@@ -52,16 +47,13 @@ python init_test_db.py
 
 # ② 开发: 环境变量方式 (数据 + 日志都隔离, 推荐)
 $env:MYSQL_DATABASE="academicdb_test"
-scrapy crawl pubscholar_v1 -s LOG_LEVEL=DEBUG -s V1_MAX_PAGES=1
+scrapy crawl pubscholar_v1 -s LOG_LEVEL=DEBUG
 
 # ③ 生产: 全量爬取
-scrapy crawl pubscholar_v1          # Scrapy
-python run_v1_spider.py --all       # Windows runner
+scrapy crawl pubscholar_v1
 ```
 
 **原理**: `MYSQL_DATABASE` 是唯一环境开关 —— `settings.py` 读环境变量（默认 `academicdb`）；所有写库组件（MySQL 管道 / 运行日志 / 断点续爬）都从 settings 取库名自动跟随；`logging_config.py` 按库名分流日志到 `logs/` 或 `logs/test/`。
-
-> ⚠️ Scrapy 的 `-s MYSQL_DATABASE=...` 只切数据层（日志仍进 `logs/`），要连日志一起隔离请用环境变量或 runner 的 `--db-name`。
 
 ---
 
@@ -71,8 +63,8 @@ python run_v1_spider.py --all       # Windows runner
 |---|---|---|
 | URL | `pubscholar.cn/hky/open/resources/api/v1/articles` | `scholarin.cn/hky/api/v2/resources/article` |
 | 认证 | 无需登录，需会话 Cookie | 需登录 Cookie |
-| 功能 | 全量中文文献 (~7400万) | 按关键词搜索 |
-| 运行器 | `run_v1_spider.py` | `run_v2_spider.py` |
+| 功能 | 全量中文文献 (~7400万), 分桶模式 | 按关键词搜索 |
+| 爬虫 | `scrapy crawl pubscholar_v1` | `scrapy crawl pubscholar_v2 -a query="..."` |
 
 ### 获取 Cookie
 
@@ -84,28 +76,23 @@ python run_v1_spider.py --all       # Windows runner
 
 ## 运行参数
 
-### run_v1_spider.py
+### v1 分桶模式 (settings / `-s`)
 
 | 参数 | 说明 | 默认值 |
 |------|------|--------|
-| `-p, --pages` | 爬取页数 | 1 |
-| `--all` | 爬取全部 | - |
-| `-s, --page-size` | 每页条数 (最大 50) | 50 |
-| `--start-page` | 断点续爬起始页 | 1 |
-| `--cookie` | Cookie 字符串 | (预设) |
-| `--xsrf-token` | XSRF Token | (预设) |
-| `--min-delay` | 最小请求间隔 (秒) | 1.5 |
-| `--max-delay` | 最大请求间隔 (秒) | 3.0 |
-| `--no-mysql` | 禁用 MySQL 写入 | - |
+| `V1_BUCKET_COLLECTIONS` | 顶层 collection 集合 | `北大核心,南大核心` |
+| `V1_BUCKET_THRESHOLD` | 单桶最大条数阈值 | `9900` |
+| `V1_BUCKET_DEPTH` | 切分深度 (year→subject→source) | `3` |
+| `V1_BUCKET_WINDOW` | 桶内滑动窗口 (并发页数) | `4` |
+| `V1_BUCKET_CONCURRENCY` | 并发桶数 | `2` |
+| `V1_BUCKET_MAX_BUCKETS` | 限爬桶数 (测试用, None=全部) | `None` |
+| `V1_BUCKET_FORCE_PLAN` | 强制重建分桶计划 | `0` |
 
-### run_v2_spider.py
+### v2 (settings / `-a`)
 
 | 参数 | 说明 | 默认值 |
 |------|------|--------|
-| `-q, --query` | 搜索关键词 (**必填**) | - |
-| `--cookie` | 登录 Cookie (**必填**) | - |
-| `--xsrf-token` | XSRF Token (**必填**) | - |
-| `--uid` | 用户 UID (**必填**) | - |
+| `query` | 搜索关键词 (**必填**, `-a query="..."`) | - |
 
 ### 诊断工具
 
@@ -120,31 +107,27 @@ python test_v1_api.py   # 验证 API 连通性和签名
 ### 方式 1: DEBUG 日志 (最快)
 
 ```bash
-# Scrapy + 测试库 + DEBUG 日志 + 只爬 1 页
-scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test -s LOG_LEVEL=DEBUG -s V1_MAX_PAGES=1
-
-# runner + 测试库 + verbose
-python run_v1_spider.py -p 1 -s 3 --db-name academicdb_test -v
+# Scrapy + 测试库 + DEBUG 日志
+scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test -s LOG_LEVEL=DEBUG -s V1_BUCKET_MAX_BUCKETS=1
 ```
 
 ### 方式 2: VSCode 断点调试 (推荐)
 
-已内置 [.vscode/launch.json](.vscode/launch.json) 三个配置:
+已内置 [.vscode/launch.json](.vscode/launch.json) 配置:
 
 | 配置 | 用途 |
 |------|------|
-| 调试 pubscholar_v1 (测试库) | Scrapy 爬虫 + 测试库 + DEBUG + 1 页 |
-| 调试 run_v1_spider (测试库) | runner + 测试库 (同步代码, 调试体验最佳) |
+| 调试 pubscholar_v1 (测试库) | Scrapy 爬虫 + 测试库 + DEBUG + 限爬 1 桶 |
 | 调试 pubscholar_v1 (生产库, 慎用) | 仅确认安全时使用 |
 
-使用: 代码行号左侧设断点 → `F5` → 选择配置 → 启动。推荐断点位置: `parse()` (翻页)、`record_to_item()` (字段解析)、`_upsert_article()` (去重写入)、`process_request()` (签名注入)。
+使用: 代码行号左侧设断点 → `F5` → 选择配置 → 启动。推荐断点位置: `parse_bucket_page()` (桶内翻页)、`record_to_item()` (字段解析)、`_upsert_article()` (去重写入)、`process_request()` (签名注入)。
 
 ### 方式 3: 代码内 breakpoint()
 
 在要调试的位置插入 `breakpoint()`，然后运行:
 
 ```bash
-python run_v1_spider.py -p 1 -s 3 --db-name academicdb_test
+scrapy crawl pubscholar_v1 -s V1_BUCKET_MAX_BUCKETS=1
 ```
 
 pdb 命令: `p` 打印变量 / `n` 下一行 / `s` 进入函数 / `c` 继续 / `q` 退出。
@@ -153,10 +136,10 @@ pdb 命令: `p` 打印变量 / `n` 下一行 / `s` 进入函数 / `c` 继续 / `
 
 | 保护 | 参数 | 作用 |
 |------|------|------|
-| 测试库 | `-s MYSQL_DATABASE=academicdb_test` / `--db-name academicdb_test` | 数据不污染生产库 |
-| 限制页数 | `-s V1_MAX_PAGES=1` / `-p 1` | 只跑 1 页 |
-| DEBUG 日志 | `-s LOG_LEVEL=DEBUG` / `-v` | 看全链路细节 |
-| 小页面 | `-s V1_PAGE_SIZE=3` / `-s 3` | 响应小好分析 |
+| 测试库 | `-s MYSQL_DATABASE=academicdb_test` | 数据不污染生产库 |
+| 限爬桶数 | `-s V1_BUCKET_MAX_BUCKETS=1` | 只跑 1 个桶 |
+| DEBUG 日志 | `-s LOG_LEVEL=DEBUG` | 看全链路细节 |
+| 小页面 | `-s V1_PAGE_SIZE=3` | 响应小好分析 |
 
 ---
 
@@ -171,10 +154,8 @@ academic-spiders/
 │   ├── pipelines.py                # MySQL + JSON 双管道
 │   ├── utils/signing.py            # SHA1 签名工具
 │   └── spiders/
-│       ├── pubscholar_v1.py        # v1 全量爬虫
+│       ├── pubscholar_v1.py        # v1 全量爬虫 (分桶模式)
 │       └── pubscholar_v2.py        # v2 搜索爬虫
-├── run_v1_spider.py                # Windows v1 运行器
-├── run_v2_spider.py                # Windows v2 运行器
 ├── test_v1_api.py                  # API 诊断工具
 ├── sql/schema.sql                  # 建表脚本 (6 张表)
 ├── result/                         # v1 接口原始抓包数据
@@ -202,7 +183,6 @@ python init_test_db.py
 # 三种切换方式任选其一:
 $env:MYSQL_DATABASE="academicdb_test"                    # PowerShell 环境变量
 scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test   # Scrapy 单次
-python run_v1_spider.py --db-name academicdb_test        # runner 参数
 
 # 重置测试库 (清空测试数据)
 python init_test_db.py --reset
@@ -224,7 +204,7 @@ python init_test_db.py --reset
 
 ## 注意事项
 
-- **Windows 用户**: Scrapy reactor 在 Win + Py3.12 下有兼容性问题，请使用 `run_v1_spider.py` / `run_v2_spider.py`
+- **Windows 用户**: 建议直接使用 Scrapy 爬虫 (已内置 `spider_opened` 信号注入, 绕过 Windows 上 start_requests 不被调用的兼容性问题)
 - **Cookie 过期**: API 返回 403 `"第三方应用独立请求时，无此操作权限"` 时需重新获取 Cookie
 - **全量爬取时间**: ~7400 万条，1.5s/页，50 条/页，单线程约 140 天。建议多机部署
 - **存储**: 全量数据预估 ~400GB，建议预留 600GB+
