@@ -18,6 +18,8 @@ scholarin_*.csv
 output/*
 cookies.json
 .env
+.env.profiles
+.env.bak
 .local.env
 
 # Logs (运行日志)

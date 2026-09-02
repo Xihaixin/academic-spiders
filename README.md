@@ -32,28 +32,43 @@ scrapy crawl pubscholar_v2 -a query="人工智能"
 
 ---
 
-## 开发 vs 生产环境
+## 开发 vs 生产环境 (三模式, v3.5)
 
-同一个爬虫，用**数据库名**区分环境：默认 `academicdb` = 生产，改成其他库名 = 开发/测试（数据 + 日志自动隔离）。
+同一套爬虫代码，通过**运行模式**切换不同的 MySQL 目标库与日志目录（数据 + 日志自动隔离）。
 
-| 环境 | 数据库 | 日志目录 | 命令示例 |
-|------|--------|----------|----------|
-| 开发 | `academicdb_test` | `logs/test/` | `scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test` |
-| 生产 | `academicdb` | `logs/` | `scrapy crawl pubscholar_v1` |
+| 模式 | 数据库 | 主机 | 日志目录 | JSON 输出目录 | 用途 |
+|------|--------|------|----------|---------------|------|
+| `test` | `academicdb_test` | localhost | `logs/test/` | `output/test/` | 本地测试/调试 |
+| `dev` | `academicdb` | localhost | `logs/dev/` | `output/dev/` | 本地开发 |
+| `prod` | `pubscholar` | 远程主机 | `logs/` | `output/` | 远程生产库 |
+
+### 模式切换 (推荐: env.py)
 
 ```bash
-# ① 初始化测试库 (结构同生产, 数据隔离)
-python init_test_db.py
-
-# ② 开发: 环境变量方式 (数据 + 日志都隔离, 推荐)
-$env:MYSQL_DATABASE="academicdb_test"
-scrapy crawl pubscholar_v1 -s LOG_LEVEL=DEBUG
-
-# ③ 生产: 全量爬取
-scrapy crawl pubscholar_v1
+python env.py list                      # 查看所有模式 + 当前生效模式
+python env.py current                   # 查看当前 .env 生效配置 (密码脱敏)
+python env.py switch test               # 本地测试
+python env.py switch dev                # 本地开发
+python env.py switch prod               # 远程生产库 (会二次确认)
+python env.py switch dev --dry-run      # 预览将写入的 .env, 不落盘
 ```
 
-**原理**: `MYSQL_DATABASE` 是唯一环境开关 —— `settings.py` 读环境变量（默认 `academicdb`）；所有写库组件（MySQL 管道 / 运行日志 / 断点续爬）都从 settings 取库名自动跟随；`logging_config.py` 按库名分流日志到 `logs/` 或 `logs/test/`。
+切换原理: 读取 `.env.profiles` (含 test/dev/prod 三块配置) → 重写 `.env`。
+`.env` 写入 `ACADEMIC_MODE=<mode>` 标记；`settings.py` 仍通过 `load_dotenv()` 读 `.env`，运行逻辑零改动。
+
+- **Profile 仓库**: `.env.profiles`（含真实密钥, gitignored）；模板见 `.env.profiles.example`（可提交）。
+- **自定义键保留**: `.env` 中不属于任何 profile 的键在切换时会被自动保留。
+- **安全**: 每次切换先把旧 `.env` 备份为 `.env.bak`；切到 `prod` 需确认 (`-y/--yes` 跳过)。
+- **临时覆盖单次运行**仍可用 `-s MYSQL_DATABASE=academicdb_test` 或 `--db-name`，无需改 `.env`。
+
+### 初始化测试库 (可选)
+
+```bash
+python init_test_db.py          # 创建 academicdb_test (结构同生产, 数据隔离)
+python init_test_db.py --reset  # 重置测试库
+```
+
+**原理**: `MYSQL_DATABASE` 是环境开关 —— `settings.py` 读环境变量（默认 `academicdb`=dev）；所有写库组件（MySQL 管道 / 运行日志 / 断点续爬）都从 settings 取库名自动跟随；`logging_config.py` 按库名解析模式分流日志（`prod→logs/`、`dev→logs/dev/`、`test→logs/test/`）。
 
 ---
 
@@ -118,7 +133,10 @@ scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test -s LOG_LEVEL=DEBUG 
 | 配置 | 用途 |
 |------|------|
 | 调试 pubscholar_v1 (测试库) | Scrapy 爬虫 + 测试库 + DEBUG + 限爬 1 桶 |
-| 调试 pubscholar_v1 (生产库, 慎用) | 仅确认安全时使用 |
+| 调试 pubscholar_v1 (开发库, 慎用) | 指向本地 academicdb, 仅确认安全时使用 |
+
+> 提示: launch.json 硬编码了 MySQL 环境变量, 优先级高于 .env。若想调试时跟随 env.py 切换,
+> 可删除配置里的 MYSQL_* 字段, 改为先 `python env.py switch <mode>` 再 F5。
 
 使用: 代码行号左侧设断点 → `F5` → 选择配置 → 启动。推荐断点位置: `parse_bucket_page()` (桶内翻页)、`record_to_item()` (字段解析)、`_upsert_article()` (去重写入)、`process_request()` (签名注入)。
 
@@ -177,10 +195,14 @@ academic-spiders/
 ### 测试环境 (数据库隔离)
 
 ```bash
-# 初始化测试库 academicdb_test (与生产库完全隔离, 结构相同)
+# 初始化测试库 academicdb_test (与业务库完全隔离, 结构相同)
 python init_test_db.py
 
-# 三种切换方式任选其一:
+# 切换到 test 模式后运行 (推荐)
+python env.py switch test
+scrapy crawl pubscholar_v1
+
+# 单次临时覆盖 (不改 .env, 数据/日志目录自动跟随库名):
 $env:MYSQL_DATABASE="academicdb_test"                    # PowerShell 环境变量
 scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test   # Scrapy 单次
 
@@ -208,4 +230,4 @@ python init_test_db.py --reset
 - **Cookie 过期**: API 返回 403 `"第三方应用独立请求时，无此操作权限"` 时需重新获取 Cookie
 - **全量爬取时间**: ~7400 万条，1.5s/页，50 条/页，单线程约 140 天。建议多机部署
 - **存储**: 全量数据预估 ~400GB，建议预留 600GB+
-- **日志**: 文件日志在 `logs/`（生产）与 `logs/test/`（测试，数据库名 ≠ academicdb 时自动切换），单文件 50MB 轮转保留 10 份
+- **日志**: 文件日志按模式分流 —— prod→`logs/`、dev→`logs/dev/`、test→`logs/test/`，单文件 50MB 轮转保留 10 份。切换方式见上方「开发 vs 生产环境」。
