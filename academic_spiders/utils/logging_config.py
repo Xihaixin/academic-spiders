@@ -3,9 +3,16 @@
 
 供 settings.py (Scrapy) 和 run_*_spider.py (Windows runner) 复用。
 
-日志目录规则 (测试/生产隔离):
-  - 生产库 (academicdb):        logs/<文件名>.log
-  - 其他库 (如 academicdb_test): logs/test/<文件名>.log
+日志目录规则 (三模式隔离, v3.5):
+  - prod (远程库 pubscholar):    logs/<文件名>.log
+  - dev  (本地库 academicdb):    logs/dev/<文件名>.log
+  - test (本地测试库 academicdb_test 等): logs/test/<文件名>.log
+
+模式判定优先级:
+  1. 实际生效的数据库名 MYSQL_DATABASE (环境变量, 可来自 shell 或 .env; 覆盖
+     -s / launch.json / env.py 切换全场景, 日志目录始终与真正写入的库一致);
+  2. ACADEMIC_MODE 标记 (env.py 写入 .env, 仅作兜底);
+  3. 都缺省时默认 test (安全侧: 不污染生产日志)。
 
 轮转: 单文件 50MB 触发轮转, 保留 10 个历史文件 (.1 ~ .10)。
 """
@@ -22,8 +29,26 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 LOG_FORMAT_FULL = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 LOG_DATEFORMAT_FULL = "%Y-%m-%d %H:%M:%S"
 
-# 生产数据库名 (其他名字视为测试环境, 日志写入 logs/test/)
-PROD_DB_NAME = "academicdb"
+# 三种运行模式
+MODES = ("test", "dev", "prod")
+
+# 库名 → 模式 (ACADEMIC_MODE 缺省时的反推表; 未列出的库名一律按 test 处理)
+_DB_TO_MODE = {
+    "pubscholar": "prod",
+    "academicdb": "dev",
+}
+
+# 模式 → logs/ 下的子目录 (None/空串 = logs/ 根目录, 即 prod)
+_MODE_LOG_SUBDIR = {
+    "prod": "",
+    "dev": "dev",
+    "test": "test",
+}
+
+
+def mode_env_marker() -> str:
+    """读取 ACADEMIC_MODE 环境变量 (env.py 在 .env 中维护)"""
+    return os.getenv("ACADEMIC_MODE", "").strip().lower()
 
 
 def resolve_db_name(db_name: str) -> str:
@@ -33,21 +58,56 @@ def resolve_db_name(db_name: str) -> str:
     return os.getenv("MYSQL_DATABASE", "")
 
 
-def is_test_db(db_name: str) -> bool:
-    """判断是否为测试环境 (数据库名非生产库名)"""
-    return bool(db_name) and db_name != PROD_DB_NAME
+def mode_of_db(db_name: str) -> str:
+    """库名 → 模式 (未识别库名按 test 安全处理)"""
+    name = resolve_db_name(db_name)
+    return _DB_TO_MODE.get(name, "test")
+
+
+def resolve_mode(db_name: Optional[str] = None) -> str:
+    """解析当前模式
+
+    优先级:
+      1. 实际生效的数据库名 MYSQL_DATABASE (覆盖 -s / launch.json / .env 全场景,
+         日志目录与真正写入的库保持一致);
+      2. ACADEMIC_MODE 标记 (env.py 写入 .env, 仅作兜底);
+      3. 都缺省时默认 test (安全侧: 不污染生产日志)。
+    """
+    name = resolve_db_name(db_name or "")
+    if name:
+        return mode_of_db(name)
+    marker = mode_env_marker()
+    if marker in MODES:
+        return marker
+    return "test"
+
+
+def log_subdir(mode: str) -> str:
+    """模式 → logs/ 下的子目录名 (prod 返回空串 = logs/ 根目录)"""
+    return _MODE_LOG_SUBDIR.get(mode, _MODE_LOG_SUBDIR["test"])
+
+
+def is_test_db(db_name: Optional[str] = None) -> bool:
+    """判断当前是否为 test 模式"""
+    return resolve_mode(db_name) == "test"
+
+
+def is_prod_db(db_name: Optional[str] = None) -> bool:
+    """判断当前是否为 prod 模式 (远程库 pubscholar)"""
+    return resolve_mode(db_name) == "prod"
 
 
 def get_log_dir(db_name: Optional[str] = None) -> Path:
     """获取 (并创建) 日志目录
 
-    :param db_name: 数据库名 (None 时从环境变量读取)
-    :return: 生产 → logs/; 测试 → logs/test/
+    :param db_name: 数据库名 (None 时按 ACADEMIC_MODE / 环境变量 MYSQL_DATABASE 解析模式)
+    :return: prod → logs/; dev → logs/dev/; test → logs/test/
     """
-    name = resolve_db_name(db_name or "")
+    mode = resolve_mode(db_name)
     base = PROJECT_ROOT / "logs"
-    if is_test_db(name):
-        base = base / "test"
+    sub = log_subdir(mode)
+    if sub:
+        base = base / sub
     base.mkdir(parents=True, exist_ok=True)
     return base
 
@@ -61,8 +121,8 @@ def setup_file_logging(
 
     :param log_filename: 日志文件名 (如 "runner_v1.log")
     :param level:        日志级别
-    :param db_name:      数据库名。None 时从 MYSQL_DATABASE 环境变量读取。
-                         非生产库时日志写入 logs/test/ 子目录 (与生产隔离)
+    :param db_name:      数据库名。None 时按 ACADEMIC_MODE / MYSQL_DATABASE 解析模式。
+                          日志目录跟随模式: prod→logs/, dev→logs/dev/, test→logs/test/
     :return: 创建的 handler
     """
     handler = RotatingFileHandler(

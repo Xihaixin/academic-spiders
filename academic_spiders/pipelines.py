@@ -14,6 +14,8 @@ from dbutils.pooled_db import PooledDB
 from scrapy import signals
 from scrapy.settings import Settings
 
+from academic_spiders.utils.logging_config import log_subdir, mode_of_db
+
 logger = logging.getLogger(__name__)
 
 
@@ -47,8 +49,10 @@ class JsonExportPipeline:
     @classmethod
     def from_crawler(cls, crawler):
         output_dir = crawler.settings.get("ACADEMIC_JSON_OUTPUT") or "./output"
-        if crawler.settings.get("MYSQL_DATABASE") == "academicdb_test":
-            output_dir = os.path.join(output_dir, "test")
+        mode = mode_of_db(crawler.settings.get("MYSQL_DATABASE"))
+        sub = log_subdir(mode)
+        if sub:
+            output_dir = os.path.join(output_dir, sub)
         return cls(output_dir=output_dir)
 
     @staticmethod
@@ -102,7 +106,7 @@ class JsonExportPipeline:
                 qh[:8], cur_page, len(items),
             )
             return
-        final_path = os.path.join(out_dir, f"page_{qh}_{cur_page:0>8}.json")
+        final_path = os.path.join(out_dir, f"{qh}_{cur_page:0>8}.json")
         # 临时文件 + os.replace 原子替换, 避免残留半截文件
         fd, tmp_path = tempfile.mkstemp(dir=out_dir, suffix=".json.tmp")
         try:

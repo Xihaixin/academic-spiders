@@ -63,9 +63,12 @@ EXTENSIONS = {
     'academic_spiders.extensions.SpiderRunLogExtension': 500,
 }
 
-# ── MySQL 配置 (支持环境变量覆盖, 用于测试/生产环境隔离) ──────
-#   生产: 默认 academicdb
-#   测试: MYSQL_DATABASE=academicdb_test (环境变量 / -s 参数 / --db-name)
+# ── MySQL 配置 (环境变量驱动, 由 env.py 切换模式) ────────────
+#   三种模式 (见 .env.profiles, 切换命令 `python env.py switch <test|dev|prod>`):
+#     test: academicdb_test @ localhost   (本地测试, 数据/日志隔离)
+#     dev : academicdb       @ localhost   (本地开发)
+#     prod: pubscholar       @ 远程主机     (远程生产库)
+#   -s MYSQL_DATABASE=... / --db-name 仍可临时覆盖单次运行的数据库。
 MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
 MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))
 MYSQL_USER = os.getenv("MYSQL_USER", "root")
