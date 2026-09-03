@@ -8,11 +8,10 @@
   - dev  (本地库 academicdb):    logs/dev/<文件名>.log
   - test (本地测试库 academicdb_test 等): logs/test/<文件名>.log
 
-模式判定优先级:
-  1. 实际生效的数据库名 MYSQL_DATABASE (环境变量, 可来自 shell 或 .env; 覆盖
-     -s / launch.json / env.py 切换全场景, 日志目录始终与真正写入的库一致);
-  2. ACADEMIC_MODE 标记 (env.py 写入 .env, 仅作兜底);
-  3. 都缺省时默认 test (安全侧: 不污染生产日志)。
+模式判定 (单一开关 ACADEMIC_MODE, 与 config 注册表一致):
+  1. 环境变量 ACADEMIC_MODE (env.py 写入 .env, 唯一真相);
+  2. 缺省时按 MYSQL_DATABASE 库名反推 (pubscholar→prod, academicdb→dev, 其余→test);
+  3. 都缺省时默认 dev (本地开发, 安全侧)。
 
 轮转: 单文件 50MB 触发轮转, 保留 10 个历史文件 (.1 ~ .10)。
 """
@@ -31,6 +30,8 @@ LOG_DATEFORMAT_FULL = "%Y-%m-%d %H:%M:%S"
 
 # 三种运行模式
 MODES = ("test", "dev", "prod")
+
+DEFAULT_MODE = "dev"
 
 # 库名 → 模式 (ACADEMIC_MODE 缺省时的反推表; 未列出的库名一律按 test 处理)
 _DB_TO_MODE = {
@@ -65,21 +66,14 @@ def mode_of_db(db_name: str) -> str:
 
 
 def resolve_mode(db_name: Optional[str] = None) -> str:
-    """解析当前模式
-
-    优先级:
-      1. 实际生效的数据库名 MYSQL_DATABASE (覆盖 -s / launch.json / .env 全场景,
-         日志目录与真正写入的库保持一致);
-      2. ACADEMIC_MODE 标记 (env.py 写入 .env, 仅作兜底);
-      3. 都缺省时默认 test (安全侧: 不污染生产日志)。
-    """
-    name = resolve_db_name(db_name or "")
-    if name:
-        return mode_of_db(name)
+    """解析当前模式: ACADEMIC_MODE 优先, 其次按库名反推, 最后默认 dev"""
     marker = mode_env_marker()
     if marker in MODES:
         return marker
-    return "test"
+    name = resolve_db_name(db_name or "")
+    if name:
+        return mode_of_db(name)
+    return DEFAULT_MODE
 
 
 def log_subdir(mode: str) -> str:

@@ -46,20 +46,22 @@ scrapy crawl pubscholar_v2 -a query="人工智能"
 
 ```bash
 python env.py list                      # 查看所有模式 + 当前生效模式
-python env.py current                   # 查看当前 .env 生效配置 (密码脱敏)
+python env.py current                   # 查看当前激活配置 (密码脱敏)
 python env.py switch test               # 本地测试
 python env.py switch dev                # 本地开发
 python env.py switch prod               # 远程生产库 (会二次确认)
-python env.py switch dev --dry-run      # 预览将写入的 .env, 不落盘
+python env.py init                      # 首次使用: 从模板生成 .env.secrets
 ```
 
-切换原理: 读取 `.env.profiles` (含 test/dev/prod 三块配置) → 重写 `.env`。
-`.env` 写入 `ACADEMIC_MODE=<mode>` 标记；`settings.py` 仍通过 `load_dotenv()` 读 `.env`，运行逻辑零改动。
+**实现原理 (配置类 + 注册表)**: 模式的具体值定义在代码子类中（`academic_spiders/config/modes.py`，
+`ConfigBase` 定义共有结构）；`.env` 只保留单一开关 `ACADEMIC_MODE=<mode>`；注册表
+`academic_spiders/config/registry.py` 依据该开关构建激活配置对象；`settings.py` 从配置对象
+取 `MYSQL_*`、日志目录与 JSON 输出目录，现有管道/扩展零改动。
 
-- **Profile 仓库**: `.env.profiles`（含真实密钥, gitignored）；模板见 `.env.profiles.example`（可提交）。
-- **自定义键保留**: `.env` 中不属于任何 profile 的键在切换时会被自动保留。
-- **安全**: 每次切换先把旧 `.env` 备份为 `.env.bak`；切到 `prod` 需确认 (`-y/--yes` 跳过)。
-- **临时覆盖单次运行**仍可用 `-s MYSQL_DATABASE=academicdb_test` 或 `--db-name`，无需改 `.env`。
+- **密钥隔离**: 密码、远程主机等敏感字段存 `.env.secrets`（gitignored）；模板 `.env.secrets.example` 可提交。
+- **易扩展**: 新增模式 = 在 `modes.py` 加一个继承 `ConfigBase` 的子类 + 在 registry 注册 + 在 `.env.secrets` 加段。
+- **环境变量临时覆盖**: 进程环境设置 `MYSQL_*` 可覆盖配置类值（优先级 环境变量 > secrets > 类默认）。
+- **单次数据层覆盖**仍可用 `-s MYSQL_DATABASE=academicdb_test` 或 `--db-name`，日志目录仍跟随激活模式。
 
 ### 初始化测试库 (可选)
 
@@ -68,7 +70,7 @@ python init_test_db.py          # 创建 academicdb_test (结构同生产, 数�
 python init_test_db.py --reset  # 重置测试库
 ```
 
-**原理**: `MYSQL_DATABASE` 是环境开关 —— `settings.py` 读环境变量（默认 `academicdb`=dev）；所有写库组件（MySQL 管道 / 运行日志 / 断点续爬）都从 settings 取库名自动跟随；`logging_config.py` 按库名解析模式分流日志（`prod→logs/`、`dev→logs/dev/`、`test→logs/test/`）。
+**原理**: `ACADEMIC_MODE` 是单一模式开关（`.env` 中，由 `env.py switch` 维护）；`settings.py` 从激活配置对象（`config` 包）读取 `MYSQL_*` 等；所有写库组件（MySQL 管道 / 运行日志 / 断点续爬）都从 settings 取库名自动跟随；`logging_config.py` 按激活模式分流日志（`prod→logs/`、`dev→logs/dev/`、`test→logs/test/`）。
 
 ---
 
@@ -132,11 +134,11 @@ scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test -s LOG_LEVEL=DEBUG 
 
 | 配置 | 用途 |
 |------|------|
-| 调试 pubscholar_v1 (测试库) | Scrapy 爬虫 + 测试库 + DEBUG + 限爬 1 桶 |
-| 调试 pubscholar_v1 (开发库, 慎用) | 指向本地 academicdb, 仅确认安全时使用 |
+| 调试 pubscholar_v1 (当前模式) | Scrapy + DEBUG, 数据库跟随当前 .env 模式 |
+| 调试 pubscholar_v1 (测试, 限 10 桶) | Scrapy + 测试库常用调试, 数据库跟随当前 .env 模式 |
 
-> 提示: launch.json 硬编码了 MySQL 环境变量, 优先级高于 .env。若想调试时跟随 env.py 切换,
-> 可删除配置里的 MYSQL_* 字段, 改为先 `python env.py switch <mode>` 再 F5。
+> 两个配置均通过 `envFile` 加载 `.env`（不再硬编码 MYSQL_*），所以调试**跟随 env.py 切换的模式**：
+> 先 `python env.py switch <test|dev|prod>` 再按 F5，即写入对应模式的库。
 
 使用: 代码行号左侧设断点 → `F5` → 选择配置 → 启动。推荐断点位置: `parse_bucket_page()` (桶内翻页)、`record_to_item()` (字段解析)、`_upsert_article()` (去重写入)、`process_request()` (签名注入)。
 

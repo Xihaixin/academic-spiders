@@ -8,15 +8,23 @@ from academic_spiders.utils.logging_config import setup_file_logging
 
 load_dotenv()
 
+# 激活的配置文件 (由 config 包 + .env 中 ACADEMIC_MODE 决定)
+# .env 只保留单一开关 ACADEMIC_MODE=test|dev|prod (python env.py switch),
+# 具体值定义于 academic_spiders/config/, 敏感字段在 .env.secrets。
+from academic_spiders.config import get_active_config
+
+_ACTIVE_CONFIG = get_active_config()
+
 BOT_NAME = "academic_spiders"
-ACADEMIC_JSON_OUTPUT=os.getenv("ACADEMIC_JSON_OUTPUT", default="./output")
+# JSON 输出基础目录, 由激活配置追加模式子目录 (test/dev/prod)
+ACADEMIC_JSON_OUTPUT = _ACTIVE_CONFIG.json_output_dir
 
 SPIDER_MODULES = ["academic_spiders.spiders"]
 NEWSPIDER_MODULE = "academic_spiders.spiders"
 
 # ── 文件日志 (控制台 + 文件双输出) ─────────────────────────────
-# 日志文件: 项目根目录 logs/scrapy.log, 50MB 轮转 × 10
-setup_file_logging("scrapy.log")
+# 日志目录由激活配置决定: logs/<subdir>
+setup_file_logging("scrapy.log", db_name=_ACTIVE_CONFIG.MYSQL_DATABASE)
 
 # ── 爬虫行为 ──────────────────────────────────────────────────
 ROBOTSTXT_OBEY = False
@@ -63,17 +71,14 @@ EXTENSIONS = {
     'academic_spiders.extensions.SpiderRunLogExtension': 500,
 }
 
-# ── MySQL 配置 (环境变量驱动, 由 env.py 切换模式) ────────────
-#   三种模式 (见 .env.profiles, 切换命令 `python env.py switch <test|dev|prod>`):
-#     test: academicdb_test @ localhost   (本地测试, 数据/日志隔离)
-#     dev : academicdb       @ localhost   (本地开发)
-#     prod: pubscholar       @ 远程主机     (远程生产库)
-#   -s MYSQL_DATABASE=... / --db-name 仍可临时覆盖单次运行的数据库。
-MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
-MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))
-MYSQL_USER = os.getenv("MYSQL_USER", "root")
-MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "200310")
-MYSQL_DATABASE = os.getenv("MYSQL_DATABASE", "academicdb")
+# ── MySQL 配置 (由激活配置对象提供, 覆盖见下方说明) ──────────
+#   三种模式 (config 包): test/dev/prod; 切换 `python env.py switch <mode>`
+#   -s MYSQL_DATABASE=... / 环境变量 MYSQL_* 仍可临时覆盖单次运行。
+MYSQL_HOST = _ACTIVE_CONFIG.MYSQL_HOST
+MYSQL_PORT = _ACTIVE_CONFIG.MYSQL_PORT
+MYSQL_USER = _ACTIVE_CONFIG.MYSQL_USER
+MYSQL_PASSWORD = _ACTIVE_CONFIG.MYSQL_PASSWORD
+MYSQL_DATABASE = _ACTIVE_CONFIG.MYSQL_DATABASE
 MYSQL_POOL_SIZE = 8
 
 # ── Feed 导出 ─────────────────────────────────────────────────

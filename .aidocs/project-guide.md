@@ -1,6 +1,6 @@
 # 公益学术平台(pubscholar.cn) 文献爬虫系统 — 项目文档
 
-**版本**: 3.5 | **日期**: 2026-09-02
+**版本**: 3.5 | **日期**: 2026-09-03
 
 ---
 
@@ -198,21 +198,27 @@ pdb 命令: `p` 打印变量 / `n` 下一行 / `s` 进入函数 / `c` 继续 / `
 
 ```bash
 python env.py list                      # 查看模式 + 当前生效模式
-python env.py current                   # 查看当前 .env 生效配置 (密码脱敏)
-python env.py switch test|dev|prod      # 切换并写入 .env
-python env.py switch dev --dry-run      # 预览不落盘
+python env.py current                   # 查看当前激活配置 (密码脱敏)
+python env.py switch test|dev|prod      # 切换 (只改 .env 中 ACADEMIC_MODE)
 python env.py switch prod               # 切 prod 会二次确认 (-y 跳过)
+python env.py init                      # 首次使用: 从模板生成 .env.secrets
 ```
 
-**实现原理**：
+**实现原理 (配置类 + 注册表)**：
 
-1. **Profile 仓库**: `.env.profiles`（gitignored, 含真实密钥）以 `[test]/[dev]/[prod]` 段组织三块配置；模板 `.env.profiles.example` 可提交。
-2. **切换**: `env.py` → `EnvManager.switch()` 重写 `.env`（原子写入, 旧文件备份 `.env.bak`；非 profile 自定义键自动保留）；`.env` 写入 `ACADEMIC_MODE=<mode>` 标记。
-3. **数据层**: `settings.py` 仍 `load_dotenv()` 读 `.env`，各组件从 settings 读 `MYSQL_*` 自动跟随，运行逻辑零改动。
-4. **日志层**: `logging_config.py` 按生效库名解析模式分流 —— `prod→logs/`、`dev→logs/dev/`、`test→logs/test/`。
-5. **临时覆盖单次运行**仍可用 `-s MYSQL_DATABASE=academicdb_test` 或 `--db-name`，无需改 `.env`。
+1. **配置类**: `academic_spiders/config/modes.py` — `ConfigBase` 定义共有结构，
+   `TestConfig/DevConfig/ProdConfig` 子类承载非敏感默认值 (库名/主机/端口/用户/子目录)。
+2. **注册表**: `academic_spiders/config/registry.py` 依据 `.env` 中单一开关 `ACADEMIC_MODE`
+   构建激活配置对象 (`get_active_config()`)，`set_active_mode()` 供程序内切换。
+3. **密钥隔离**: 敏感字段 (密码、远程 host/user) 存 `.env.secrets`（gitignored），
+   构造配置对象时按模式段合并；模板 `.env.secrets.example` 可提交。
+4. **数据层**: `settings.py` 从激活配置对象取 `MYSQL_*`/`ACADEMIC_JSON_OUTPUT`，
+   各组件从 settings 读 `MYSQL_*` 自动跟随，运行逻辑零改动。
+5. **日志层**: `logging_config.py` 按激活模式分流 —— `prod→logs/`、`dev→logs/dev/`、`test→logs/test/`。
+6. **临时覆盖单次运行**仍可用 `-s MYSQL_DATABASE=academicdb_test` 或进程环境变量 `MYSQL_*`。
 
-> **注意**: `-s MYSQL_DATABASE=...` 只切数据层——`settings.py` 在模块加载早期读环境变量决定日志目录，所以单靠 `-s` 时日志目录不随库名改变；要数据+日志一起切，用 `env.py switch`（改 `.env`）或设置环境变量。
+> **注意**: `-s MYSQL_DATABASE=...` 只切数据层——日志目录跟随激活模式 (`.env` 的 `ACADEMIC_MODE`)；
+> 要数据+日志一起切，用 `python env.py switch <mode>`。
 
 ### 3.7 分桶模式 (v3.4, 突破分页窗口)
 
@@ -366,13 +372,13 @@ python init_test_db.py --reset
 | 方式 | 命令 | 场景 |
 |------|------|------|
 | env.py (推荐) | `python env.py switch test` | 数据 + 日志一起切换, 持久生效 |
-| 环境变量 | `$env:MYSQL_DATABASE="academicdb_test"` 后正常启动 | 临时/长时间测试会话 |
+| 环境变量 | `$env:MYSQL_DATABASE="academicdb_test"` 后正常启动 | 临时/长时间测试会话 (二次覆盖) |
 | Scrapy `-s` | `scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test` | 单次测试 (仅数据层) |
 | runner 参数 | `python run_v1_spider.py --db-name academicdb_test` | runner 测试 |
 
-**隔离保证**：test 库与 dev/prod 库是相互独立的 database；`SpiderRunLogExtension`、断点续爬 (`resume.py`) 等所有组件都从 settings 读取 `MYSQL_DATABASE`，自动跟随切换，测试产生的数据、运行日志、审计记录全部落在测试库，不会污染业务库。
+**隔离保证**：test 库与 dev/prod 库是相互独立的 database；`SpiderRunLogExtension`、断点续爬 (`resume.py`) 等所有组件都从 settings 读取 `MYSQL_DATABASE`，自动跟随激活配置，测试产生的数据、运行日志、审计记录全部落在测试库，不会污染业务库。
 
-**日志隔离**：文件日志跟随模式分流 — `prod→logs/`、`dev→logs/dev/`、`test→logs/test/` (由 `logging_config.py` 按生效库名解析模式)。注意: 仅用 `-s MYSQL_DATABASE=...` 时，settings.py 在启动早期读取环境变量决定日志目录，日志目录不随库名改变；要数据+日志一起切换，用 `python env.py switch test`（改 `.env`）或设置 `$env:MYSQL_DATABASE="academicdb_test"`。
+**日志隔离**：文件日志跟随激活模式分流 — `prod→logs/`、`dev→logs/dev/`、`test→logs/test/` (由 `logging_config.py` 按 `ACADEMIC_MODE`/库名解析)。注意: 仅用 `-s MYSQL_DATABASE=...` 时只切数据层，日志目录跟随激活模式；要数据+日志一起切换，用 `python env.py switch test`。
 
 ### 5.7 存储估算
 
@@ -453,4 +459,4 @@ Cookie 已过期! API 返回: {"cause":"第三方应用独立请求时，无此�
 | 2026-08-13 | v3.2 | 去重逻辑: articles.dedup_key (二级降级: doi → title+source+year 哈希); 新建 articles_audit_log 审计表 (记录被覆盖旧数据); pipelines 去重写入 (SELECT→审计+UPDATE / INSERT) |
 | 2026-08-13 | v3.3 | 日志: ① 文件日志 50MB 轮转 × 10; ② 测试/生产日志隔离 (logs/ 与 logs/test/); ③ 自定义 ConciseLogFormatter — 每条文献只记一行摘要 (页码/标题/去重键), 不再打印完整 item dict; ④ 类型检查: pyproject 增加 [tool.pyright] (basic 模式抑制动态类型噪音), 修复 27 处类型标注缺陷 (Optional/返回类型/`json.loads(response.text)` 替代 `.json()` 等) |
 | 2026-08-25 | v3.4 | 聚合分桶爬取 (突破单查询 10000 条窗口): ① 验证工具 fetch_aggregations.py / verify_window_limit.py (窗口探测、维度完备性、分桶可行性预览); ② 新增 crawl_query_state / crawl_plan 表 + utils/query_state.py (持久连接+批量插入) + utils/query_plan.py; ③ pubscholar_v1.py 双模式 — 线性保留 + 分桶 (collection→year→subject→source 递归切分, 逐桶滑窗爬取, 断点续爬); ④ api_client.py 轻量客户端; ⑤ parsers 修复 date 截断 VARCHAR(10); ⑥ 完整记录见 .aidocs/academic-spiders/bucket-crawl-implementation-record.md |
-| 2026-09-02 | v3.5 | 三模式配置管理: ① 新增 .env.profiles 模式仓库 (test/dev/prod) + env.py CLI (list/current/switch/init) + utils/env_manager.py (EnvManager 重写 .env, 备份 .env.bak, 保留自定义键); ② 日志目录三模式分流 (prod→logs/, dev→logs/dev/, test→logs/test/) 并扩展 JSON 输出目录同步分流; ③ .env.profiles.example 可提交模板。详见 .aidocs/academic-spiders/env-mode-manager.md |
+| 2026-09-03 | v3.5 | 三模式配置类管理 (重构 env 重写方案): ① 新增 academic_spiders/config/ 包 — ConfigBase 基类 + TestConfig/DevConfig/ProdConfig 子类 + registry 注册表 (按 .env 单一开关 ACADEMIC_MODE 选择激活配置) + secrets 加载器 (.env.secrets, gitignored); ② settings.py 从激活配置对象取 MYSQL_*/ACADEMIC_JSON_OUTPUT, 日志目录三模式分流 (prod→logs/, dev→logs/dev/, test→logs/test/); ③ env.py 重写 (list/current/switch/init), 仅维护 ACADEMIC_MODE 单开关; ④ 移除原 EnvManager/.env.profiles 整块重写方案。详见 .aidocs/academic-spiders/env-mode-manager.md |

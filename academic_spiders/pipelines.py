@@ -14,8 +14,6 @@ from dbutils.pooled_db import PooledDB
 from scrapy import signals
 from scrapy.settings import Settings
 
-from academic_spiders.utils.logging_config import log_subdir, mode_of_db
-
 logger = logging.getLogger(__name__)
 
 
@@ -48,11 +46,8 @@ class JsonExportPipeline:
 
     @classmethod
     def from_crawler(cls, crawler):
+        # ACADEMIC_JSON_OUTPUT 已由激活配置提供 (含模式子目录 test/dev/prod)
         output_dir = crawler.settings.get("ACADEMIC_JSON_OUTPUT") or "./output"
-        mode = mode_of_db(crawler.settings.get("MYSQL_DATABASE"))
-        sub = log_subdir(mode)
-        if sub:
-            output_dir = os.path.join(output_dir, sub)
         return cls(output_dir=output_dir)
 
     @staticmethod
