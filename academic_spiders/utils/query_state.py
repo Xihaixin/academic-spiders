@@ -70,6 +70,15 @@ class QueryStateStore:
 
     def mark_interrupted(self):
         """启动时把上次异常终止遗留的 running 桶重置为 pending"""
+        self.reset_running_buckets()
+
+    def reset_running_buckets(self):
+        """将当前所有 running 状态的桶重置为 pending (断点续爬)
+
+        调用时机:
+          - 启动时: mark_interrupted() → 清理上次异常终止的遗留桶
+          - 关闭时: spider._on_spider_closed() → 非正常关闭时重置活跃桶
+        """
         try:
             conn = self._get_conn()
             with conn.cursor() as cur:

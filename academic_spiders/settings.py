@@ -71,6 +71,12 @@ EXTENSIONS = {
     'academic_spiders.extensions.SpiderRunLogExtension': 500,
 }
 
+# ── 爬虫运行日志心跳间隔 (秒) ────────────────────────────────────
+# SpiderRunLogExtension 每隔此秒数将当前 stats 写入 spider_run_log,
+# 确保用户中断 (Ctrl+C) 时最多丢失此间隔内的统计数据。
+# 设置为 0 禁用心跳, 仅在 spider_closed 时一次性写入。
+SPIDER_LOG_HEARTBEAT_INTERVAL = 30
+
 # ── MySQL 配置 (由激活配置对象提供, 覆盖见下方说明) ──────────
 #   三种模式 (config 包): test/dev/prod; 切换 `python env.py switch <mode>`
 #   -s MYSQL_DATABASE=... / 环境变量 MYSQL_* 仍可临时覆盖单次运行。

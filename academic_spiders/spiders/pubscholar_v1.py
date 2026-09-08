@@ -121,8 +121,14 @@ class PubscholarV1Spider(scrapy.Spider):
         self._build_plan_and_start()
 
     def _on_spider_closed(self, spider=None, reason=None):
-        """释放查询状态持久连接"""
+        """释放查询状态持久连接; 非正常完成时重置活跃桶为 pending"""
         if self._store is not None:
+            # 非正常关闭时, 将仍在 running 的桶重置为 pending (断点续爬)
+            if reason != "finished":
+                try:
+                    self._store.reset_running_buckets()
+                except Exception as e:
+                    logger.warning("重置活跃桶状态失败: %s", e)
             self._store.close()
 
     # ═══════════════════════════════════════════════════════════
