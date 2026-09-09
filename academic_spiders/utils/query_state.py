@@ -134,17 +134,32 @@ class QueryStateStore:
             "page_size": page_size, "collection": collection,
         }])
 
-    def claim_next(self) -> Optional[dict]:
-        """领取一个 pending 桶 (置为 running), 返回其查询参数与边界"""
+    def claim_next(self, collections: Optional[List[str]] = None) -> Optional[dict]:
+        """领取一个 pending 桶 (置为 running), 返回其查询参数与边界
+
+        :param collections: 可选, 目标集合列表 (如 ["北大核心", "CSSCI"])。
+            传入后只领取 collection 列命中其中之一的桶 (该列直接反映桶的集合
+            归属), 避免误领其它集合遗留的 pending 桶 (如库里残留的、当前
+            计划外的旧集合桶)。传 None/空 则领取任意 pending 桶 (原行为)。
+        """
+        where = "status='pending'"
+        args: List[object] = []
+        if collections:
+            colls = [str(c) for c in collections if c]
+            if colls:
+                placeholders = ", ".join(["%s"] * len(colls))
+                where += f" AND collection IN ({placeholders})"
+                args.extend(colls)
         try:
             conn = self._get_conn()
             with conn.cursor() as cur:
                 cur.execute(
-                    """SELECT id, query_hash, query_params, total, max_page
-                       FROM crawl_query_state
-                       WHERE status='pending'
-                       ORDER BY id ASC LIMIT 1
-                       FOR UPDATE"""
+                    f"""SELECT id, query_hash, query_params, total, max_page
+                        FROM crawl_query_state
+                        WHERE {where}
+                        ORDER BY id ASC LIMIT 1
+                        FOR UPDATE""",
+                    args,
                 )
                 row = cur.fetchone()
                 if row:

@@ -127,10 +127,11 @@ V1_FINGER = _v1cfg["finger"]
 V1_PAGE_SIZE = _v1cfg["page_size"]
 
 # ── v1 聚合分桶模式 ───────────────────────────────────────────
-# 首请求聚合接口, 顶层 collection 固定 (北大核心/南大核心),
+# 首请求聚合接口, 顶层 collection 固定 (北大核心/CSSCI),
 # lang 固定中文 C; 桶内按 year→subject→source 递归切分, 每桶 <= threshold。
 # 桶状态写入 crawl_query_state 表, 支持断点续爬。
-V1_BUCKET_COLLECTIONS = os.getenv("V1_BUCKET_COLLECTIONS", "北大核心,南大核心")
+# 注意: 站点已将 collection 值 "南大核心" 更名为 "CSSCI"(同义), 旧值已返回空结果。
+V1_BUCKET_COLLECTIONS = os.getenv("V1_BUCKET_COLLECTIONS", "北大核心,CSSCI")
 V1_BUCKET_THRESHOLD = int(os.getenv("V1_BUCKET_THRESHOLD", "9900"))
 V1_BUCKET_DEPTH = int(os.getenv("V1_BUCKET_DEPTH", "3"))
 V1_BUCKET_WINDOW = int(os.getenv("V1_BUCKET_WINDOW", "4"))

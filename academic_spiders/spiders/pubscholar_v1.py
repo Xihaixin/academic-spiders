@@ -10,8 +10,12 @@
   桶状态写入 crawl_query_state 表, 支持断点续爬。
 
 启动示例:
-  scrapy crawl pubscholar_v1                              # 分桶模式 (北大+南大核心)
+  scrapy crawl pubscholar_v1                              # 分桶模式 (北大核心 + CSSCI/南大核心)
   scrapy crawl pubscholar_v1 -s V1_BUCKET_MAX_BUCKETS=2   # 测试限爬2桶
+
+注意 (2026-09): 站点将 collection 值 "南大核心" 更名为 "CSSCI"
+  (两者同义: CSSCI = 南京大学 中文社会科学引文索引)。
+  现默认用 CSSCI, 旧值 "南大核心" 作为过滤参数已返回空结果。
 """
 
 import json
@@ -58,7 +62,8 @@ class PubscholarV1Spider(scrapy.Spider):
     page_size = 50
 
     # 分桶模式配置
-    bucket_collections = ["北大核心", "南大核心"]
+    # collection 使用站点当前取值 "CSSCI" (= 旧 "南大核心", 见文件头注释)
+    bucket_collections = ["北大核心", "CSSCI"]
     bucket_threshold = 9900
     bucket_depth = 3
     bucket_window = 4
@@ -86,7 +91,7 @@ class PubscholarV1Spider(scrapy.Spider):
         spider.bucket_depth = s.getint("V1_BUCKET_DEPTH", 3)
         spider.bucket_window = s.getint("V1_BUCKET_WINDOW", 4)
         spider.bucket_concurrency = s.getint("V1_BUCKET_CONCURRENCY", 2)
-        raw_collections = s.get("V1_BUCKET_COLLECTIONS", "北大核心,南大核心")
+        raw_collections = s.get("V1_BUCKET_COLLECTIONS", "北大核心,CSSCI")
         spider.bucket_collections = [
             c for c in re.split(r"[,，、]", raw_collections) if c
         ]
@@ -284,7 +289,9 @@ class PubscholarV1Spider(scrapy.Spider):
         if self.bucket_max_buckets is not None and self._claimed_buckets >= self.bucket_max_buckets:
             return False
 
-        row = self._store.claim_next()
+        # 只领取当前计划目标集合 (bucket_collections) 的 pending 桶,
+        # 避免误领库里残留的其它集合 (如旧 "北大核心"/"南大核心") 的桶
+        row = self._store.claim_next(collections=self.bucket_collections)
         if row is None:
             return False
 

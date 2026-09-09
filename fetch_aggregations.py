@@ -7,7 +7,7 @@
   python fetch_aggregations.py
   python fetch_aggregations.py --collection 北大核心
   python fetch_aggregations.py --collection 北大核心 --year 2020
-  python fetch_aggregations.py --all-core        # 北大核心 + 南大核心
+  python fetch_aggregations.py --all-core        # 北大核心 + CSSCI(原南大核心)
   python fetch_aggregations.py --all-core --with-total
 
 --with-total 会额外请求一次 articles 接口, 在 JSON 中标注 total/total_pages。
@@ -32,7 +32,8 @@ logger = logging.getLogger("fetch_aggregations")
 
 OUT_DIR = Path("result") / "aggregations"
 
-CORE_COLLECTIONS = ["北大核心", "南大核心"]
+# 站点已将 "南大核心" 更名为 "CSSCI" (二者同义), 用新值过滤才返回数据
+CORE_COLLECTIONS = ["北大核心", "CSSCI"]
 
 
 def build_tag(filters: Dict[str, str]) -> str:
@@ -96,8 +97,8 @@ def parse_args():
         description="抓取 pubscholar v1 aggregations 响应并保存为 JSON",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("--collection", type=str, default=None, help="核心收录 (北大核心/南大核心), 可逗号分隔多个")
-    parser.add_argument("--all-core", action="store_true", help="同时抓取 北大核心 + 南大核心")
+    parser.add_argument("--collection", type=str, default=None, help="核心收录 (北大核心/CSSCI), 可逗号分隔多个")
+    parser.add_argument("--all-core", action="store_true", help="同时抓取 北大核心 + CSSCI(原南大核心)")
     parser.add_argument("--type", dest="art_type", type=str, default=None, help="论文类型 (期刊论文/学位论文/...)")
     parser.add_argument("--year", type=str, default=None, help="出版年 (如 2020)")
     parser.add_argument("--subject", type=str, default=None, help="学科分类")

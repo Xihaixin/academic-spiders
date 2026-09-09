@@ -33,8 +33,8 @@ logger = logging.getLogger("verify_window")
 # 分治维度顺序: 只使用单值/完备性较好的维度, 避开强重叠的 keyword/institution/funding
 PARTITION_ORDER = ["year", "subject", "source", "institution", "type"]
 
-# 中文核心集合 (需求限定)
-CORE_COLLECTIONS = ["北大核心", "南大核心"]
+# 中文核心集合 (需求限定); 站点已将 "南大核心" 更名为 "CSSCI"(同义)
+CORE_COLLECTIONS = ["北大核心", "CSSCI"]
 
 
 def _filters(collection: str = "", extra: Optional[Dict[str, str]] = None) -> Dict[str, str]:
@@ -151,7 +151,7 @@ def truncation_check(client: PubscholarClient, delay: float) -> None:
     contexts: List[Tuple[str, Dict[str, str]]] = [
         ("基础 lang=C", _filters()),
         ("北大核心", _filters("北大核心")),
-        ("南大核心", _filters("南大核心")),
+        ("CSSCI(原南大核心)", _filters("CSSCI")),
     ]
     for label, filters in contexts:
         try:
