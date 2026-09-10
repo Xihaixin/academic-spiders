@@ -70,6 +70,7 @@ class SpiderRunLogExtension:
         self._heartbeat_call: Optional[task.LoopingCall] = None
         self._first_error: Optional[str] = None
         self._start_extra: Optional[dict] = None  # 保存启动时的 extra_info, 供关闭时合并
+        self._finalized: bool = False             # 是否已写最终记录 (防止重复落库)
 
     @classmethod
     def from_crawler(cls, crawler: Crawler):
@@ -86,7 +87,57 @@ class SpiderRunLogExtension:
         crawler.signals.connect(
             ext._on_spider_error, signal=signals.spider_error
         )
+        # 兜底: 注册 reactor 关闭钩子, 覆盖"强制关闭 (二次 Ctrl+C)"
+        # 导致 spider_closed 未触发的场景 (见 _on_reactor_shutdown)
+        ext._register_reactor_shutdown_hook()
         return ext
+
+    def _register_reactor_shutdown_hook(self):
+        """注册 Twisted reactor 关闭钩子 (进程退出前最后一道兜底)
+
+        背景: 用户按两次 Ctrl+C 时, Scrapy 走 `_signal_kill` → `reactor.stop()`
+        强制不干净关闭, `spider_closed` 信号可能来不及发出 → 最终记录不落库,
+        spider_run_log.status 永久停留 'running'。
+
+        reactor 的 "before"/"shutdown" 触发器在 reactor 停止前**必定同步执行**
+        (优雅关闭与强制关闭都会走到), 在此同步落库可兜底该场景。
+        """
+        try:
+            from twisted.internet import reactor
+            # 注: Twisted 类型存根将 eventType 误标为 callable, 此报警为类型噪音,
+            # 运行时正常 (Scrapy 自身 crawler.py 亦如此调用)。
+            reactor.addSystemEventTrigger(
+                "before", "shutdown", self._on_reactor_shutdown
+            )
+        except Exception as e:
+            logger.warning("注册 reactor 关闭兜底钩子失败: %s", e)
+
+    def _on_reactor_shutdown(self):
+        """reactor 关闭前同步落库 (兜底强制关闭场景)
+
+        若 spider_closed 已正常写入 (_finalized=True) 则直接跳过。
+        DB 写入使用同步 pymysql, 在 reactor shutdown 触发器中可安全执行。
+        """
+        if self._finalized or not self.run_id:
+            return
+        try:
+            stats = self.crawler.stats
+            req = stats.get_value("downloader/request_count") if stats else 0
+            items = stats.get_value("item_scraped_count") if stats else 0
+            errors = stats.get_value("log_count/ERROR") if stats else 0
+            last_page = getattr(self._spider, "last_page", 0) if self._spider else 0
+            self.write_run_end(
+                status="interrupted",
+                total_requests=req or 0,
+                total_items=items or 0,
+                total_errors=errors or 0,
+                last_page=last_page or 0,
+                error_message="进程强制退出 (未走正常关闭流程, 由 reactor 钩子兜底)",
+                shutdown_extra={"shutdown_reason": "reactor_shutdown_fallback"},
+            )
+            logger.info("reactor 关闭兜底: 已将运行记录落库 (status=interrupted)")
+        except Exception as e:
+            logger.warning("reactor 关闭兜底写入失败: %s", e)
 
     # ═══════════════════════════════════════════════════════════════
     # 数据库连接
@@ -429,6 +480,7 @@ class SpiderRunLogExtension:
                         ),
                     )
                 conn.commit()
+                self._finalized = True  # 标记已写最终记录 (reactor 兜底钩子据此跳过)
                 logger.info(
                     "运行日志已更新: run_id=%s, status=%s, "
                     "requests=%d, items=%d, errors=%d, last_page=%d",
