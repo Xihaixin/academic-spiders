@@ -212,6 +212,22 @@ scrapy crawl pubscholar_v1 -s MYSQL_DATABASE=academicdb_test   # Scrapy 单次
 python init_test_db.py --reset
 ```
 
+### 生产环境
+
+```bash
+# 生产库，进入生产环境，向虚拟环境中注入相关的配置
+scrapy crawl pubscholar_v1 -s V1_BUCKET_MODE=1 -s V1_BUCKET_MAX_BUCKETS=2 -s V1_BUCKET_COLLECTIONS=CSSCI
+---
+"crawl",
+"pubscholar_v1",
+"-s",
+"V1_BUCKET_MODE=1",
+"-s",
+"V1_BUCKET_MAX_BUCKETS=10",
+"-s",
+"V1_BUCKET_COLLECTIONS=CSSCI",
+
+```
 ---
 
 ## 技术要点
